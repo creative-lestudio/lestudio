@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>LE STUDIO — Diseño, Redes y Contenido</title>
+<meta name="description" content="LE STUDIO: estudio independiente de estrategia, diseño, contenido, desarrollo web, marketing e inteligencia artificial. Un solo equipo, todo conectado.">
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@500,600,700&display=swap">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -96,6 +97,14 @@
     border: 1px solid rgba(255,255,255,.18);
     box-shadow: 0 8px 32px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.16);
   }
+  /* liquid glass for dropdown/flyout menus — more opaque so text behind never bleeds through */
+  .liquid-glass-menu{
+    background: linear-gradient(160deg, rgba(18,32,58,.92), rgba(4,14,32,.94));
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255,255,255,.14);
+    box-shadow: 0 20px 50px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.12);
+  }
   #site-header{
     overflow: visible;
     transition: max-height .35s ease, opacity .3s ease;
@@ -156,6 +165,32 @@
   }
   .modal-overlay.open{ display:flex; }
   .checkbox-row{ display:flex; align-items:flex-start; gap:10px; }
+
+  /* service page: "qué puede incluir" tag pills */
+  .tag-pill{
+    display:inline-flex; align-items:center;
+    padding:8px 16px; border-radius:9999px;
+    background: rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.14);
+    color: rgba(255,255,255,.7);
+    font-size:13.5px;
+    transition: background .2s ease, border-color .2s ease, color .2s ease;
+  }
+  .tag-pill:hover{ background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.28); color:#fff; }
+
+  /* service page: FAQ accordion */
+  .faq-item{ border-bottom: 1px solid rgba(255,255,255,.1); }
+  .faq-question{
+    width:100%; text-align:left; display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding: 20px 4px; color:#fff; font-weight:500; cursor:pointer; background:none; border:none;
+  }
+  .faq-chevron{ transition: transform .25s ease; flex-shrink:0; color:rgba(255,255,255,.45); }
+  .faq-item.open .faq-chevron{ transform: rotate(180deg); }
+  .faq-answer{
+    max-height:0; overflow:hidden; transition: max-height .3s ease, padding .3s ease;
+    color: rgba(255,255,255,.6); font-size:14.5px; line-height:1.65;
+  }
+  .faq-item.open .faq-answer{ max-height:400px; padding-bottom:20px; }
   .checkbox-row input[type="checkbox"]{
     margin-top:3px; width:16px; height:16px; accent-color:#ffffff; flex-shrink:0;
   }
@@ -177,20 +212,20 @@
           <svg width="10" height="6" viewBox="0 0 10 6" fill="none" class="mt-0.5 opacity-70"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
         </button>
         <div id="servicios-panel" class="dropdown-panel absolute left-1/2 -translate-x-1/2 top-full pt-4 w-[360px]">
-          <div class="glass rounded-2xl p-2 shadow-2xl shadow-black/40">
-            <button onclick="showService('redes')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/[.06] transition-colors flex items-center justify-between gap-4">
+          <div class="liquid-glass-menu rounded-2xl p-2">
+            <button onclick="showService('social-media')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/[.06] transition-colors flex items-center justify-between gap-4">
               <span class="font-medium text-white text-[14px]">Social Media</span>
               <span class="text-[12px] text-white/45">Estrategia y gestión</span>
             </button>
-            <button onclick="showService('contenido')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/[.06] transition-colors flex items-center justify-between gap-4">
+            <button onclick="showService('content-production')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/[.06] transition-colors flex items-center justify-between gap-4">
               <span class="font-medium text-white text-[14px]">Content Production</span>
               <span class="text-[12px] text-white/45">Audiovisual y edición</span>
             </button>
-            <button onclick="showService('diseno')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/[.06] transition-colors flex items-center justify-between gap-4">
+            <button onclick="showService('brand-design')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/[.06] transition-colors flex items-center justify-between gap-4">
               <span class="font-medium text-white text-[14px]">Brand & Design</span>
               <span class="text-[12px] text-white/45">Identidad y diseño</span>
             </button>
-            <button onclick="showService('desarrollo-web')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/[.06] transition-colors flex items-center justify-between gap-4">
+            <button onclick="showService('web-development')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-white/[.06] transition-colors flex items-center justify-between gap-4">
               <span class="font-medium text-white text-[14px]">Web & Digital Development</span>
               <span class="text-[12px] text-white/45">Productos digitales</span>
             </button>
@@ -220,10 +255,10 @@
   <!-- mobile menu -->
   <div id="mobile-menu" class="hidden lg:hidden border-t border-white/10 bg-[#021024]/95 px-6 py-6 space-y-5 text-white/85">
     <p class="text-xs uppercase tracking-wider text-white/40">Servicios</p>
-    <button onclick="showService('redes'); closeMobile();" class="block">Social Media</button>
-    <button onclick="showService('contenido'); closeMobile();" class="block">Content Production</button>
-    <button onclick="showService('diseno'); closeMobile();" class="block">Brand & Design</button>
-    <button onclick="showService('desarrollo-web'); closeMobile();" class="block">Web & Digital Development</button>
+    <button onclick="showService('social-media'); closeMobile();" class="block">Social Media</button>
+    <button onclick="showService('content-production'); closeMobile();" class="block">Content Production</button>
+    <button onclick="showService('brand-design'); closeMobile();" class="block">Brand & Design</button>
+    <button onclick="showService('web-development'); closeMobile();" class="block">Web & Digital Development</button>
     <button onclick="showService('growth-marketing'); closeMobile();" class="block">Growth & Marketing</button>
     <button onclick="showService('ai-automation'); closeMobile();" class="block">AI & Automation</button>
     <div class="h-px bg-white/10"></div>
@@ -291,7 +326,7 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-      <button onclick="showService('redes')" class="hover-lift glass rounded-3xl p-8 text-left flex flex-col justify-between min-h-[300px]">
+      <button onclick="showService('social-media')" class="hover-lift glass rounded-3xl p-8 text-left flex flex-col justify-between min-h-[300px]">
         <div>
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="mb-5"><circle cx="12" cy="12" r="3" stroke="white" stroke-opacity=".85" stroke-width="1.4"/><circle cx="5" cy="6" r="2" stroke="white" stroke-opacity=".85" stroke-width="1.4"/><circle cx="19" cy="6" r="2" stroke="white" stroke-opacity=".85" stroke-width="1.4"/><circle cx="5" cy="18" r="2" stroke="white" stroke-opacity=".85" stroke-width="1.4"/><circle cx="19" cy="18" r="2" stroke="white" stroke-opacity=".85" stroke-width="1.4"/><path d="M9.8 10.2L6.5 7.3M14.2 10.2L17.5 7.3M9.8 13.8L6.5 16.7M14.2 13.8L17.5 16.7" stroke="white" stroke-opacity=".85" stroke-width="1.4"/></svg>
           <h3 class="font-display text-2xl mb-2.5">Social Media</h3>
@@ -300,7 +335,7 @@
         <span class="text-sm text-white/50 mt-6">Ver servicio</span>
       </button>
 
-      <button onclick="showService('contenido')" class="hover-lift glass rounded-3xl p-8 text-left flex flex-col justify-between min-h-[300px]">
+      <button onclick="showService('content-production')" class="hover-lift glass rounded-3xl p-8 text-left flex flex-col justify-between min-h-[300px]">
         <div>
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="mb-5"><rect x="3" y="5" width="14" height="14" rx="2" stroke="white" stroke-opacity=".85" stroke-width="1.4"/><path d="M17 9.5L21 7V17L17 14.5" stroke="white" stroke-opacity=".85" stroke-width="1.4" stroke-linejoin="round"/></svg>
           <h3 class="font-display text-2xl mb-2.5">Content Production</h3>
@@ -309,7 +344,7 @@
         <span class="text-sm text-white/50 mt-6">Ver servicio</span>
       </button>
 
-      <button onclick="showService('diseno')" class="hover-lift glass rounded-3xl p-8 text-left flex flex-col justify-between min-h-[300px]">
+      <button onclick="showService('brand-design')" class="hover-lift glass rounded-3xl p-8 text-left flex flex-col justify-between min-h-[300px]">
         <div>
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="mb-5"><path d="M4 20L14 10M14 10L11 7L17 4L20 7L17 13L14 10Z" stroke="white" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <h3 class="font-display text-2xl mb-2.5">Brand & Design</h3>
@@ -318,7 +353,7 @@
         <span class="text-sm text-white/50 mt-6">Ver servicio</span>
       </button>
 
-      <button onclick="showService('desarrollo-web')" class="hover-lift glass rounded-3xl p-8 text-left flex flex-col justify-between min-h-[300px]">
+      <button onclick="showService('web-development')" class="hover-lift glass rounded-3xl p-8 text-left flex flex-col justify-between min-h-[300px]">
         <div>
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="mb-5"><rect x="3" y="4" width="18" height="14" rx="2" stroke="white" stroke-opacity=".85" stroke-width="1.4"/><path d="M3 8h18" stroke="white" stroke-opacity=".85" stroke-width="1.4"/><circle cx="6" cy="6" r=".6" fill="white" fill-opacity=".85"/><circle cx="8" cy="6" r=".6" fill="white" fill-opacity=".85"/><path d="M8 21h8M12 18v3" stroke="white" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round"/></svg>
           <h3 class="font-display text-2xl mb-2.5">Web & Digital Development</h3>
@@ -472,34 +507,165 @@
       </div>
     </div>
   </footer>
+</main>
 
 <!-- ===================== SERVICE DETAIL VIEW ===================== -->
-<section id="service-detail-view" class="max-w-5xl mx-auto px-6 md:px-10 py-20 md:py-28">
-  <button onclick="goHome()" class="text-white/60 hover:text-white text-sm mb-12 inline-flex items-center gap-2 transition-colors">
-    <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5 1L1 5L5 9M1 5H13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    Volver al inicio
-  </button>
+<section id="service-detail-view">
 
-  <p id="sd-eyebrow" class="text-white/45 text-sm mb-4"></p>
-  <h1 id="sd-title" class="font-display text-4xl md:text-5xl mb-7 max-w-2xl"></h1>
-  <p id="sd-description" class="text-white/65 leading-relaxed max-w-2xl mb-14"></p>
+  <!-- 01 — HERO -->
+  <div class="max-w-6xl mx-auto px-6 md:px-10 pt-20 md:pt-24 pb-16 md:pb-20">
+    <button onclick="goHome()" class="text-white/60 hover:text-white text-sm mb-10 inline-flex items-center gap-2 transition-colors">
+      <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5 1L1 5L5 9M1 5H13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Volver al inicio
+    </button>
 
-  <div class="glass rounded-2xl p-8 mb-16">
-    <h2 class="font-display text-2xl mb-6">Incluye</h2>
-    <ul id="sd-includes" class="grid sm:grid-cols-2 gap-x-10 gap-y-4"></ul>
-  </div>
-
-  <div id="sd-pricing" class="mb-16"></div>
-
-  <div class="glass rounded-3xl p-10 text-center">
-    <h3 class="font-display text-2xl md:text-3xl mb-4">¿Hablamos de tu proyecto?</h3>
-    <p class="text-white/55 mb-8 max-w-md mx-auto">Contanos en qué punto estás y te decimos, sin vueltas, si esto es para vos.</p>
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-      <a href="https://wa.me/584241859724" target="_blank" rel="noopener" class="btn-primary w-full sm:w-auto text-center font-semibold px-8 py-3.5 rounded-full">Escríbenos</a>
-      <button onclick="openContactForm('Hola, quiero más información sobre el servicio de ' + document.getElementById('sd-eyebrow').textContent + '.')" class="btn-ghost w-full sm:w-auto text-center font-semibold px-8 py-3.5 rounded-full">creative.lestudio@gmail.com</button>
+    <div class="grid lg:grid-cols-[1.3fr_1fr] gap-12 items-center">
+      <div>
+        <p id="sd-eyebrow" class="text-white/45 text-sm mb-4 tracking-wide"></p>
+        <h1 id="sd-title" class="font-display text-4xl md:text-5xl lg:text-[3.4rem] leading-[1.1] mb-6 max-w-xl"></h1>
+        <p id="sd-description" class="text-white/65 leading-relaxed max-w-lg mb-9"></p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="https://wa.me/584241859724" target="_blank" rel="noopener" class="btn-primary text-center font-semibold px-7 py-3.5 rounded-full">Escríbenos</a>
+          <button onclick="scrollToIdInPage('sd-whatwedo-anchor')" class="btn-ghost text-center font-semibold px-7 py-3.5 rounded-full">Ver qué incluye</button>
+        </div>
+      </div>
+      <div id="sd-visual" class="hidden lg:flex items-center justify-center aspect-square rounded-3xl glass p-10"></div>
     </div>
   </div>
+
+  <!-- 02 — INTRODUCCIÓN -->
+  <div class="max-w-4xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">
+    <div id="sd-intro" class="space-y-5 text-white/65 leading-relaxed text-lg"></div>
+  </div>
+
+  <!-- 03 — QUÉ HACEMOS -->
+  <div id="sd-whatwedo-anchor" class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">
+    <h2 class="font-display text-3xl md:text-4xl mb-10">Qué hacemos</h2>
+    <div id="sd-whatwedo" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+  </div>
+
+  <!-- 04 — NUESTRO ENFOQUE -->
+  <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">
+    <h2 class="font-display text-3xl md:text-4xl mb-10">Nuestro enfoque</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="glass rounded-2xl p-7">
+        <p class="text-white/35 text-sm mb-3">01</p>
+        <h3 class="font-display text-xl mb-2.5">Entendemos</h3>
+        <p class="text-white/60 text-[14px] leading-relaxed">Analizamos la marca, el negocio, el contexto y los objetivos.</p>
+      </div>
+      <div class="glass rounded-2xl p-7">
+        <p class="text-white/35 text-sm mb-3">02</p>
+        <h3 class="font-display text-xl mb-2.5">Diseñamos</h3>
+        <p class="text-white/60 text-[14px] leading-relaxed">Convertimos el problema en una estrategia y una solución concreta.</p>
+      </div>
+      <div class="glass rounded-2xl p-7">
+        <p class="text-white/35 text-sm mb-3">03</p>
+        <h3 class="font-display text-xl mb-2.5">Ejecutamos</h3>
+        <p class="text-white/60 text-[14px] leading-relaxed">Producimos, desarrollamos y ponemos la solución en marcha.</p>
+      </div>
+      <div class="glass rounded-2xl p-7">
+        <p class="text-white/35 text-sm mb-3">04</p>
+        <h3 class="font-display text-xl mb-2.5">Optimizamos</h3>
+        <p class="text-white/60 text-[14px] leading-relaxed">Medimos, aprendemos y mejoramos.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 — QUÉ PUEDE INCLUIR -->
+  <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">
+    <h2 class="font-display text-3xl md:text-4xl mb-3">Qué puede incluir</h2>
+    <p class="text-white/55 mb-9 max-w-xl">Piezas concretas que podés combinar según lo que tu proyecto necesite.</p>
+    <div id="sd-includes" class="flex flex-wrap gap-2.5"></div>
+  </div>
+
+  <!-- PLANES (solo Social Media y Brand & Design) -->
+  <div id="sd-pricing" class="max-w-6xl mx-auto px-6 md:px-10"></div>
+
+  <!-- 06 — PROYECTO DESTACADO -->
+  <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">
+    <p class="text-white/45 text-sm mb-3 tracking-wide">Proyecto destacado</p>
+    <div class="glass rounded-3xl p-8 md:p-12">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div class="aspect-video rounded-2xl border border-dashed border-white/15 flex items-center justify-center">
+          <span class="text-white/25 text-sm">Imagen del proyecto — próximamente</span>
+        </div>
+        <div>
+          <h3 class="font-display text-2xl mb-6 text-white/40">Nombre del proyecto — próximamente</h3>
+          <div class="space-y-4">
+            <div>
+              <p class="text-white/45 text-xs uppercase tracking-wide mb-1">El reto</p>
+              <p class="text-white/40 text-sm leading-relaxed">Estamos documentando este caso para mostrártelo con el detalle que merece.</p>
+            </div>
+            <div>
+              <p class="text-white/45 text-xs uppercase tracking-wide mb-1">La solución</p>
+              <p class="text-white/40 text-sm leading-relaxed">Pronto vas a poder ver acá qué hicimos exactamente y por qué.</p>
+            </div>
+            <div>
+              <p class="text-white/45 text-xs uppercase tracking-wide mb-1">El resultado</p>
+              <p class="text-white/40 text-sm leading-relaxed">Los resultados reales de este proyecto se suman apenas estén disponibles.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 — TESTIMONIO -->
+  <div id="sd-testimonial-wrap" class="max-w-4xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10"></div>
+
+  <!-- 08 — SERVICIOS RELACIONADOS -->
+  <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">
+    <h2 class="font-display text-3xl md:text-4xl mb-3 max-w-lg">Un proyecto rara vez necesita una sola solución.</h2>
+    <p class="text-white/55 mb-9 max-w-xl">Combinamos nuestras disciplinas para construir soluciones que funcionan como un sistema, no como piezas aisladas.</p>
+    <div id="sd-related" class="grid sm:grid-cols-3 gap-5"></div>
+  </div>
+
+  <!-- 09 — FAQ -->
+  <div class="max-w-3xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">
+    <h2 class="font-display text-3xl md:text-4xl mb-10">Preguntas frecuentes</h2>
+    <div id="sd-faq" class="space-y-3"></div>
+  </div>
+
+  <!-- 10 — CTA FINAL -->
+  <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-24 border-t border-white/10">
+    <div class="text-center max-w-2xl mx-auto mb-14">
+      <h2 class="font-display text-3xl md:text-4xl mb-4">¿Qué quieres construir?</h2>
+      <p class="text-white/60 leading-relaxed">Cuéntanos qué querés conseguir, qué querés mejorar o qué está bloqueando el crecimiento de tu negocio. Analizamos el proyecto y te proponemos el siguiente paso.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-[1.4fr_1fr] gap-5">
+      <div class="glass rounded-3xl p-8 md:p-10">
+        <div class="space-y-4">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <input type="text" id="sd-cta-name" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Nombre" />
+            <input type="email" id="sd-cta-email" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Email" />
+          </div>
+          <input type="text" id="sd-cta-company" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Empresa" />
+          <select id="sd-cta-service" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white/80">
+            <option value="Social Media" class="bg-[#052659]">Social Media</option>
+            <option value="Content Production" class="bg-[#052659]">Content Production</option>
+            <option value="Brand & Design" class="bg-[#052659]">Brand & Design</option>
+            <option value="Web & Digital Development" class="bg-[#052659]">Web & Digital Development</option>
+            <option value="Growth & Marketing" class="bg-[#052659]">Growth & Marketing</option>
+            <option value="AI & Automation" class="bg-[#052659]">AI & Automation</option>
+            <option value="No estoy seguro" class="bg-[#052659]">No estoy seguro</option>
+          </select>
+          <textarea id="sd-cta-message" rows="4" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Cuéntanos sobre el proyecto"></textarea>
+          <button onclick="submitServiceCTA()" class="btn-primary w-full text-center font-semibold px-7 py-3.5 rounded-full">Enviar consulta →</button>
+        </div>
+      </div>
+
+      <div class="glass rounded-3xl p-8 md:p-10 flex flex-col justify-center">
+        <h3 class="font-display text-xl mb-3">¿Prefieres hablar directamente?</h3>
+        <p class="text-white/55 text-sm leading-relaxed mb-8">Escribinos por WhatsApp y contanos qué necesitás.</p>
+        <a id="sd-whatsapp-link" href="https://wa.me/584241859724" target="_blank" rel="noopener" class="btn-ghost text-center font-semibold px-7 py-3.5 rounded-full">Hablar por WhatsApp →</a>
+      </div>
+    </div>
+  </div>
+
 </section>
+
+
 
 <!-- ===================== CUSTOM PLAN MODAL ===================== -->
 <div id="custom-plan-modal" class="modal-overlay">
@@ -747,9 +913,11 @@
       </div>`;
 
     container.innerHTML = `
-      <h2 class="font-display text-3xl mb-3">Planes de ${pricingLabels[category]}</h2>
-      <p class="text-white/55 mb-8 max-w-2xl">Elegí el nivel de acompañamiento que tu marca necesita hoy, o armá tu propio plan a medida.</p>
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">${cards}${customCard}</div>`;
+      <div class="py-16 md:py-20 border-t border-white/10">
+        <h2 class="font-display text-3xl mb-3">Planes de ${pricingLabels[category]}</h2>
+        <p class="text-white/55 mb-8 max-w-2xl">Elegí el nivel de acompañamiento que tu marca necesita hoy, o armá tu propio plan a medida.</p>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">${cards}${customCard}</div>
+      </div>`;
   }
 
   // ---------- Plan personalizado (custom plan -> contact form) ----------
@@ -835,140 +1003,350 @@
 
 
   // ---------- Services data ----------
+  const testimonials = {
+    'social-media': {
+      quote: 'Desde que LE STUDIO tomó nuestras redes, los informes mensuales nos muestran exactamente qué está funcionando y por qué. Nunca habíamos tenido tanta claridad.',
+      name: 'Directora de Operaciones',
+      company: 'Inversiones MDS'
+    },
+    'content-production': {
+      quote: 'Nos ordenaron el contenido de un año a la semana siguiente de empezar. La calidad de producción se nota desde el primer post.',
+      name: 'Fundador',
+      company: 'Legacy World'
+    },
+    'brand-design': {
+      quote: 'Nos armaron la identidad completa —naming, logo, papelería y manual de marca— en semanas. Hoy toda la empresa habla el mismo idioma visual.',
+      name: 'Gerenta General',
+      company: 'Decoplant'
+    }
+  };
+
   const services = {
-    'redes': {
+    'social-media': {
       eyebrow: 'Social Media',
       title: 'Tu marca, activa, relevante y estratégica.',
       description: 'Gestionamos tus redes sociales como un canal de negocio, no como un simple calendario de publicaciones. Definimos la estrategia, planificamos el contenido, gestionamos la comunidad y analizamos el rendimiento para construir una presencia digital coherente y orientada al crecimiento.',
-      includes: [
-        'Estrategia de redes sociales',
-        'Gestión de Instagram, TikTok y otras plataformas',
-        'Community management',
-        'Calendario editorial',
-        'Creación y adaptación de contenido',
-        'Publicación y gestión diaria',
-        'Análisis y reporting',
-        'Estrategias de crecimiento'
+      intro: [
+        'Cualquiera puede programar publicaciones. Lo que separa una red social que vende de una que solo existe es la estrategia detrás: saber para quién hablás, qué querés lograr con cada pieza y cómo se conecta un mes con el siguiente.',
+        'Trabajamos con marcas que ya entendieron que las redes no son gratis solo porque no se pagan en pauta — cuestan tiempo, consistencia y criterio. Nosotros ponemos las tres cosas, para que vos no tengas que estar pendiente de qué publicar hoy.'
       ],
-      pricing: 'social'
+      whatWeDo: [
+        { name: 'Estrategia de redes', desc: 'Definimos qué comunicar, a quién, cómo y con qué objetivo.' },
+        { name: 'Planificación de contenido', desc: 'Construimos calendarios y pilares de contenido alineados con la marca.' },
+        { name: 'Gestión de redes', desc: 'Publicamos, organizamos y mantenemos activa la presencia digital.' },
+        { name: 'Community Management', desc: 'Gestionamos conversaciones, comentarios y mensajes de la comunidad.' },
+        { name: 'Contenido para redes', desc: 'Desarrollamos piezas adaptadas a cada plataforma.' },
+        { name: 'Análisis y optimización', desc: 'Medimos el rendimiento y usamos los datos para mejorar la estrategia.' }
+      ],
+      includes: [
+        'Estrategia de Social Media', 'Instagram', 'TikTok', 'Calendario editorial',
+        'Community Management', 'Diseño de publicaciones', 'Reels', 'Stories',
+        'Copywriting', 'Gestión de perfiles', 'Informes mensuales', 'Estrategias de crecimiento'
+      ],
+      pricing: 'social',
+      faq: [
+        { q: '¿Qué redes sociales gestionáis?', a: 'Principalmente Instagram y TikTok, aunque nos adaptamos a la plataforma donde esté tu audiencia. Lo definimos juntos según tu marca y tu objetivo, no aplicamos la misma fórmula a todos los clientes.' },
+        { q: '¿También producís el contenido?', a: 'Sí. La estrategia y la producción van de la mano dentro de este servicio, y si necesitás piezas más elaboradas, se conecta directo con Content Production sin fricción entre equipos.' },
+        { q: '¿Podemos contratar únicamente estrategia?', a: 'Sí, es posible. Muchos clientes ya tienen equipo interno de community management y solo necesitan la definición estratégica y el calendario. Lo conversamos según tu caso.' },
+        { q: '¿Gestionáis comentarios y mensajes?', a: 'Sí, el community management incluye responder comentarios y mensajes directos dentro del horario y el tono que definamos juntos para tu marca.' },
+        { q: '¿Cuánto contenido se publica al mes?', a: 'Depende del plan que elijas. Los tres niveles —básico, intermedio y avanzado— tienen cantidades distintas de posts, reels e historias, detalladas en la sección de planes.' },
+        { q: '¿Cómo medís los resultados?', a: 'Con informes mensuales que muestran alcance, interacción y crecimiento real, explicados en lenguaje simple — no solo una captura de métricas sin contexto.' },
+        { q: '¿Trabajáis con marcas que están empezando?', a: 'Sí. De hecho ahí es donde más valor aporta tener una estrategia clara desde el día uno, en vez de publicar sin un rumbo definido.' }
+      ],
+      related: ['content-production', 'brand-design', 'growth-marketing']
     },
-    'contenido': {
+    'content-production': {
       eyebrow: 'Content Production',
       title: 'Contenido diseñado para captar atención.',
       description: 'Conceptualizamos, producimos y editamos contenido que convierte ideas en piezas que las personas quieren ver, compartir y recordar. Desde contenido para redes hasta campañas audiovisuales, construimos cada producción alrededor de una idea, una narrativa y un objetivo.',
+      intro: [
+        'La diferencia entre un video que se scrollea y uno que se mira entero casi nunca es la cámara — es la idea. Por eso empezamos por el concepto y la narrativa, no por la fecha de grabación.',
+        'Producimos con equipo propio, no subcontratamos cámaras ni editores de último minuto. Eso significa un mismo estándar de calidad en cada entrega, y un equipo que entiende tu marca en vez de tratarla como un cliente más de la semana.'
+      ],
+      whatWeDo: [
+        { name: 'Dirección creativa', desc: 'Definimos el concepto visual y narrativo de cada producción.' },
+        { name: 'Concepto y guion', desc: 'Convertimos objetivos de comunicación en ideas que pueden convertirse en contenido.' },
+        { name: 'Producción audiovisual', desc: 'Fotografía, video y producción de contenido.' },
+        { name: 'Contenido vertical', desc: 'Reels, TikTok, Shorts y formatos pensados para consumo móvil.' },
+        { name: 'Edición', desc: 'Montaje, ritmo, sonido, color y postproducción.' },
+        { name: 'Adaptación', desc: 'Convertimos una producción en diferentes piezas y formatos.' }
+      ],
       includes: [
-        'Dirección creativa',
-        'Conceptualización',
-        'Guion',
-        'Producción audiovisual',
-        'Fotografía',
-        'Video',
-        'Reels y contenido vertical',
-        'Edición',
-        'Motion graphics',
-        'Adaptaciones para diferentes plataformas'
-      ]
+        'Dirección creativa', 'Conceptualización', 'Guion', 'Producción audiovisual',
+        'Fotografía', 'Video', 'Reels', 'TikTok', 'Shorts', 'Edición',
+        'Motion graphics', 'Postproducción', 'Adaptación a formatos', 'Contenido para campañas'
+      ],
+      faq: [
+        { q: '¿Trabajáis con video y fotografía?', a: 'Sí, ambos formatos forman parte del servicio y normalmente se planifican juntos dentro de una misma producción para aprovechar cada sesión.' },
+        { q: '¿Podéis producir contenido para redes?', a: 'Sí, es uno de los usos más frecuentes: contenido vertical, reels y piezas pensadas específicamente para el consumo en redes sociales.' },
+        { q: '¿También os encargáis de la edición?', a: 'Sí, montaje, color, sonido y motion graphics están incluidos — no entregamos material crudo sin terminar.' },
+        { q: '¿Podemos contratar únicamente la producción?', a: 'Sí, si ya tenés un equipo de edición interno podemos encargarnos solo de la parte de grabación y dirección creativa.' },
+        { q: '¿Trabajáis con campañas publicitarias?', a: 'Sí, producimos piezas pensadas para campañas pagas, coordinado con el equipo de Growth & Marketing cuando el proyecto lo requiere.' },
+        { q: '¿Podéis crear diferentes formatos a partir de una producción?', a: 'Sí, de una misma sesión solemos adaptar múltiples piezas: reel, historia, corte horizontal y vertical, para aprovechar mejor cada producción.' },
+        { q: '¿Trabajáis con contenido generado mediante IA?', a: 'Lo evaluamos caso por caso. Priorizamos producción real, pero hay procesos puntuales (como algunas adaptaciones o pruebas de concepto) donde la IA puede sumar sin reemplazar la producción original.' }
+      ],
+      related: ['social-media', 'brand-design', 'growth-marketing']
     },
-    'diseno': {
+    'brand-design': {
       eyebrow: 'Brand & Design',
       title: 'Una identidad que hace reconocible a tu marca.',
       description: 'Diseñamos sistemas visuales coherentes que hacen que una marca se vea, se sienta y se recuerde como una sola. Desde una identidad completa hasta una pieza puntual, cada elemento responde al mismo lenguaje visual.',
-      includes: [
-        'Identidad visual',
-        'Branding',
-        'Naming',
-        'Logotipo',
-        'Dirección de arte',
-        'Diseño gráfico',
-        'Diseño para redes',
-        'Diseño editorial',
-        'Packaging',
-        'UI/UX',
-        'Diseño de interfaces',
-        'Manuales de marca'
+      intro: [
+        'Una marca no es un logo — es un sistema. Cuando ese sistema no existe, cada pieza nueva se diseña desde cero y la marca termina viéndose distinta en cada lugar donde aparece.',
+        'Construimos ese sistema una sola vez, bien hecho, para que tu equipo pueda seguir usándolo solo durante años sin perder consistencia ni tener que llamarnos por cada publicación nueva.'
       ],
-      pricing: 'identidad'
+      whatWeDo: [
+        { name: 'Brand Identity', desc: 'Construimos sistemas visuales capaces de representar una marca.' },
+        { name: 'Dirección de arte', desc: 'Definimos cómo debe verse y sentirse la marca.' },
+        { name: 'Diseño gráfico', desc: 'Creamos piezas para los diferentes puntos de contacto.' },
+        { name: 'Digital Design', desc: 'Diseñamos experiencias visuales para entornos digitales.' },
+        { name: 'UI/UX', desc: 'Diseñamos interfaces claras, funcionales y visualmente coherentes.' },
+        { name: 'Sistemas de marca', desc: 'Creamos reglas y recursos para mantener consistencia.' }
+      ],
+      includes: [
+        'Branding', 'Identidad visual', 'Logo', 'Dirección de arte', 'Naming',
+        'Diseño gráfico', 'Diseño para redes', 'Diseño editorial', 'Packaging',
+        'UI Design', 'UX Design', 'Sistemas visuales', 'Brand Guidelines'
+      ],
+      pricing: 'identidad',
+      faq: [
+        { q: '¿Creáis identidades de marca desde cero?', a: 'Sí, es uno de los proyectos más completos que hacemos: desde el naming y el concepto hasta el manual de marca final.' },
+        { q: '¿También trabajáis sobre marcas existentes?', a: 'Sí, muchos proyectos son de evolución de marca: mantenemos lo que ya funciona y corregimos lo que genera inconsistencia.' },
+        { q: '¿Qué incluye un proyecto de branding?', a: 'Depende del nivel elegido — tenés el detalle exacto en la sección de planes de esta página, desde identidad básica hasta un sistema de marca completo.' },
+        { q: '¿Diseñáis únicamente el logo?', a: 'Podemos, pero recomendamos pensarlo como parte de un sistema: tipografías, paleta y aplicaciones, para que el logo funcione bien en cualquier contexto.' },
+        { q: '¿Trabajáis también diseño para redes?', a: 'Sí, y lo hacemos usando el mismo sistema visual de tu marca, para que redes, web y papelería se vean como una sola cosa.' },
+        { q: '¿Podéis diseñar la interfaz de una web o aplicación?', a: 'Sí, el diseño UI/UX forma parte de este servicio y se coordina directamente con el equipo de Web & Digital Development cuando hay que construirla.' },
+        { q: '¿Entregáis manual de marca?', a: 'Sí, en los planes de identidad corporativa y completa incluimos manual de marca con las reglas de uso de cada elemento.' }
+      ],
+      related: ['content-production', 'web-development', 'social-media']
     },
-    'desarrollo-web': {
+    'web-development': {
       eyebrow: 'Web & Digital Development',
       title: 'Diseñamos y desarrollamos productos digitales que funcionan.',
       description: 'Creamos experiencias digitales rápidas, escalables y adaptadas a las necesidades reales de cada negocio. Desde una landing diseñada para convertir hasta plataformas y herramientas internas construidas completamente a medida.',
+      intro: [
+        'Una web bonita que carga lento o no convierte no cumplió su trabajo. Antes de diseñar una sola pantalla, entendemos qué tiene que lograr ese sitio y para quién.',
+        'Construimos productos digitales pensados para durar: rápidos, ordenados por dentro y fáciles de mantener, no solo para verse bien el día del lanzamiento.'
+      ],
+      whatWeDo: [
+        { name: 'E-commerce', desc: 'Tiendas online diseñadas para vender y crecer.' },
+        { name: 'Landing Pages', desc: 'Experiencias enfocadas en conversión.' },
+        { name: 'Sitios corporativos', desc: 'Webs que comunican claramente el valor de una empresa.' },
+        { name: 'Dashboards', desc: 'Paneles para visualizar información y gestionar operaciones.' },
+        { name: 'Aplicaciones web', desc: 'Productos digitales desarrollados alrededor de necesidades específicas.' },
+        { name: 'Integraciones', desc: 'Conectamos herramientas, APIs y sistemas.' }
+      ],
       includes: [
-        'Diseño y desarrollo web',
-        'E-commerce',
-        'Shopify',
-        'Landing pages',
-        'Webs corporativas',
-        'Dashboards',
-        'Plataformas digitales',
-        'Aplicaciones web',
-        'Sistemas internos',
-        'Integraciones mediante API',
-        'Mantenimiento y soporte'
-      ]
+        'Diseño web', 'Desarrollo web', 'E-commerce', 'Shopify', 'Landing pages',
+        'Sitios corporativos', 'Dashboards', 'Aplicaciones web', 'Plataformas digitales',
+        'Sistemas internos', 'Integraciones API', 'Automatizaciones', 'Mantenimiento', 'Soporte'
+      ],
+      faq: [
+        { q: '¿Trabajáis con Shopify?', a: 'Sí, tanto tiendas nuevas como mejoras y personalización de tiendas Shopify existentes.' },
+        { q: '¿Podéis desarrollar una web completamente a medida?', a: 'Sí, cuando el proyecto lo requiere construimos desde cero en vez de partir de una plantilla, especialmente en dashboards o plataformas con lógica propia.' },
+        { q: '¿También diseñáis la interfaz?', a: 'Sí, el diseño UI/UX se trabaja en conjunto con Brand & Design para que la web sea consistente con el resto de tu identidad.' },
+        { q: '¿Podéis conectar diferentes herramientas?', a: 'Sí, las integraciones vía API con CRM, email o pasarelas de pago son parte habitual de estos proyectos.' },
+        { q: '¿Desarrolláis dashboards?', a: 'Sí, paneles internos para visualizar datos o gestionar operaciones son uno de los productos que más construimos a medida.' },
+        { q: '¿Podéis mantener una web después del lanzamiento?', a: 'Sí, ofrecemos mantenimiento y soporte continuo para que el sitio siga funcionando bien mucho después de publicado.' },
+        { q: '¿Podéis crear una plataforma digital desde cero?', a: 'Sí, es uno de los proyectos más completos: relevamos el proceso real de tu negocio y construimos la herramienta alrededor de eso.' }
+      ],
+      related: ['brand-design', 'growth-marketing', 'ai-automation']
     },
     'growth-marketing': {
       eyebrow: 'Growth & Marketing',
       title: 'Convertimos visibilidad en oportunidades de negocio.',
       description: 'Construimos estrategias para que tu marca sea encontrada, considerada y elegida. Combinamos posicionamiento orgánico, publicidad digital, presencia en buscadores de IA y estrategias de captación para construir un sistema de adquisición conectado.',
+      intro: [
+        'Que te encuentren es el primer paso, no el objetivo. El objetivo es que te elijan a vos y no a la competencia que apareció al lado en la misma búsqueda.',
+        'Por eso no separamos SEO, publicidad y contenido en compartimentos aislados: los conectamos en un mismo sistema, donde cada canal refuerza a los demás en vez de competir por el mismo presupuesto.'
+      ],
+      whatWeDo: [
+        { name: 'SEO', desc: 'Trabajamos el posicionamiento orgánico para atraer tráfico cualificado.' },
+        { name: 'GEO / AI Search', desc: 'Optimizamos la presencia de una marca en motores de búsqueda generativos y sistemas de IA.' },
+        { name: 'Google Ads', desc: 'Diseñamos, lanzamos y optimizamos campañas de publicidad en Google.' },
+        { name: 'Meta Ads', desc: 'Desarrollamos estrategias de adquisición mediante Instagram y Facebook.' },
+        { name: 'Estrategia de contenido', desc: 'Creamos contenido orientado a descubrimiento, consideración y conversión.' },
+        { name: 'Captación y conversión', desc: 'Diseñamos sistemas para convertir tráfico en oportunidades comerciales.' }
+      ],
       includes: [
-        'Estrategia de marketing',
-        'SEO',
-        'GEO / AEO',
-        'Google Ads',
-        'Meta Ads',
-        'Estrategia de contenidos',
-        'Generación de leads',
-        'Optimización de conversión',
-        'Analítica y medición',
-        'Estrategias de adquisición'
-      ]
+        'Estrategia de marketing', 'SEO', 'SEO técnico', 'SEO de contenidos', 'GEO',
+        'AI Search', 'Google Ads', 'Meta Ads', 'Lead Generation', 'CRO',
+        'Analytics', 'Reporting', 'Estrategia de contenidos'
+      ],
+      faq: [
+        { q: '¿Qué diferencia hay entre SEO y GEO?', a: 'El SEO trabaja tu posición en buscadores tradicionales como Google. El GEO busca que tu marca esté bien representada dentro de las respuestas de sistemas de IA generativa. Son complementarios, no excluyentes.' },
+        { q: '¿Trabajáis con Google Ads?', a: 'Sí, diseñamos, lanzamos y optimizamos campañas de búsqueda y shopping según el objetivo de cada negocio.' },
+        { q: '¿También gestionáis Meta Ads?', a: 'Sí, campañas en Instagram y Facebook, coordinadas con el resto de la estrategia de contenido y marca.' },
+        { q: '¿Podéis combinar SEO y publicidad?', a: 'Sí, de hecho lo recomendamos: el orgánico construye una base sostenible mientras la pauta genera resultados más inmediatos.' },
+        { q: '¿Qué significa aparecer en buscadores de IA?', a: 'Significa que cuando alguien le pregunta algo relacionado con tu rubro a ChatGPT, Gemini u otro sistema similar, tu marca tiene más probabilidad de ser mencionada o considerada dentro de esa respuesta. No es algo que se pueda garantizar puntualmente, pero sí se puede trabajar de forma consistente.' },
+        { q: '¿Cómo medís los resultados?', a: 'Con analítica y reporting periódico sobre tráfico, posiciones, conversión y rendimiento de cada campaña.' },
+        { q: '¿Trabajáis con empresas que ya tienen equipo de marketing?', a: 'Sí, en varios proyectos trabajamos como un equipo especializado que complementa al equipo interno, no como reemplazo.' }
+      ],
+      related: ['social-media', 'content-production', 'web-development']
     },
     'ai-automation': {
       eyebrow: 'AI & Automation',
       title: 'IA que trabaja para tu negocio.',
       description: 'Diseñamos sistemas de inteligencia artificial y automatización que reducen tareas repetitivas, aceleran procesos y permiten que los equipos dediquen más tiempo a lo que realmente importa. No se trata de añadir IA porque está de moda: analizamos cómo funciona tu empresa y aplicamos tecnología donde realmente puede generar impacto.',
+      intro: [
+        'La mayoría de los procesos que le quitan tiempo a un equipo no requieren una persona pensando — requieren que alguien mueva información de un lado a otro. Ahí es exactamente donde entra la automatización.',
+        'No empezamos por la tecnología. Empezamos por entender cómo funciona tu operación hoy, y después decidimos si hace falta un agente de IA, un flujo automatizado, o simplemente conectar dos herramientas que ya usás.'
+      ],
+      whatWeDo: [
+        { name: 'AI Agents', desc: 'Agentes capaces de ejecutar tareas y trabajar con información de la empresa.' },
+        { name: 'Chatbots', desc: 'Atención automatizada para web y canales de comunicación.' },
+        { name: 'Automatización de procesos', desc: 'Conectamos herramientas y eliminamos tareas manuales repetitivas.' },
+        { name: 'Automatización comercial', desc: 'Captación, cualificación y seguimiento automático de leads.' },
+        { name: 'Integraciones', desc: 'Conectamos CRM, formularios, plataformas, APIs y herramientas.' },
+        { name: 'IA interna', desc: 'Sistemas que ayudan a los equipos a buscar información, procesar datos y ejecutar tareas.' }
+      ],
       includes: [
-        'Agentes de IA',
-        'Chatbots',
-        'Asistentes virtuales',
-        'Automatización de procesos',
-        'Automatización comercial',
-        'Automatización de marketing',
-        'Integraciones entre herramientas',
-        'CRM + IA',
-        'Atención al cliente 24/7',
-        'Cualificación de leads',
-        'Automatización de tareas internas'
-      ]
+        'AI Agents', 'Chatbots', 'Asistentes virtuales', 'Automatización de procesos',
+        'Automatización de ventas', 'Automatización de marketing', 'Lead qualification',
+        'Seguimiento automático', 'Integraciones con CRM', 'Integraciones API',
+        'IA para equipos internos', 'Atención 24/7'
+      ],
+      faq: [
+        { q: '¿Qué procesos se pueden automatizar?', a: 'Cualquier tarea repetitiva basada en reglas claras: seguimiento de leads, respuestas frecuentes, envío de documentos, actualización de datos entre sistemas, entre muchas otras.' },
+        { q: '¿Podéis crear un agente de IA personalizado?', a: 'Sí, entrenado con información real de tu negocio para que responda y actúe de forma coherente con cómo trabajás.' },
+        { q: '¿Los chatbots pueden utilizar información de nuestra empresa?', a: 'Sí, ese es justamente el punto: que respondan con tus datos reales, no con respuestas genéricas desconectadas de tu negocio.' },
+        { q: '¿Podéis conectar la IA con nuestro CRM?', a: 'Sí, las integraciones con CRM son una de las bases más comunes de estos proyectos, para que la información fluya sin cargarla dos veces.' },
+        { q: '¿La IA puede atender clientes automáticamente?', a: 'Sí, con escalamiento a un humano cuando la consulta lo amerita — nunca dejamos a tu cliente sin respuesta ni atrapado en un bucle.' },
+        { q: '¿Podéis automatizar procesos internos?', a: 'Sí, no solo de cara al cliente: también procesos administrativos, operativos o de reporting interno.' },
+        { q: '¿Cómo sabemos qué procesos merece la pena automatizar?', a: 'Empezamos con una auditoría de tu operación actual para identificar dónde hay más fricción y dónde la automatización realmente ahorra tiempo, en vez de sumar complejidad innecesaria.' }
+      ],
+      related: ['web-development', 'growth-marketing', 'social-media']
     }
+  };
+
+  // ---------- Abstract hero visuals per service (no stock photography) ----------
+  const serviceVisuals = {
+    'social-media': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><circle cx="100" cy="100" r="14" stroke="white" stroke-opacity=".8" stroke-width="1.4"/><circle cx="40" cy="55" r="9" stroke="white" stroke-opacity=".55" stroke-width="1.4"/><circle cx="160" cy="55" r="9" stroke="white" stroke-opacity=".55" stroke-width="1.4"/><circle cx="40" cy="150" r="9" stroke="white" stroke-opacity=".55" stroke-width="1.4"/><circle cx="160" cy="150" r="9" stroke="white" stroke-opacity=".55" stroke-width="1.4"/><path d="M88 90L48 62M112 90L152 62M88 110L48 143M112 110L152 143" stroke="white" stroke-opacity=".35" stroke-width="1.2"/></svg>`,
+    'content-production': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><rect x="35" y="55" width="130" height="90" rx="8" stroke="white" stroke-opacity=".7" stroke-width="1.4"/><path d="M85 82L120 100L85 118V82Z" stroke="white" stroke-opacity=".8" stroke-width="1.4" stroke-linejoin="round"/><path d="M35 75H165M35 125H165" stroke="white" stroke-opacity=".25" stroke-width="1.2"/></svg>`,
+    'brand-design': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><circle cx="85" cy="100" r="45" stroke="white" stroke-opacity=".55" stroke-width="1.4"/><path d="M118 60L150 100L118 140L100 100L118 60Z" stroke="white" stroke-opacity=".8" stroke-width="1.4" stroke-linejoin="round"/></svg>`,
+    'web-development': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><rect x="30" y="45" width="140" height="110" rx="8" stroke="white" stroke-opacity=".7" stroke-width="1.4"/><path d="M30 70H170" stroke="white" stroke-opacity=".7" stroke-width="1.4"/><circle cx="45" cy="57.5" r="3" fill="white" fill-opacity=".6"/><circle cx="57" cy="57.5" r="3" fill="white" fill-opacity=".6"/><path d="M55 100L75 120L55 140M100 140H145" stroke="white" stroke-opacity=".6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    'growth-marketing': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><path d="M35 145L75 100L105 125L165 55" stroke="white" stroke-opacity=".8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M130 55H165V90" stroke="white" stroke-opacity=".8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M35 165H165" stroke="white" stroke-opacity=".25" stroke-width="1.2"/></svg>`,
+    'ai-automation': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><rect x="70" y="80" width="60" height="45" rx="10" stroke="white" stroke-opacity=".8" stroke-width="1.4"/><path d="M100 80V60" stroke="white" stroke-opacity=".8" stroke-width="1.4" stroke-linecap="round"/><circle cx="100" cy="54" r="6" stroke="white" stroke-opacity=".8" stroke-width="1.4"/><circle cx="85" cy="102" r="5" fill="white" fill-opacity=".7"/><circle cx="115" cy="102" r="5" fill="white" fill-opacity=".7"/><circle cx="40" cy="102" r="7" stroke="white" stroke-opacity=".4" stroke-width="1.2"/><circle cx="160" cy="102" r="7" stroke="white" stroke-opacity=".4" stroke-width="1.2"/><path d="M70 102H47M130 102H153" stroke="white" stroke-opacity=".3" stroke-width="1.2"/></svg>`
   };
 
   function showService(id){
     const s = services[id];
     if(!s) return;
+
     document.getElementById('sd-eyebrow').textContent = s.eyebrow;
     document.getElementById('sd-title').textContent = s.title;
     document.getElementById('sd-description').textContent = s.description;
+    document.getElementById('sd-visual').innerHTML = serviceVisuals[id] || '';
+
+    document.getElementById('sd-intro').innerHTML = s.intro.map(p => `<p>${p}</p>`).join('');
+
+    document.getElementById('sd-whatwedo').innerHTML = s.whatWeDo.map(item => `
+      <div class="glass rounded-2xl p-6">
+        <h3 class="font-display text-lg mb-2">${item.name}</h3>
+        <p class="text-white/60 text-[14px] leading-relaxed">${item.desc}</p>
+      </div>`).join('');
 
     document.getElementById('sd-includes').innerHTML = s.includes.map(item => `
-      <li class="flex gap-3 text-white/65 text-[15px] leading-relaxed">
-        <span class="mt-2 w-1.5 h-1.5 rounded-full bg-white/50 shrink-0"></span>
-        <span>${item}</span>
-      </li>`).join("");
+      <span class="tag-pill">${item}</span>`).join('');
+
     renderServicePricing(s.pricing);
+
+    // Testimonial (only if one exists for this service, per real data — no invented quotes)
+    const testimonialWrap = document.getElementById('sd-testimonial-wrap');
+    const t = testimonials[id];
+    if(t){
+      testimonialWrap.innerHTML = `
+        <div class="glass rounded-3xl p-8 md:p-10">
+          <div class="flex gap-1 mb-5" aria-label="5 de 5 estrellas">
+            ${'<svg class="star" width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>'.repeat(5)}
+          </div>
+          <p class="text-white/75 leading-relaxed mb-7 text-lg">"${t.quote}"</p>
+          <p class="font-medium text-white text-sm">${t.name}</p>
+          <p class="text-white/45 text-xs mt-0.5">${t.company}</p>
+        </div>`;
+    } else {
+      testimonialWrap.innerHTML = `
+        <div class="glass rounded-3xl p-8 md:p-10 text-center border-dashed">
+          <p class="text-white/40 text-sm italic">Todavía no sumamos un testimonio específico de este servicio — pronto vas a poder leerlo acá.</p>
+        </div>`;
+    }
+
+    document.getElementById('sd-related').innerHTML = s.related.map(relId => {
+      const rel = services[relId];
+      return `
+        <button onclick="showService('${relId}')" class="glass hover-lift rounded-2xl p-6 text-left">
+          <h3 class="font-display text-lg mb-1.5">${rel.eyebrow}</h3>
+          <p class="text-white/50 text-[13px]">${rel.title}</p>
+        </button>`;
+    }).join('');
+
+    document.getElementById('sd-faq').innerHTML = s.faq.map((item, i) => `
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>${item.q}</span>
+          <svg class="faq-chevron" width="14" height="9" viewBox="0 0 14 9" fill="none"><path d="M1 1L7 7L13 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="faq-answer">${item.a}</div>
+      </div>`).join('');
+
+    document.getElementById('sd-cta-service').value = s.eyebrow;
+    document.getElementById('sd-whatsapp-link').href =
+      'https://wa.me/584241859724?text=' + encodeURIComponent('Hola, quiero hablar sobre ' + s.eyebrow + '.');
+
+    document.title = s.eyebrow + ' — LE STUDIO';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if(metaDesc) metaDesc.setAttribute('content', s.description);
 
     document.getElementById('home-view').style.display = 'none';
     document.getElementById('service-detail-view').style.display = 'block';
     closeMobile();
     closeDropdown();
     window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+
+    if(location.hash.slice(1) !== id){
+      history.pushState({service: id}, '', '#' + id);
+    }
+  }
+
+  function toggleFaq(btn){
+    const item = btn.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    item.parentElement.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if(!wasOpen) item.classList.add('open');
+  }
+
+  function submitServiceCTA(){
+    const name = document.getElementById('sd-cta-name').value.trim();
+    const email = document.getElementById('sd-cta-email').value.trim();
+    const company = document.getElementById('sd-cta-company').value.trim();
+    const service = document.getElementById('sd-cta-service').value;
+    const message = document.getElementById('sd-cta-message').value.trim();
+
+    if(!name || !email || !message){
+      alert('Por favor completá al menos nombre, email y contanos sobre el proyecto.');
+      return;
+    }
+
+    const subject = 'Nueva consulta — ' + service;
+    let body = 'Nombre: ' + name + '\\n';
+    body += 'Email: ' + email + '\\n';
+    if(company) body += 'Empresa: ' + company + '\\n';
+    body += 'Servicio: ' + service + '\\n';
+    body += '\\nProyecto:\\n' + message;
+
+    window.location.href = 'mailto:creative.lestudio@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
   }
 
   function goHome(){
     document.getElementById('service-detail-view').style.display = 'none';
     document.getElementById('home-view').style.display = 'block';
+    document.title = 'LE STUDIO — Diseño, Redes y Contenido';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if(metaDesc) metaDesc.setAttribute('content', 'LE STUDIO: estudio independiente de estrategia, diseño, contenido, desarrollo web, marketing e inteligencia artificial. Un solo equipo, todo conectado.');
     window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+    if(location.hash){
+      history.pushState({}, '', location.pathname + location.search);
+    }
   }
 
   function scrollToTop(){
@@ -986,6 +1364,22 @@
       if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
     });
   }
+
+  function scrollToIdInPage(id){
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  // ---------- Deep links: #social-media, #brand-design, etc. ----------
+  function routeFromHash(){
+    const hash = location.hash.slice(1);
+    if(hash && services[hash]){
+      showService(hash);
+    } else if(!hash){
+      goHome();
+    }
+  }
+  window.addEventListener('popstate', routeFromHash);
 
   // ---------- Direction-aware scroll dock ----------
   // Scrolling down past the threshold: collapse the full nav, show the compact dock.
@@ -1035,6 +1429,12 @@
   function closeDropdown(){
     servPanel.classList.remove('force-open');
     servTogg.setAttribute('aria-expanded', 'false');
+  }
+
+  // Run once everything above is initialized, so a direct/refreshed link like
+  // #social-media (or the back/forward buttons) can safely call showService().
+  if(location.hash.slice(1) && services[location.hash.slice(1)]){
+    showService(location.hash.slice(1));
   }
 </script>
 </body>
