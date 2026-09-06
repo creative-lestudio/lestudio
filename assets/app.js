@@ -9,7 +9,7 @@
     // Poné acá tu endpoint real de Formspree o Web3Forms cuando lo tengas
     // (ej: 'https://formspree.io/f/xxxxxxx'). Mientras esto sea 'PLACEHOLDER',
     // el formulario sigue funcionando por correo (mailto) automáticamente.
-    FORM_ENDPOINT: 'PLACEHOLDER',
+    FORM_ENDPOINT: 'https://formspree.io/f/xkjnvaae',
 
     // Cuando conectes un asistente real por API (item pendiente), pegá acá su
     // endpoint. Mientras sea 'PLACEHOLDER', el chat de "¿Qué está frenando tu
@@ -528,10 +528,16 @@
   async function submitLead(fields, kind){
     if(CONFIG.FORM_ENDPOINT && CONFIG.FORM_ENDPOINT !== 'PLACEHOLDER'){
       try {
+        const subjectLine = (kind === 'review' ? 'Nueva reseña de cliente — ' : 'Nueva solicitud — ') + (fields.company || fields.service || 'LE STUDIO');
+        const payload = Object.assign(
+          { _kind: kind || 'lead', _subject: subjectLine },
+          fields.email ? { _replyto: fields.email } : {},
+          fields
+        );
         const res = await fetch(CONFIG.FORM_ENDPOINT, {
           method: 'POST',
           headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-          body: JSON.stringify(Object.assign({ _kind: kind || 'lead' }, fields))
+          body: JSON.stringify(payload)
         });
         if(res.ok){
           trackEvent('form_submit', { kind: kind || 'lead', service: fields.service || '' });
