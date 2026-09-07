@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://creative-lestudio.github.io/lestudio/sitemap.xml
