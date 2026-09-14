@@ -197,9 +197,10 @@
       company: 'Legacy World'
     },
     'brand-design': {
-      quote: 'Nos armaron la identidad completa —naming, logo, papelería y manual de marca— en semanas. Hoy toda la empresa habla el mismo idioma visual.',
-      name: 'Gerenta General',
-      company: 'Decoplant'
+  quote: 'Muy eficiente, capturó a la perfección la esencia de marca que buscábamos.',
+  name: 'Diana Patiño',
+  company: 'Decoplant'
+}
     }
   };
 
