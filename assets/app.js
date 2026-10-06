@@ -185,22 +185,16 @@
   initDragMarquee('logos-marquee-wrap', 'logos-marquee-track', 0.5);
 
   // ---------- Portfolio (color logos + real descriptions) ----------
+  // ---------- Reseñas reales de clientes ----------
+  const reviews = [
+    { quote: 'Muy eficiente, capturó a la perfección la esencia de marca que buscábamos', name: 'Diana Patiño', role: 'Fundadora', company: 'Suministros Daponte, C.A / Decoplant', rating: 5 , serviceLabel: 'Brand & Design' },
+    { quote: 'Excelente trabajo, muy creativos y los recomendaria 100%', name: 'Jhonny Civitillo', role: 'Fundador, CEO', company: 'HPS', rating: 5 , serviceLabel: 'Brand & Design' },
+    { quote: 'Un servicio bastante profesional y responsable', name: 'Andrés Roa', role: 'Gerente', company: 'Multiservicios RDR78', rating: 5 , serviceLabel: 'Brand & Design' },
+    { quote: 'Muy buena la experiencia', name: 'Miguel Sanchis', role: 'Vice presidente', company: 'Winners League Unimet', rating: 5 , serviceLabel: 'Brand & Design' }
+  ];
+
   const testimonials = {
-    'social-media': {
-      quote: 'Desde que LE STUDIO tomó nuestras redes, los informes mensuales nos muestran exactamente qué está funcionando y por qué. Nunca habíamos tenido tanta claridad.',
-      name: 'Directora de Operaciones',
-      company: 'Inversiones MDS'
-    },
-    'content-production': {
-      quote: 'Una producción de alto nivel gestionada de forma 360 por LE STUDIO, lo cual ocasionó que desde nuestro primer episodio consiguiéramos muchas vistas de forma orgánica.',
-      name: 'Marcelo Leal',
-      company: 'Legacy World'
-    },
-    'brand-design': {
-      quote: 'Nos armaron la identidad completa —naming, logo, papelería y manual de marca— en semanas. Hoy toda la empresa habla el mismo idioma visual.',
-      name: 'Gerenta General',
-      company: 'Decoplant'
-    }
+    'brand-design': { quote: 'Muy eficiente, capturó a la perfección la esencia de marca que buscábamos', name: 'Diana Patiño', company: 'Suministros Daponte, C.A / Decoplant · Fundadora' }
   };
 
   // ---------- Projects (real case studies, interconnected with services & portfolio) ----------
@@ -218,7 +212,6 @@
       challenge: 'Legacy World quería lanzar un podcast propio, pero necesitaba algo más que una cámara y un micrófono: necesitaba un concepto, una estructura y una dirección de arte que representaran a la marca desde el primer episodio.',
       solution: 'Dirigimos y producimos el podcast de punta a punta: definimos el concepto, el guion y la estructura de cada episodio, desarrollamos la dirección de arte, y nos encargamos de la producción y postproducción completa del contenido. Marcelo Leal condujo el programa como entrevistador, y hoy el podcast se distribuye y comercializa en YouTube, TikTok e Instagram.',
       result: '35.000 reproducciones orgánicas en el primer episodio, sin pauta paga.',
-      testimonial: { quote: 'Una producción de alto nivel gestionada de forma 360 por LE STUDIO, lo cual ocasionó que desde nuestro primer episodio consiguiéramos muchas vistas de forma orgánica.', name: 'Marcelo Leal', role: 'Fundador', company: 'Legacy World', rating: 5 }
     },
     'legacy-world-web': {
       name: 'Legacy World — Sitio Web',
@@ -244,7 +237,7 @@
       linkUrl: 'https://www.behance.net/gallery/218332771/DECOPLANT-Branding',
       challenge: 'Decoplant necesitaba una identidad capaz de representar dos líneas de negocio a la vez —decoración y plantas artificiales— sin que la marca se sintiera dividida ni genérica en ninguna de las dos.',
       solution: 'Desarrollamos el naming y la identidad visual completa de Decoplant, construyendo un sistema de marca coherente desde cero que funciona igual de bien para ambas líneas de negocio.',
-      testimonial: { quote: 'Nos armaron la identidad completa —naming, logo, papelería y manual de marca— en semanas. Hoy toda la empresa habla el mismo idioma visual.', name: '', role: 'Gerenta General', company: 'Decoplant', rating: 5 }
+      testimonial: { quote: 'Muy eficiente, capturó a la perfección la esencia de marca que buscábamos', name: 'Diana Patiño', role: 'Fundadora', company: 'Suministros Daponte, C.A / Decoplant', rating: 5 }
     },
     'mds-redes': {
       name: 'Inversiones MDS — Redes',
@@ -257,7 +250,6 @@
       challenge: 'Inversiones MDS necesitaba algo más que seguidores: buscaba construir, a través de su Instagram, una audiencia real con potencial de convertirse en clientes.',
       solution: 'Gestionamos la presencia en redes sociales de Inversiones MDS: estrategia, calendario editorial y gestión diaria de su comunidad, con el objetivo puesto en la calidad de la audiencia, no solo en el volumen.',
       result: 'Hoy Inversiones MDS es una de las marcas más recordadas de su sector y con mejor presencia en redes, y su Instagram se convirtió en un generador constante de leads orgánicos.',
-      testimonial: { quote: 'Desde que LE STUDIO tomó nuestras redes, los informes mensuales nos muestran exactamente qué está funcionando y por qué. Nunca habíamos tenido tanta claridad.', name: '', role: 'Directora de Operaciones', company: 'Inversiones MDS', rating: 5 }
     },
     'mds-contenido': {
       name: 'Inversiones MDS — Contenido',
@@ -274,6 +266,7 @@
       solution: 'Producimos y editamos contenido en video para Inversiones MDS, pensado específicamente para reforzar su presencia como marca de referencia en el sector de diagnóstico médico.',
     },
     'rdr-identidad': {
+      testimonial: { quote: 'Un servicio bastante profesional y responsable', name: 'Andrés Roa', role: 'Gerente', company: 'Multiservicios RDR78', rating: 5 },
       name: 'Multiservicios RDR — Identidad Visual',
       client: 'Multiservicios RDR',
       badge: 'rdr',
@@ -332,6 +325,7 @@
       solution: 'Para Synergy trabajamos diseño gráfico, fichas técnicas de producción y dirección creativa para sus campañas, incluyendo el diseño de fichas técnicas que hoy forma parte de nuestro portafolio público en Behance.',
     },
     'hps-asesoria': {
+      testimonial: { quote: 'Excelente trabajo, muy creativos y los recomendaria 100%', name: 'Jhonny Civitillo', role: 'Fundador, CEO', company: 'HPS', rating: 5 },
       name: 'HPS — Asesoría de Marca',
       client: 'HPS',
       badge: 'hps',
@@ -342,6 +336,7 @@
       result: 'Un plan de marca claro y accionable, con prioridades definidas para que HPS supiera exactamente qué resolver primero.',
     },
     'winners-producto': {
+      testimonial: { quote: 'Muy buena la experiencia', name: 'Miguel Sanchis', role: 'Vice presidente', company: 'Winners League Unimet', rating: 5 },
       name: 'Winners League Unimet — Indumentaria',
       client: 'Winners League Unimet',
       badge: 'winners',
@@ -428,19 +423,12 @@
 
   function renderTestimonials(){
     if(!document.getElementById('testimonials-static-grid')) return;
-    const list = [];
-    Object.keys(projects).forEach(slug => {
-      const p = projects[slug];
-      if(p.testimonial){
-        const svc = services[p.service];
-        list.push(Object.assign({}, p.testimonial, { serviceLabel: svc ? svc.eyebrow : p.tags[0] }));
-      }
-    });
+    const list = reviews.slice();
 
     const staticGrid = document.getElementById('testimonials-static-grid');
     const marqueeWrap = document.getElementById('testimonials-marquee-wrap');
 
-    if(list.length <= 3){
+    if(list.length <= 4){
       staticGrid.classList.remove('hidden');
       staticGrid.innerHTML = list.map(t => testimonialCardHTML(t)).join('');
       marqueeWrap.classList.add('hidden');
@@ -604,7 +592,7 @@
     const checked = Array.from(document.querySelectorAll('#custom-plan-checklist input:checked')).map(i => i.value);
     const notes = document.getElementById('custom-plan-notes').value.trim();
     if(checked.length === 0){
-      alert('Elegí al menos un ítem para tu plan personalizado.');
+      alert(window.I18N ? I18N.tr('Elegí al menos un ítem para tu plan personalizado.') : 'Elegí al menos un ítem para tu plan personalizado.');
       return;
     }
     let message = 'Hola, quiero armar un plan personalizado de ' + pricingLabels[category] + ' con lo siguiente:\n\n';
@@ -699,11 +687,11 @@
     const terms = document.getElementById('contact-terms').checked;
 
     if(!name || !email || !message){
-      alert('Por favor completá nombre, email y mensaje.');
+      alert(window.I18N ? I18N.tr('Por favor completá nombre, email y mensaje.') : 'Por favor completá nombre, email y mensaje.');
       return;
     }
     if(!terms){
-      alert('Necesitamos que aceptes ser contactado para poder responderte.');
+      alert(window.I18N ? I18N.tr('Necesitamos que aceptes ser contactado para poder responderte.') : 'Necesitamos que aceptes ser contactado para poder responderte.');
       return;
     }
 
@@ -1006,6 +994,16 @@
     }
   };
 
+  const aEnKeys = {
+    'social-media': [['social media',2],['followers',2],['engagement',2],['community',1],['posts',1],['instagram',2]],
+    'content-production': [['content',2],['videos',2],['photo',2],['photography',2],['production',2],['filming',2],['editing',1],['reels',2]],
+    'brand-design': [['brand',2],['identity',2],['design',2],['unprofessional',2],['professional',1],['logo',2],['packaging',2]],
+    'web-development': [['website',2],['site',1],['online store',2],['store',1],['shop',1],['landing',2],['web',2]],
+    'growth-marketing': [['advertising',2],['sales',2],['customers',1],['no customers',3],['traffic',2],['campaign',2],['found on google',2],['marketing',2],['seo',2],['ads',2],['leads',2]],
+    'ai-automation': [['automate',3],['automation',3],['=ai',3],['artificial intelligence',3],['repetitive',3],['processes',2],['agent',2],['customer support',2],['chatbot',3]]
+  };
+  Object.keys(aEnKeys).forEach(id => { assistantServices[id].keys = assistantServices[id].keys.concat(aEnKeys[id]); });
+
   const assistantState = { history: [], last: [], unmatched: 0, busy: false };
 
   function aNorm(t){
@@ -1030,13 +1028,13 @@
 
   function aIntent(norm){
     const trimmed = norm.trim();
-    const price = /\b(precio|precios|cuesta|cuestan|costo|costos|tarifa|tarifas|presupuesto|cotiza|cotizacion|cotizar|cobran|cobras|planes|paquete|paquetes|barato|economico|inversion)\b/.test(norm)
-      || (/\bcuanto\b/.test(norm) && /(cuest|cobr|vale|pag|sale|inver)/.test(norm));
-    const greet = trimmed.length < 28 && /^(hola|buenas|buenos dias|buen dia|buenas tardes|buenas noches|hey|saludos|que tal)\b/.test(trimmed);
-    const thanks = trimmed.length < 40 && /\b(gracias|genial|perfecto|excelente|listo)\b/.test(trimmed);
-    const timing = /(cuanto tard|plazo|tiempo de entrega|cuando entreg|demora)/.test(norm);
-    const human = /(hablar con|contactar|agendar|reunion|llamada|una cita|asesor)/.test(norm);
-    const overview = /(que hacen|que ofrecen|que servicios|quienes son|a que se dedican)/.test(norm);
+    const price = /\b(price|prices|pricing|cost|costs|rates|fee|fees|budget|quote|cheap|affordable|precio|precios|cuesta|cuestan|costo|costos|tarifa|tarifas|presupuesto|cotiza|cotizacion|cotizar|cobran|cobras|planes|paquete|paquetes|barato|economico|inversion)\b/.test(norm)
+      || (/\bcuanto\b/.test(norm) && /(cuest|cobr|vale|pag|sale|inver)/.test(norm)) || /how much/.test(norm);
+    const greet = trimmed.length < 28 && /^(hello|hi|hey|hola|buenas|buenos dias|buen dia|buenas tardes|buenas noches|hey|saludos|que tal)\b/.test(trimmed);
+    const thanks = trimmed.length < 40 && /\b(thanks|thank you|gracias|genial|perfecto|excelente|listo)\b/.test(trimmed);
+    const timing = /(how long|timeline|deadline|turnaround|cuanto tard|plazo|tiempo de entrega|cuando entreg|demora)/.test(norm);
+    const human = /(talk to|speak with|schedule|meeting|hablar con|contactar|agendar|reunion|llamada|una cita|asesor)/.test(norm);
+    const overview = /(what do you do|what services|who are you|que hacen|que ofrecen|que servicios|quienes son|a que se dedican)/.test(norm);
     return { price, greet, thanks, timing, human, overview };
   }
 
@@ -1050,7 +1048,7 @@
   function aButton(label, kind, onClick, href){
     const el = href ? aEl('a', kind) : aEl('button', kind);
     if(href){ el.href = href; } else { el.type = 'button'; }
-    el.textContent = label;
+    el.innerHTML = label;
     if(onClick) el.addEventListener('click', onClick);
     return el;
   }
@@ -1074,8 +1072,9 @@
 
   function aQuoteMessage(userText, serviceId){
     const svc = serviceId ? assistantServices[serviceId].name : '';
-    let msg = 'Hola, quiero solicitar una cotización' + (svc ? ' de ' + svc : '') + '.';
-    if(userText) msg += '\n\nMi situación: ' + userText.slice(0, 400);
+    const T = (x) => (window.I18N ? I18N.tr(x) : x);
+    let msg = T('Hola, quiero solicitar una cotización') + (svc ? ' ' + T('de') + ' ' + svc : '') + '.';
+    if(userText) msg += '\n\n' + T('Mi situación') + ': ' + userText.slice(0, 400);
     return msg;
   }
 
@@ -1110,7 +1109,7 @@
       openContactForm(aQuoteMessage(userText, serviceId), serviceId ? assistantServices[serviceId].name : '', 'quote');
     });
     const talkBtn = () => aButton('Hablar con el equipo', 'btn-ghost', () => {
-      openContactForm('Hola, quiero que me ayuden con lo siguiente: ' + userText.slice(0, 400));
+      openContactForm((window.I18N ? I18N.tr('Hola, quiero que me ayuden con lo siguiente') : 'Hola, quiero que me ayuden con lo siguiente') + ': ' + userText.slice(0, 400));
     });
 
     // --- Saludo / gracias
@@ -1129,18 +1128,18 @@
       paragraphs.push('Cada proyecto se cotiza según lo que necesitas y el alcance que tenga, y trabajamos para que nuestras soluciones sean accesibles para negocios en cualquier etapa. Lo más rápido es que nos cuentes tu caso en el formulario y te enviamos una cotización a medida en menos de 24 horas.');
       if(primary){
         const s = assistantServices[primary];
-        paragraphs.push('Por lo que cuentas, lo que mejor encaja es <strong>' + s.name + '</strong>: ' + s.deliver);
-        if(secondary) paragraphs.push('También podría ayudarte <strong>' + assistantServices[secondary].name + '</strong>, que ' + assistantServices[secondary].short);
+        paragraphs.push('<span>Por lo que cuentas, lo que mejor encaja es</span> <strong>' + s.name + '</strong>: <span>' + s.deliver + '</span>');
+        if(secondary) paragraphs.push('<span>También podría ayudarte</span> <strong>' + assistantServices[secondary].name + '</strong>: <span>' + assistantServices[secondary].short + '</span>');
       }
       actions.push(quoteBtn(primary));
-      if(primary) actions.push(aButton('Ver ' + assistantServices[primary].name, 'btn-ghost', null, assistantServices[primary].href));
+      if(primary) actions.push(aButton('<span>Ver</span> ' + assistantServices[primary].name, 'btn-ghost', null, assistantServices[primary].href));
       return { paragraphs, actions, services: primary ? [primary].concat(secondary ? [secondary] : []) : [] };
     }
 
     // --- Plazos
     if(intent.timing){
       paragraphs.push('Los tiempos dependen del alcance de cada proyecto. Una vez que entendemos lo que necesitas, te entregamos una propuesta con alcance y calendario claros, para que sepas qué esperar desde el primer día.');
-      if(primary) paragraphs.push('Para tu caso, lo más cercano es <strong>' + assistantServices[primary].name + '</strong>.');
+      if(primary) paragraphs.push('<span>Para tu caso, lo más cercano es</span> <strong>' + assistantServices[primary].name + '</strong>.');
       actions.push(talkBtn());
       return { paragraphs, actions, services: primary ? [primary] : [] };
     }
@@ -1156,22 +1155,22 @@
     // --- Recomendación con justificación
     if(primary){
       const s = assistantServices[primary];
-      const tag = aEl('span', 'msg-tag', 'Te recomendamos: ' + s.name);
-      paragraphs.push(tag.outerHTML + '<br/>' + s.intro);
-      paragraphs.push(s.why);
-      paragraphs.push('<strong>Lo que haríamos:</strong> ' + s.deliver);
-      if(s.proof) paragraphs.push(s.proof);
+      const tag = aEl('span', 'msg-tag', '<span>Te recomendamos</span>: ' + s.name);
+      paragraphs.push(tag.outerHTML + '<br/><span>' + s.intro + '</span>');
+      paragraphs.push('<span>' + s.why + '</span>');
+      paragraphs.push('<strong>Lo que haríamos:</strong> <span>' + s.deliver + '</span>');
+      if(s.proof) paragraphs.push('<span>' + s.proof + '</span>');
       if(secondary){
-        paragraphs.push('Además, <strong>' + assistantServices[secondary].name + '</strong> ' + assistantServices[secondary].short);
+        paragraphs.push('<span>Además,</span> <strong>' + assistantServices[secondary].name + '</strong>: <span>' + assistantServices[secondary].short + '</span>');
       }
-      actions.push(aButton('Ver ' + s.name, 'btn-primary', null, s.href));
+      actions.push(aButton('<span>Ver</span> ' + s.name, 'btn-primary', null, s.href));
       actions.push(talkBtn());
       return { paragraphs, actions, services: [primary].concat(secondary ? [secondary] : []) };
     }
 
     // --- Panorama general
     if(intent.overview){
-      paragraphs.push('Somos un equipo de crecimiento digital: <strong>Brand &amp; Design</strong> (identidad y diseño para redes), <strong>Social Media</strong>, <strong>Content Production</strong>, <strong>Web &amp; Digital Development</strong>, <strong>Growth &amp; Marketing</strong> y <strong>AI &amp; Automation</strong>. Cuéntame qué quieres lograr y te digo por dónde empezar.');
+      paragraphs.push('Somos un equipo de crecimiento digital con seis servicios: Brand & Design (identidad y diseño para redes), Social Media, Content Production, Web & Digital Development, Growth & Marketing y AI & Automation. Cuéntame qué quieres lograr y te digo por dónde empezar.');
       actions.push(aButton('Ver servicios', 'btn-ghost', null, '#servicios'));
       return { paragraphs, actions };
     }
@@ -1253,11 +1252,11 @@
   // ---------- Home: constelación de servicios + animaciones de entrada ----------
   const constellationNodes = [
     { label: 'Brand',   href: 'brand-design/',       desc: 'Identidad visual, diseño para redes y manual de marca.',
-      ico: '<path d="M4 20L14 10M14 10l-3-3 6-3 3 3-3 6-3-3z"/>' },
+      ico: '<path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"/><path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z"/>' },
     { label: 'Content', href: 'content-production/', desc: 'Producción audiovisual, fotografía, video y edición.',
       ico: '<rect x="3" y="5" width="14" height="14" rx="2"/><path d="M17 9.5L21 7v10l-4-2.5"/>' },
     { label: 'Social',  href: 'social-media/',       desc: 'Estrategia y comunidad en Instagram, TikTok y más.',
-      ico: '<circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/>' },
+      ico: '<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>' },
     { label: 'Web',     href: 'web-development/',    desc: 'E-commerce, landing pages y plataformas a medida.',
       ico: '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8M12 18v3"/>' },
     { label: 'Growth',  href: 'growth-marketing/',   desc: 'SEO, GEO/AEO, Google Ads y Meta Ads.',
@@ -1507,7 +1506,7 @@
     const message = document.getElementById('sd-cta-message').value.trim();
 
     if(!name || !email || !message){
-      alert('Por favor completá al menos nombre, email y contanos sobre el proyecto.');
+      alert(window.I18N ? I18N.tr('Por favor completá al menos nombre, email y contanos sobre el proyecto.') : 'Por favor completá al menos nombre, email y contanos sobre el proyecto.');
       return;
     }
 
@@ -1812,7 +1811,7 @@
     const message = document.getElementById('review-text').value.trim();
 
     if(!name || !company || !role || !message){
-      alert('Por favor completá tu nombre, tu empresa, tu cargo y la descripción.');
+      alert(window.I18N ? I18N.tr('Por favor completá tu nombre, tu empresa, tu cargo y la descripción.') : 'Por favor completá tu nombre, tu empresa, tu cargo y la descripción.');
       return;
     }
 
@@ -1852,26 +1851,20 @@
   function computeScrollState(){
     const currentY = window.scrollY;
     const delta = currentY - lastScrollY;
-
     if(Math.abs(delta) > SCROLL_JITTER_THRESHOLD){
       scrollDirection = delta > 0 ? 'down' : 'up';
       lastScrollY = currentY;
     }
-
-    let shouldBeScrolled;
-    if(currentY < 80){
-      shouldBeScrolled = false; // always show full nav near the top
-    } else if(scrollDirection === 'down'){
-      shouldBeScrolled = true;
-    } else {
-      shouldBeScrolled = false;
-    }
-
+    const root = document.documentElement;
+    // El dock está disponible en cuanto se baja un poco, suba o baje la persona.
+    root.classList.toggle('scrolled', currentY > 80);
+    // El menú superior solo se oculta mientras se baja.
+    const shouldHide = currentY > 80 && scrollDirection === 'down';
     const now = performance.now();
-    if(shouldBeScrolled !== scrolledState && (now - lastToggleTime) > SCROLL_TOGGLE_COOLDOWN){
-      scrolledState = shouldBeScrolled;
+    if(shouldHide !== scrolledState && (now - lastToggleTime) > SCROLL_TOGGLE_COOLDOWN){
+      scrolledState = shouldHide;
       lastToggleTime = now;
-      document.documentElement.classList.toggle('scrolled', scrolledState);
+      root.classList.toggle('nav-hide', shouldHide);
     }
     scrollTicking = false;
   }
@@ -1884,6 +1877,22 @@
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   computeScrollState();
+
+  // ---------- Dock: enlaces reales (funcionan desde cualquier página) ----------
+  // En la home evitamos recargar y volvemos a la vista principal si hace falta;
+  // en el resto de páginas el enlace normal (href) abre la página.
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a.dock-btn[data-nav]');
+    if(!a) return;
+    const home = document.getElementById('home-view');
+    if(!home) return;
+    e.preventDefault();
+    const nav = a.dataset.nav;
+    if(nav === 'home'){ goHome(); scrollToTop(); return; }
+    if(nav === 'portafolio'){ showPortfolioPage(); return; }
+    if(home.style.display === 'none') goHome();
+    setTimeout(() => scrollToId(nav), 40);
+  });
 
   // ---------- Mobile menu ----------
   const mobileToggle = document.getElementById('mobile-toggle');
