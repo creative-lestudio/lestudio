@@ -389,7 +389,7 @@
     if(!document.getElementById('portfolio-marquee-a')) return;
     const entries = getUniqueClientEntries();
     const cardHTML = entries.map(entry => `
-        <button onclick="showProject('${entry.slug}')" class="glass hover-lift rounded-2xl overflow-hidden text-left flex flex-col shrink-0 w-56">
+        <button onclick="showProject('${entry.slug}')" class="glass hover-lift rounded-2xl overflow-hidden text-left flex flex-col shrink-0 w-64">
           <div class="aspect-video">
             <img src="${portfolioBadges[entry.badge]}" alt="${entry.client}" class="w-full h-full object-cover" />
           </div>
@@ -654,18 +654,35 @@
     return { ok: true, viaMailto: true };
   }
 
-  function openContactForm(prefillMessage){
+  function openContactForm(prefillMessage, serviceValue, mode){
     document.getElementById('contact-name').value = '';
     document.getElementById('contact-email').value = '';
     document.getElementById('contact-phone').value = '';
     document.getElementById('contact-company').value = '';
-    document.getElementById('contact-service').value = 'No estoy seguro';
+    const svcSel = document.getElementById('contact-service');
+    svcSel.value = 'No estoy seguro';
+    if(serviceValue){
+      const hasOpt = Array.from(svcSel.options).some(o => o.value === serviceValue);
+      if(hasOpt) svcSel.value = serviceValue;
+    }
     document.getElementById('contact-message').value = prefillMessage || '';
     document.getElementById('contact-terms').checked = false;
+    const titleEl = document.getElementById('contact-title');
+    const subEl = document.getElementById('contact-sub');
+    if(titleEl && subEl){
+      if(mode === 'quote'){
+        titleEl.textContent = 'Solicita tu cotización';
+        subEl.textContent = 'Cuéntanos qué necesitas y te enviamos una propuesta a medida en menos de 24 horas.';
+      } else {
+        titleEl.textContent = '¿Hablamos de tu proyecto?';
+        subEl.textContent = 'Completa tus datos y te respondemos en menos de 24 horas.';
+      }
+    }
     document.getElementById('contact-form-panel').classList.remove('hidden');
     document.getElementById('contact-success-panel').classList.add('hidden');
     document.getElementById('contact-error-panel').classList.add('hidden');
     document.getElementById('contact-modal').classList.add('open');
+    trackEvent('contact_form_open', { mode: mode || 'default' });
   }
 
   function closeContactForm(){
@@ -784,7 +801,7 @@
     'brand-design': {
       eyebrow: 'Brand & Design',
       title: 'Una identidad que hace reconocible a tu marca.',
-      description: 'Diseñamos sistemas visuales coherentes que hacen que una marca se vea, se sienta y se recuerde como una sola. Desde una identidad completa hasta una pieza puntual, cada elemento responde al mismo lenguaje visual.',
+      description: 'Diseñamos sistemas visuales coherentes que hacen que una marca se vea, se sienta y se recuerde como una sola. Desde una identidad completa hasta el diseño para tus redes sociales, cada elemento responde al mismo lenguaje visual.',
       ctaLabel: 'Quiero una marca memorable',
       intro: [
         'Una marca no es un logo — es un sistema. Cuando ese sistema no existe, cada pieza nueva se diseña desde cero y la marca termina viéndose distinta en cada lugar donde aparece.',
@@ -794,13 +811,13 @@
         { name: 'Brand Identity', desc: 'Construimos sistemas visuales capaces de representar una marca.' },
         { name: 'Dirección de arte', desc: 'Definimos cómo debe verse y sentirse la marca.' },
         { name: 'Diseño gráfico', desc: 'Creamos piezas para los diferentes puntos de contacto.' },
-        { name: 'Digital Design', desc: 'Diseñamos experiencias visuales para entornos digitales.' },
+        { name: 'Diseño para redes sociales', desc: 'Posts, historias, carruseles, portadas y plantillas editables, alineados con tu identidad.' },
         { name: 'UI/UX', desc: 'Diseñamos interfaces claras, funcionales y visualmente coherentes.' },
         { name: 'Sistemas de marca', desc: 'Creamos reglas y recursos para mantener consistencia.' }
       ],
       includes: [
         'Branding', 'Identidad visual', 'Logo', 'Dirección de arte', 'Naming',
-        'Diseño gráfico', 'Diseño para redes', 'Diseño editorial', 'Packaging',
+        'Diseño gráfico', 'Diseño para redes sociales', 'Posts y carruseles', 'Plantillas para redes', 'Diseño editorial', 'Packaging',
         'UI Design', 'UX Design', 'Sistemas visuales', 'Brand Guidelines'
       ],
       pricing: 'identidad',
@@ -809,7 +826,7 @@
         { q: '¿También trabajáis sobre marcas existentes?', a: 'Sí, muchos proyectos son de evolución de marca: mantenemos lo que ya funciona y corregimos lo que genera inconsistencia.' },
         { q: '¿Qué incluye un proyecto de branding?', a: 'Depende del nivel elegido — tenés el detalle exacto en la sección de planes de esta página, desde identidad básica hasta un sistema de marca completo.' },
         { q: '¿Diseñáis únicamente el logo?', a: 'Podemos, pero recomendamos pensarlo como parte de un sistema: tipografías, paleta y aplicaciones, para que el logo funcione bien en cualquier contexto.' },
-        { q: '¿Trabajáis también diseño para redes?', a: 'Sí, y lo hacemos usando el mismo sistema visual de tu marca, para que redes, web y papelería se vean como una sola cosa.' },
+        { q: '¿Trabajáis también diseño para redes sociales?', a: 'Sí. Diseñamos posts, historias, carruseles, portadas y plantillas editables usando el mismo sistema visual de tu marca, para que redes, web y papelería se vean como una sola cosa.' },
         { q: '¿Podéis diseñar la interfaz de una web o aplicación?', a: 'Sí, el diseño UI/UX forma parte de este servicio y se coordina directamente con el equipo de Web & Digital Development cuando hay que construirla.' },
         { q: '¿Entregáis manual de marca?', a: 'Sí, en los planes de identidad corporativa y completa incluimos manual de marca con las reglas de uso de cada elemento.' }
       ],
@@ -924,114 +941,407 @@
     }
   };
 
-  // ---------- "¿Qué está frenando tu negocio?" — chips + chat ----------
-  const problemChips = [
-    { text: 'No tengo tiempo para gestionar mis redes', service: 'social-media' },
-    { text: 'Mi marca no se ve profesional', service: 'brand-design' },
-    { text: 'Necesito contenido y no sé por dónde empezar', service: 'content-production' },
-    { text: 'Mi web no convierte visitas en clientes', service: 'web-development' },
-    { text: 'No sé si mi marketing está funcionando', service: 'growth-marketing' },
-    { text: 'Pierdo horas en tareas repetitivas', service: 'ai-automation' },
-  ];
+  // ---------- "¿Qué está frenando tu negocio?" — asistente de texto libre ----------
+  // Sin mensajes ni botones predeterminados: la persona escribe, el asistente
+  // interpreta su situación, justifica y recomienda el servicio. Si pregunta por
+  // precios, muestra el botón que abre el formulario de cotización.
+  // Si algún día conectas un modelo real, pon su URL en CONFIG.CHAT_API_ENDPOINT
+  // (recibe { message, history } y devuelve { reply }). Mientras tanto responde
+  // con el motor local de abajo.
 
-  function renderProblemChips(){
-    const wrap = document.getElementById('problem-chips');
-    if(!wrap) return;
-    wrap.innerHTML = problemChips.map(c =>
-      `<button class="problem-chip" onclick="askChipQuestion(${JSON.stringify(c.text)}, '${c.service}')">${c.text}</button>`
-    ).join('');
-  }
-
-  const chatKeywordRules = [
-    { keywords: ['red social', 'redes', 'instagram', 'tiktok', 'community', 'seguidores'], service: 'social-media' },
-    { keywords: ['marca', 'logo', 'identidad', 'branding', 'naming', 'diseño'], service: 'brand-design' },
-    { keywords: ['contenido', 'video', 'foto', 'reel', 'produccion', 'producción'], service: 'content-production' },
-    { keywords: ['web', 'pagina', 'página', 'sitio', 'tienda', 'ecommerce', 'e-commerce'], service: 'web-development' },
-    { keywords: ['marketing', 'seo', 'ads', 'publicidad', 'anuncios', 'clientes', 'ventas', 'leads'], service: 'growth-marketing' },
-    { keywords: ['automatiz', 'tiempo', 'repetitiv', 'chatbot', 'whatsapp', 'ia ', ' ia', 'proceso'], service: 'ai-automation' },
-  ];
-
-  function matchServiceFromText(text){
-    const lower = text.toLowerCase();
-    for(const rule of chatKeywordRules){
-      if(rule.keywords.some(k => lower.includes(k))) return rule.service;
+  const assistantServices = {
+    'social-media': {
+      name: 'Social Media', href: 'social-media/',
+      keys: [['redes',2],['red social',2],['instagram',2],['tiktok',2],['facebook',1],['linkedin',1],['seguidores',2],['followers',2],['comunidad',1],['community',2],['publicaciones',1],['publicar',1],['posts',1],['engagement',2],['interaccion',1],['alcance',1],['perfil',1],['no tengo tiempo',1],['que publicar',1]],
+      intro: 'Es muy común: gestionar redes consume tiempo y, sin una estrategia clara, rara vez se traduce en clientes.',
+      why: 'Las redes funcionan cuando hay estrategia, constancia y criterio detrás: saber para quién hablas, qué quieres lograr con cada pieza y cómo se conecta un mes con el siguiente. Nosotros ponemos esas tres cosas para que tu perfil deje de ser una tarea pendiente y empiece a atraer a las personas correctas.',
+      deliver: 'definiríamos la estrategia, planificaríamos el contenido, gestionaríamos tu comunidad y te entregaríamos informes para ver qué funciona y por qué.',
+      proof: 'Con Inversiones MDS construimos una audiencia real y su Instagram se convirtió en un generador constante de leads orgánicos.',
+      short: 'se encargaría de que tus redes estén activas, con estrategia y medición.'
+    },
+    'content-production': {
+      name: 'Content Production', href: 'content-production/',
+      keys: [['contenido',2],['video',2],['videos',2],['foto',2],['fotos',2],['fotografia',2],['reel',2],['reels',2],['podcast',2],['produccion',2],['audiovisual',2],['grabar',2],['edicion',1],['editar',1],['camara',1],['guion',1],['creativ',1],['que publicar',1],['no se que',1]],
+      intro: 'Tiene sentido: sin una buena idea y una producción cuidada, el contenido pasa desapercibido.',
+      why: 'La diferencia entre un video que se salta y uno que se ve completo casi nunca es la cámara: es la idea. Por eso partimos del concepto y la narrativa, y después producimos y editamos con un mismo estándar de calidad.',
+      deliver: 'nos encargaríamos de la dirección creativa, el guion, la grabación (video y fotografía) y la edición, con formatos pensados para redes y campañas.',
+      proof: 'El primer episodio del podcast de Legacy World, que produjimos de punta a punta, alcanzó 35.000 reproducciones orgánicas sin pauta paga.',
+      short: 'te daría piezas de video y foto con una idea detrás, listas para redes y campañas.'
+    },
+    'brand-design': {
+      name: 'Brand & Design', href: 'brand-design/',
+      keys: [['marca',2],['logo',2],['logotipo',2],['identidad',2],['branding',2],['naming',2],['nombre de',1],['diseno',2],['disenar',2],['imagen',1],['profesional',1],['amateur',2],['paleta',1],['tipografia',1],['manual de marca',2],['packaging',2],['flyer',1],['plantillas',1],['artes',1],['presentacion',1],['uniforme',1],['merch',1],['no se ve',1],['se ve mal',2]],
+      intro: 'Es más común de lo que parece: cuando una marca no se ve profesional, la gente duda antes de comprar.',
+      why: 'Una marca no es solo un logo: es un sistema visual que debe verse igual en tu web, tus redes y tus materiales. Cuando ese sistema no existe, cada pieza se ve distinta y transmite menos confianza; cuando existe, te reconocen y te recuerdan.',
+      deliver: 'crearíamos tu identidad visual (logo, tipografías, paleta y manual de marca) y el diseño para tus redes sociales —posts, historias, carruseles y plantillas— con el mismo lenguaje visual.',
+      proof: 'Para Decoplant desarrollamos el naming y la identidad visual completa desde cero, con un sistema que funciona para sus dos líneas de negocio.',
+      short: 'daría a tu marca una identidad coherente, incluido el diseño para redes sociales.'
+    },
+    'web-development': {
+      name: 'Web & Digital Development', href: 'web-development/',
+      keys: [['web',2],['pagina',2],['sitio',2],['tienda',2],['ecommerce',2],['e-commerce',2],['shopify',2],['landing',2],['plataforma',1],['dashboard',2],['aplicacion',1],['app',1],['carrito',1],['checkout',1],['vender online',2],['vender por internet',2],['dominio',1],['no convierte',2],['visitas',1]],
+      intro: 'Una web que no convierte es una oportunidad perdida todos los días.',
+      why: 'Una web bonita que carga lento o no guía al visitante hacia una acción no cumple su trabajo. Antes de diseñar una pantalla definimos qué debe lograr el sitio y para quién, y construimos algo rápido, ordenado y pensado para convertir visitas en clientes.',
+      deliver: 'diseñaríamos y desarrollaríamos tu sitio, tienda online o landing con foco en conversión, incluyendo los canales de contacto o compra que más usan tus clientes.',
+      proof: 'Para Legacy World construimos su tienda online desde cero: hoy vende a nivel nacional e internacional, con checkout propio y un botón para cerrar la compra por WhatsApp.',
+      short: 'te daría un sitio rápido y pensado para convertir visitas en clientes.'
+    },
+    'growth-marketing': {
+      name: 'Growth & Marketing', href: 'growth-marketing/',
+      keys: [['marketing',2],['seo',2],['google',2],['ads',2],['anuncios',2],['publicidad',2],['pauta',2],['leads',2],['ventas',2],['vender',1],['vendo',2],['clientes',1],['no me encuentran',2],['posicionamiento',2],['conversion',1],['campana',2],['trafico',2],['embudo',2],['no tengo clientes',3],['captar',2],['resultados',1],['no funciona',1]],
+      intro: 'Cuando no entra un flujo constante de clientes, casi siempre falta visibilidad o un sistema que convierta.',
+      why: 'Para vender no basta con existir: hay que ser encontrado y convertir. Combinamos SEO (incluida la visibilidad en las respuestas de IA), campañas en Google y Meta y seguimiento de resultados, para que cada acción esté ligada a clientes potenciales y no solo a visitas.',
+      deliver: 'revisaríamos cómo te encuentran hoy, definiríamos dónde conviene invertir y mediríamos leads y conversiones para optimizar con datos reales.',
+      proof: '',
+      short: 'te ayudaría a que te encuentren y a convertir esa atención en clientes, midiendo resultados.'
+    },
+    'ai-automation': {
+      name: 'AI & Automation', href: 'ai-automation/',
+      keys: [['automat',3],['=ia',3],['inteligencia artificial',3],['chatbot',3],['bot',1],['whatsapp',1],['repetitiv',3],['procesos',2],['pierdo tiempo',2],['pierdo horas',3],['agente',2],['asistente',1],['atencion al cliente',2],['responder mensajes',2],['crm',2],['flujo',1],['manual',1],['tareas',1],['no tengo tiempo',1]],
+      intro: 'Las tareas repetitivas se comen horas que podrías dedicar a vender y a atender mejor.',
+      why: 'Responder los mismos mensajes, calificar contactos o mover datos entre herramientas se puede automatizar con agentes de IA y flujos conectados. Así tu equipo dedica su tiempo a lo que realmente aporta valor.',
+      deliver: 'empezaríamos detectando qué procesos te quitan más horas y construiríamos chatbots, agentes o automatizaciones a la medida de tu negocio.',
+      proof: '',
+      short: 'automatizaría las tareas repetitivas para que recuperes tiempo.'
     }
-    return null;
+  };
+
+  const assistantState = { history: [], last: [], unmatched: 0, busy: false };
+
+  function aNorm(t){
+    return ' ' + String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\-\s]/g, ' ').replace(/\s+/g, ' ').trim() + ' ';
   }
 
-  function appendChatBubble(text, from){
-    const msgs = document.getElementById('chat-messages');
-    const div = document.createElement('div');
-    div.className = from === 'user' ? 'chat-bubble-user' : 'chat-bubble-bot';
-    div.textContent = text;
-    msgs.appendChild(div);
-    msgs.scrollTop = msgs.scrollHeight;
+  function aScoreServices(norm){
+    const out = [];
+    Object.keys(assistantServices).forEach(id => {
+      let score = 0;
+      assistantServices[id].keys.forEach(([kw, w]) => {
+        if(kw.charAt(0) === '='){
+          if(norm.indexOf(' ' + kw.slice(1) + ' ') !== -1) score += w;
+        } else if(norm.indexOf(' ' + kw) !== -1){
+          score += w;
+        }
+      });
+      if(score > 0) out.push({ id, score });
+    });
+    return out.sort((a, b) => b.score - a.score);
   }
 
-  function appendChatServiceSuggestion(serviceId){
-    const s = services[serviceId];
-    const msgs = document.getElementById('chat-messages');
-    const wrap = document.createElement('div');
-    wrap.className = 'chat-bubble-bot';
-    wrap.innerHTML = `Esto suena a <strong>${s.eyebrow}</strong>. ${s.title}<br/><button onclick="showService('${serviceId}')" style="margin-top:8px;" class="text-white underline underline-offset-2 text-[13px]">Ver ${s.eyebrow} →</button>`;
-    msgs.appendChild(wrap);
-    msgs.scrollTop = msgs.scrollHeight;
+  function aIntent(norm){
+    const trimmed = norm.trim();
+    const price = /\b(precio|precios|cuesta|cuestan|costo|costos|tarifa|tarifas|presupuesto|cotiza|cotizacion|cotizar|cobran|cobras|planes|paquete|paquetes|barato|economico|inversion)\b/.test(norm)
+      || (/\bcuanto\b/.test(norm) && /(cuest|cobr|vale|pag|sale|inver)/.test(norm));
+    const greet = trimmed.length < 28 && /^(hola|buenas|buenos dias|buen dia|buenas tardes|buenas noches|hey|saludos|que tal)\b/.test(trimmed);
+    const thanks = trimmed.length < 40 && /\b(gracias|genial|perfecto|excelente|listo)\b/.test(trimmed);
+    const timing = /(cuanto tard|plazo|tiempo de entrega|cuando entreg|demora)/.test(norm);
+    const human = /(hablar con|contactar|agendar|reunion|llamada|una cita|asesor)/.test(norm);
+    const overview = /(que hacen|que ofrecen|que servicios|quienes son|a que se dedican)/.test(norm);
+    return { price, greet, thanks, timing, human, overview };
   }
 
-  function appendChatFallback(){
-    const msgs = document.getElementById('chat-messages');
-    const wrap = document.createElement('div');
-    wrap.className = 'chat-bubble-bot';
-    wrap.innerHTML = `No estoy seguro de cuál sea el mejor camino todavía — contanos un poco más, o <button onclick="openContactForm('Hola, quiero que me ayuden a detectar qué servicio necesito.')" style="margin-top:2px;" class="text-white underline underline-offset-2">dejanos tu consulta acá</button> y te respondemos directamente.`;
-    msgs.appendChild(wrap);
-    msgs.scrollTop = msgs.scrollHeight;
+  function aEl(tag, cls, html){
+    const el = document.createElement(tag);
+    if(cls) el.className = cls;
+    if(html != null) el.innerHTML = html;
+    return el;
   }
 
-  async function askChipQuestion(text, serviceId){
-    appendChatBubble(text, 'user');
-    await new Promise(r => setTimeout(r, 350));
-    appendChatServiceSuggestion(serviceId);
+  function aButton(label, kind, onClick, href){
+    const el = href ? aEl('a', kind) : aEl('button', kind);
+    if(href){ el.href = href; } else { el.type = 'button'; }
+    el.textContent = label;
+    if(onClick) el.addEventListener('click', onClick);
+    return el;
+  }
+
+  function aThread(){ return document.getElementById('chat-messages'); }
+  function aScroll(){ const t = aThread(); if(t) t.scrollTop = t.scrollHeight; }
+
+  function aAddUser(text){
+    const d = aEl('div', 'msg msg-user');
+    d.textContent = text;
+    aThread().appendChild(d);
+    aScroll();
+  }
+
+  function aTyping(){
+    const d = aEl('div', 'msg msg-bot', '<span class="typing" aria-label="Escribiendo"><i></i><i></i><i></i></span>');
+    aThread().appendChild(d);
+    aScroll();
+    return d;
+  }
+
+  function aQuoteMessage(userText, serviceId){
+    const svc = serviceId ? assistantServices[serviceId].name : '';
+    let msg = 'Hola, quiero solicitar una cotización' + (svc ? ' de ' + svc : '') + '.';
+    if(userText) msg += '\n\nMi situación: ' + userText.slice(0, 400);
+    return msg;
+  }
+
+  function aFill(bubble, paragraphs, actions){
+    bubble.innerHTML = '';
+    paragraphs.forEach(p => bubble.appendChild(aEl('p', null, p)));
+    if(actions && actions.length){
+      const wrap = aEl('div', 'msg-actions');
+      actions.forEach(a => wrap.appendChild(a));
+      bubble.appendChild(wrap);
+    }
+  }
+
+  function aBuildReply(userText){
+    const norm = aNorm(userText);
+    const intent = aIntent(norm);
+    let scored = aScoreServices(norm);
+
+    // seguimiento: si no hay servicio pero ya hablamos de uno, lo reutilizamos
+    let usedContext = false;
+    if(!scored.length && assistantState.last.length && (intent.price || intent.timing || intent.human)){
+      scored = assistantState.last.map(id => ({ id, score: 1 }));
+      usedContext = true;
+    }
+
+    const primary = scored[0] ? scored[0].id : null;
+    const secondary = (scored[1] && scored[1].score >= Math.max(2, scored[0].score * 0.5)) ? scored[1].id : null;
+    const paragraphs = [];
+    const actions = [];
+
+    const quoteBtn = (serviceId) => aButton('Solicitar cotización', 'btn-primary', () => {
+      openContactForm(aQuoteMessage(userText, serviceId), serviceId ? assistantServices[serviceId].name : '', 'quote');
+    });
+    const talkBtn = () => aButton('Hablar con el equipo', 'btn-ghost', () => {
+      openContactForm('Hola, quiero que me ayuden con lo siguiente: ' + userText.slice(0, 400));
+    });
+
+    // --- Saludo / gracias
+    if(intent.greet && !primary){
+      paragraphs.push('¡Hola! Cuéntame qué está frenando tu negocio —más clientes, una marca que no se ve profesional, tiempo perdido en tareas repetitivas…— y te explico qué haríamos para resolverlo.');
+      return { paragraphs, actions };
+    }
+    if(intent.thanks && !primary && !intent.price){
+      paragraphs.push('¡Con gusto! Si quieres, cuéntame más sobre tu negocio o deja tus datos y el equipo te escribe en menos de 24 horas.');
+      actions.push(talkBtn());
+      return { paragraphs, actions };
+    }
+
+    // --- Precios: siempre ofrece el formulario de cotización
+    if(intent.price){
+      paragraphs.push('Cada proyecto se cotiza según lo que necesitas y el alcance que tenga, y trabajamos para que nuestras soluciones sean accesibles para negocios en cualquier etapa. Lo más rápido es que nos cuentes tu caso en el formulario y te enviamos una cotización a medida en menos de 24 horas.');
+      if(primary){
+        const s = assistantServices[primary];
+        paragraphs.push('Por lo que cuentas, lo que mejor encaja es <strong>' + s.name + '</strong>: ' + s.deliver);
+        if(secondary) paragraphs.push('También podría ayudarte <strong>' + assistantServices[secondary].name + '</strong>, que ' + assistantServices[secondary].short);
+      }
+      actions.push(quoteBtn(primary));
+      if(primary) actions.push(aButton('Ver ' + assistantServices[primary].name, 'btn-ghost', null, assistantServices[primary].href));
+      return { paragraphs, actions, services: primary ? [primary].concat(secondary ? [secondary] : []) : [] };
+    }
+
+    // --- Plazos
+    if(intent.timing){
+      paragraphs.push('Los tiempos dependen del alcance de cada proyecto. Una vez que entendemos lo que necesitas, te entregamos una propuesta con alcance y calendario claros, para que sepas qué esperar desde el primer día.');
+      if(primary) paragraphs.push('Para tu caso, lo más cercano es <strong>' + assistantServices[primary].name + '</strong>.');
+      actions.push(talkBtn());
+      return { paragraphs, actions, services: primary ? [primary] : [] };
+    }
+
+    // --- Quiere hablar con una persona
+    if(intent.human){
+      paragraphs.push('Claro. Déjanos tus datos y cuéntanos brevemente tu proyecto: el equipo te responde en menos de 24 horas. Si prefieres algo más directo, también puedes escribirnos por WhatsApp.');
+      actions.push(talkBtn());
+      actions.push(aButton('WhatsApp', 'btn-ghost', null, waLink(CONFIG.WHATSAPP_NUMBER, 'Hola, quiero hablar sobre mi proyecto.')));
+      return { paragraphs, actions };
+    }
+
+    // --- Recomendación con justificación
+    if(primary){
+      const s = assistantServices[primary];
+      const tag = aEl('span', 'msg-tag', 'Te recomendamos: ' + s.name);
+      paragraphs.push(tag.outerHTML + '<br/>' + s.intro);
+      paragraphs.push(s.why);
+      paragraphs.push('<strong>Lo que haríamos:</strong> ' + s.deliver);
+      if(s.proof) paragraphs.push(s.proof);
+      if(secondary){
+        paragraphs.push('Además, <strong>' + assistantServices[secondary].name + '</strong> ' + assistantServices[secondary].short);
+      }
+      actions.push(aButton('Ver ' + s.name, 'btn-primary', null, s.href));
+      actions.push(talkBtn());
+      return { paragraphs, actions, services: [primary].concat(secondary ? [secondary] : []) };
+    }
+
+    // --- Panorama general
+    if(intent.overview){
+      paragraphs.push('Somos un equipo de crecimiento digital: <strong>Brand &amp; Design</strong> (identidad y diseño para redes), <strong>Social Media</strong>, <strong>Content Production</strong>, <strong>Web &amp; Digital Development</strong>, <strong>Growth &amp; Marketing</strong> y <strong>AI &amp; Automation</strong>. Cuéntame qué quieres lograr y te digo por dónde empezar.');
+      actions.push(aButton('Ver servicios', 'btn-ghost', null, '#servicios'));
+      return { paragraphs, actions };
+    }
+
+    // --- No hay suficiente contexto: pedimos más información
+    assistantState.unmatched += 1;
+    if(assistantState.unmatched >= 2){
+      paragraphs.push('Para recomendarte bien prefiero que lo veas con una persona del equipo: déjanos tu consulta y te respondemos en menos de 24 horas con el mejor camino para tu negocio.');
+      actions.push(talkBtn());
+    } else {
+      paragraphs.push('Para recomendarte bien necesito un poco más de contexto. ¿A qué se dedica tu negocio y qué te gustaría conseguir: más clientes, una mejor imagen, ahorrar tiempo…?');
+    }
+    return { paragraphs, actions };
+  }
+
+  async function aReplyViaApi(userText){
+    const res = await fetch(CONFIG.CHAT_API_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: userText, history: assistantState.history.slice(-8) })
+    });
+    const data = await res.json();
+    return data && data.reply ? String(data.reply) : '';
   }
 
   async function sendChatMessage(){
     const input = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('chat-send');
+    if(!input || assistantState.busy) return;
     const text = input.value.trim();
     if(!text) return;
-    appendChatBubble(text, 'user');
+
+    assistantState.busy = true;
+    sendBtn.disabled = true;
     input.value = '';
+    input.style.height = 'auto';
+    aAddUser(text);
+    assistantState.history.push({ role: 'user', content: text });
+    trackEvent('assistant_message', { page: document.title });
 
-    if(CONFIG.CHAT_API_ENDPOINT && CONFIG.CHAT_API_ENDPOINT !== 'PLACEHOLDER'){
-      try {
-        const res = await fetch(CONFIG.CHAT_API_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: text })
-        });
-        const data = await res.json();
-        appendChatBubble(data.reply || 'Gracias por tu mensaje.', 'bot');
-        return;
-      } catch(e){
-        // if the real API fails, fall through to the local logic below
-      }
+    const bubble = aTyping();
+    const reply = aBuildReply(text);
+    const apiEnabled = CONFIG.CHAT_API_ENDPOINT && CONFIG.CHAT_API_ENDPOINT !== 'PLACEHOLDER';
+    let apiText = '';
+    if(apiEnabled){
+      try { apiText = await aReplyViaApi(text); } catch(e){ apiText = ''; }
     }
+    const words = reply.paragraphs.join(' ').split(/\s+/).length;
+    const wait = prefersReducedMotion ? 0 : Math.min(1500, 650 + words * 7);
+    await new Promise(r => setTimeout(r, wait));
 
-    await new Promise(r => setTimeout(r, 350));
-    const match = matchServiceFromText(text);
-    if(match){
-      appendChatServiceSuggestion(match);
+    if(apiText){
+      const safe = apiText.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      aFill(bubble, safe.split(/\n+/).filter(Boolean), reply.actions);
     } else {
-      appendChatFallback();
+      aFill(bubble, reply.paragraphs, reply.actions);
     }
+    if(reply.services && reply.services.length){ assistantState.last = reply.services; assistantState.unmatched = 0; }
+    assistantState.history.push({ role: 'assistant', content: reply.paragraphs.join(' ').replace(/<[^>]+>/g, '') });
+    aScroll();
+    assistantState.busy = false;
+    sendBtn.disabled = false;
+    input.focus({ preventScroll: true });
   }
 
-  renderProblemChips();
   renderTestimonials();
-  if(document.getElementById('chat-input')){
-    appendChatBubble('Contame qué te está frenando y te digo qué servicio te puede ayudar.', 'bot');
-    document.getElementById('chat-input').addEventListener('keydown', (e) => {
-      if(e.key === 'Enter') sendChatMessage();
+  (function initAssistantInput(){
+    const input = document.getElementById('chat-input');
+    if(!input) return;
+    input.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); sendChatMessage(); }
     });
-  }
+    input.addEventListener('input', () => {
+      input.style.height = 'auto';
+      input.style.height = Math.min(input.scrollHeight, 160) + 'px';
+    });
+  })();
+
+  // ---------- Home: constelación de servicios + animaciones de entrada ----------
+  const constellationNodes = [
+    { label: 'Brand',   href: 'brand-design/',       desc: 'Identidad visual, diseño para redes y manual de marca.',
+      ico: '<path d="M4 20L14 10M14 10l-3-3 6-3 3 3-3 6-3-3z"/>' },
+    { label: 'Content', href: 'content-production/', desc: 'Producción audiovisual, fotografía, video y edición.',
+      ico: '<rect x="3" y="5" width="14" height="14" rx="2"/><path d="M17 9.5L21 7v10l-4-2.5"/>' },
+    { label: 'Social',  href: 'social-media/',       desc: 'Estrategia y comunidad en Instagram, TikTok y más.',
+      ico: '<circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/>' },
+    { label: 'Web',     href: 'web-development/',    desc: 'E-commerce, landing pages y plataformas a medida.',
+      ico: '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8M12 18v3"/>' },
+    { label: 'Growth',  href: 'growth-marketing/',   desc: 'SEO, GEO/AEO, Google Ads y Meta Ads.',
+      ico: '<path d="M4 17l5-6 4 3 7-8"/><path d="M14 6h6v6"/>' },
+    { label: 'IA',      href: 'ai-automation/',      desc: 'Agentes, chatbots y automatización de procesos.',
+      ico: '<rect x="5" y="7" width="14" height="11" rx="3"/><path d="M12 7V4"/><circle cx="9" cy="12.5" r="1.2"/><circle cx="15" cy="12.5" r="1.2"/>' }
+  ];
+
+  (function initConstellation(){
+    const host = document.getElementById('sys');
+    if(!host) return;
+    const C = 280, R = 190, NR = 38;
+    const pos = constellationNodes.map((_, i) => {
+      const a = (-90 + i * 60) * Math.PI / 180;
+      return { x: C + R * Math.cos(a), y: C + R * Math.sin(a) };
+    });
+    let rays = '', nodes = '', pulses = '';
+    pos.forEach((p, i) => {
+      const n = constellationNodes[i];
+      rays += `<line class="ray" style="--i:${i}" pathLength="1" x1="${p.x.toFixed(1)}" y1="${p.y.toFixed(1)}" x2="${C}" y2="${C}"/>`;
+      if(!prefersReducedMotion){
+        const b = (1.8 + i * 0.55).toFixed(2);
+        pulses += `<circle class="pulse" r="4" visibility="hidden"><set attributeName="visibility" to="visible" begin="${b}s"/><animateMotion dur="3.4s" begin="${b}s" repeatCount="indefinite" path="M${p.x.toFixed(1)} ${p.y.toFixed(1)} L${C} ${C}" calcMode="linear"/></circle>`;
+      }
+      nodes += `
+        <a class="node" style="--i:${i}" href="${n.href}" data-i="${i}" aria-label="${n.label}: ${n.desc}">
+          <g class="node-in">
+            <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${NR}"/>
+            <g class="ico" transform="translate(${(p.x - 14).toFixed(1)} ${(p.y - 14).toFixed(1)}) scale(1.17)">${n.ico}</g>
+            <text x="${p.x.toFixed(1)}" y="${(p.y + NR + 26).toFixed(1)}">${n.label}</text>
+          </g>
+        </a>`;
+    });
+    host.innerHTML = `
+      <svg viewBox="0 0 560 560" role="img">
+        <circle class="ring" cx="${C}" cy="${C}" r="${R}"/>
+        ${rays}
+        ${pulses}
+        <g class="core">
+          <circle class="halo" cx="${C}" cy="${C}" r="76"/>
+          <circle class="fill" cx="${C}" cy="${C}" r="58"/>
+          <text x="${C}" y="${C - 2}">Tu</text>
+          <text x="${C}" y="${C + 20}">objetivo</text>
+        </g>
+        ${nodes}
+      </svg>`;
+
+    const cap = document.getElementById('sys-cap');
+    const def = 'Seis disciplinas, una sola dirección. <b>Pasa el cursor por cada una.</b>';
+    cap.innerHTML = def;
+    host.querySelectorAll('.node').forEach(el => {
+      const n = constellationNodes[el.dataset.i];
+      const show = () => { cap.innerHTML = '<b>' + n.label + '.</b> ' + n.desc; };
+      const hide = () => { cap.innerHTML = def; };
+      el.addEventListener('mouseenter', show); el.addEventListener('focus', show);
+      el.addEventListener('mouseleave', hide); el.addEventListener('blur', hide);
+    });
+
+    if('IntersectionObserver' in window && !prefersReducedMotion){
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(en => { if(en.isIntersecting){ host.classList.add('go'); io.disconnect(); } });
+      }, { threshold: 0.25 });
+      io.observe(host);
+    } else {
+      host.classList.add('go');
+    }
+  })();
+
+  (function initReveal(){
+    const els = document.querySelectorAll('.rv');
+    if(!els.length) return;
+    document.querySelectorAll('.h-bento, .h-stats').forEach(group => {
+      group.querySelectorAll(':scope > .rv').forEach((el, i) => el.style.setProperty('--rd', ((i % 3) * 0.08) + 's'));
+    });
+    if(!('IntersectionObserver' in window) || prefersReducedMotion){
+      els.forEach(el => el.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => { if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    els.forEach(el => io.observe(el));
+  })();
+  window.__appReady = true;
 
   // ---------- Abstract hero visuals per service (no stock photography) ----------
   const serviceVisuals = {
