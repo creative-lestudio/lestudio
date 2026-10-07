@@ -483,102 +483,199 @@
       ]},
     ],
     social: [
-      { name: 'Plan básico', items: [
-        { label: 'Análisis de competencias', on: false },
-        { label: 'Informes mensuales', on: false },
-        { label: 'Community manager', on: false },
-        { label: '(2) Pautas contenido orgánico', on: true },
-        { label: 'Retoque fotográfico PRO', on: true },
-        { label: '(4) Reels', on: true },
-        { label: '(8) Post', on: true },
-        { label: '(24) Historias', on: true },
-        { label: 'Calendario de contenido', on: true },
-        { label: '(1) Pauta contenido PRO', on: true },
-        { label: 'Manejo de ADS (publicidad)', on: true },
-      ]},
-      { name: 'Plan intermedio', items: [
-        { label: 'Análisis de competencias', on: true },
-        { label: 'Informes mensuales', on: true },
-        { label: 'Community manager', on: true },
-        { label: '(4) Pautas contenido orgánico', on: true },
-        { label: 'Retoque fotográfico PRO', on: true },
-        { label: '(6) Reels', on: true },
-        { label: '(12) Post', on: true },
-        { label: '(32) Historias', on: true },
-        { label: 'Calendario de contenido', on: true },
-        { label: '(2) Pautas contenido PRO', on: true },
-        { label: 'Manejo de ADS (publicidad)', on: true },
-      ]},
-      { name: 'Plan avanzado', items: [
-        { label: 'Análisis de competencias', on: true },
-        { label: 'Informes mensuales', on: true },
-        { label: 'Community manager', on: true },
-        { label: '(6) Pautas contenido orgánico', on: true },
-        { label: 'Retoque fotográfico PRO', on: true },
-        { label: '(8) Reels', on: true },
-        { label: '(16) Post', on: true },
-        { label: '(48) Historias', on: true },
-        { label: 'Calendario de contenido', on: true },
-        { label: '(4) Pautas contenido PRO', on: true },
-        { label: 'Manejo de ADS (publicidad)', on: true },
-      ]},
+      { n: '01', name: 'Starter', tagline: 'Plan de entrada para probar el servicio.', lead: 'Pensado como plan de entrada para probar el servicio.',
+        items: ['Auditoría inicial del perfil','Optimización básica','Planificación mensual','Calendario de contenido','Dirección visual básica','Guiones/copies básicos','Diseño y adaptación de piezas','6–8 piezas de contenido','2 reels sencillos','Stories','Publicación/programación','Retoque fotográfico básico','Reporte final del mes'],
+        note: 'No incluye: community management continuo, ads, influencers ni estrategia avanzada. Disponible una sola vez por cliente.' },
+      { n: '02', name: 'Basic', tagline: 'Para delegar la gestión habitual de tus redes.', lead: 'Para negocios que quieren delegar la gestión habitual de sus redes.',
+        items: ['Estrategia mensual de contenido','Planificación y calendario','Dirección creativa de contenido','Definición de líneas visuales y temáticas','Guiones y copywriting','8–12 piezas principales al mes','Reels','Stories','Diseño gráfico','Retoque fotográfico','Publicación y programación','Community management básico','Optimización continua del perfil','Informe mensual','Reunión mensual'],
+        note: 'Incluye dirección creativa, centrada principalmente en cómo se comunica la marca en redes.' },
+      { n: '03', name: 'Growth', tagline: 'Redes como herramienta de crecimiento y adquisición.', lead: 'Para negocios que quieren utilizar redes como herramienta de crecimiento y adquisición.', includes: 'Incluye todo Basic +',
+        items: ['Dirección creativa estratégica','Conceptos de campaña','Desarrollo de narrativas y líneas de comunicación','Mayor producción de contenido','Estrategia de crecimiento','Gestión de Meta Ads o Google Ads','Creatividades publicitarias','Segmentación y optimización de campañas','Influencer / creator outreach','Análisis de competencia','Identificación de oportunidades y tendencias','Reporting avanzado','Seguimiento de leads, clics y conversiones cuando sea posible','Reunión estratégica mensual'],
+        note: 'Inversión publicitaria e influencers no incluidos.' },
+      { n: '04', name: 'Advance', tagline: 'Para delegar gran parte de tu ecosistema digital.', lead: 'Para negocios que quieren delegar gran parte de su ecosistema digital.', includes: 'Incluye todo Growth +',
+        items: ['Dirección creativa integral de marca digital','Estrategia multicanal','Meta Ads','Google Ads','Influencer Marketing','Google Business Profile','Campañas y lanzamientos','Estrategia promocional','Coordinación entre redes, web, anuncios y presencia local','Revisión de conversión web','Recomendaciones de landing pages, funnels y CTA','Reporting orientado a negocio','Consultoría estratégica','Mayor disponibilidad y seguimiento','Reuniones estratégicas periódicas'],
+        note: 'Producción audiovisual profesional, inversión publicitaria, influencers y desarrollos web importantes se presupuestan aparte.' },
+    ],
+    web: [
+      { n: '01', name: 'Starter', tagline: 'Presencia y captación.', lead: 'Para negocios que necesitan una presencia digital profesional y convertir visitas en contactos.',
+        items: ['Portfolio, servicios o presentación del negocio','Formularios de contacto o solicitud de cotización','Contacto directo por WhatsApp','Diseño responsive y optimización para móvil','SEO técnico básico y configuración esencial'] },
+      { n: '02', name: 'Business', tagline: 'Procesos automatizados.', lead: 'Para negocios que quieren automatizar consultas, comandas, reservas o solicitudes sin procesar pagos.',
+        items: ['Todo lo esencial del plan Starter','Formularios avanzados con lógica de pedido o reserva','Comandas automáticas por WhatsApp o correo','Cálculo de productos, extras o cantidades cuando aplique','Confirmaciones y automatizaciones básicas'] },
+      { n: '03', name: 'E-commerce', tagline: 'Pedidos + pagos.', lead: 'Para negocios que tramitan pedidos y pagos directamente desde su web mediante una pasarela de pago segura.',
+        items: ['Catálogo, carrito y checkout','Pasarela de pago','Tarjeta, Apple Pay y Google Pay cuando la plataforma lo permita','Confirmaciones automáticas de pedido y pago','Backend, webhooks y medidas de seguridad cuando sean necesarios','Gestión básica de pedidos'] },
+      { n: '04', name: 'Commerce Integration', tagline: 'Ecosistema conectado. Según presupuesto.', lead: 'Para negocios que necesitan que la web forme parte de su ecosistema de ventas y operación. Se cotiza según presupuesto.',
+        items: ['Pedidos y pagos conectados con sistemas internos','Integración con TPV / POS','APIs, webhooks y automatizaciones avanzadas','Flujos multilocal cuando sea necesario','Sincronización con stock, CRM, ERP u otras herramientas','Arquitectura técnica adaptada al negocio'] },
     ],
   };
 
-  const pricingLabels = { identidad: 'Identidad Visual', social: 'Social Media' };
+  const pricingLabels = { identidad: 'Identidad Visual', social: 'Social Media', web: 'Desarrollo Web' };
+  const pricingServiceValue = { identidad: 'Brand & Design', social: 'Social Media', web: 'Web & Digital Development' };
+
+  const pricingMeta = {
+    social: {
+      title: 'Un plan para cada etapa de tu marca',
+      intro: 'Desde probar el servicio hasta delegar gran parte de tu ecosistema digital. Elegimos el nivel según lo que tu negocio necesita conseguir en redes.',
+      how: { title: 'Cómo elegimos el plan', rows: [
+        ['Starter', 'Una primera toma de contacto para probar el servicio, disponible una sola vez por cliente.'],
+        ['Basic', 'Gestión habitual de las redes, con dirección creativa centrada en cómo se comunica la marca.'],
+        ['Growth', 'Se pasa de dirigir contenido a dirigir campañas orientadas al crecimiento.'],
+        ['Advance', 'Dirección integral de la marca digital, coordinando redes, web, anuncios y presencia local.'] ] }
+    },
+    web: {
+      title: 'Webs que hacen más por tu negocio',
+      intro: 'Desde presencia digital hasta sistemas conectados con tu operativa. Elegimos el nivel según lo que realmente necesita tu negocio.',
+      notice: { tag: 'Importante', text: 'El presupuesto final depende del alcance, volumen de contenido, funcionalidades, integraciones, plataforma y necesidades técnicas de cada proyecto.' },
+      how: { title: 'Cómo elegimos el plan', text: 'El plan no depende de cuántas páginas tenga la web, sino de lo que debe hacer: mostrar, captar, automatizar, cobrar o integrarse con los sistemas del negocio.' },
+      recurrence: { title: 'Recurrencia · Web Care', groups: [
+        { items: [['Web Care Starter', 'Para webs de presencia y captación.'], ['Web Care Business', 'Para webs con procesos automatizados.']],
+          note: 'Incluye soporte técnico, actualizaciones, supervisión, pequeñas modificaciones y mantenimiento operativo según el alcance contratado.' },
+        { items: [['Web Care Commerce', 'Para tiendas online con pedidos y pagos.'], ['Web Care Integration', 'Para webs integradas con sistemas internos.']],
+          note: 'La cuota final depende de infraestructura, integraciones, volumen de cambios y nivel de soporte requerido.' } ] },
+      priority: { tag: 'Priority · Soporte 24/7', title: 'Soporte técnico y atención al cliente 24/7.', text: 'Se cotiza según el nivel de cobertura, criticidad y tiempos de respuesta requeridos.' },
+      extras: { title: 'Completa la solución', intro: 'Los siguientes servicios no están incluidos de forma automática en los planes de desarrollo. Se añaden únicamente cuando el proyecto los necesita y se presupuestan por separado.',
+        items: [
+          ['Fotografía profesional', 'Sesión y producción fotográfica para producto, espacio, equipo o carta.'],
+          ['Retoque & dirección visual', 'Optimización y homogeneización de fotografías actuales mediante retoque profesional, diseño y herramientas avanzadas.'],
+          ['Google Business Profile', 'Optimización de ficha, categorías, información, imágenes y presencia local.'],
+          ['SEO · GEO · AEO', 'Posicionamiento en buscadores, motores generativos y sistemas de respuesta.'],
+          ['Arquitectura visual de marca', 'Sistema visual, criterios de aplicación, tipografía, color y dirección gráfica para construir una presencia coherente.'],
+          ['Otras necesidades', 'Copywriting, automatizaciones, integraciones, analítica, idiomas, migraciones, funcionalidades personalizadas y más.'] ] },
+      closing: { title: 'Cada proyecto se cotiza según su alcance real.', text: 'Antes de comenzar, definimos funcionalidades, contenidos, integraciones y necesidades para presentar un presupuesto cerrado del proyecto concreto.' }
+    }
+  };
+
+  const CHECK_SVG = '<svg width="15" height="15" viewBox="0 0 20 20" fill="none" class="mt-0.5 shrink-0"><path d="M4 10.5L8 14.5L16 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const qAttr = (msg, svc) => `onclick='openContactForm(${JSON.stringify(msg)}, ${JSON.stringify(svc)}, "quote")'`;
 
   function renderServicePricing(category){
     const container = document.getElementById('sd-pricing');
+    if(!container) return;
     if(!category || !pricingPlans[category]){ container.innerHTML = ''; return; }
     const plans = pricingPlans[category];
+    const meta = pricingMeta[category];
+    const svcValue = pricingServiceValue[category];
+
     const cards = plans.map(plan => {
       const quoteMsg = 'Hola, quiero solicitar presupuesto para el plan ' + plan.name + ' (' + pricingLabels[category] + ').';
+      const items = plan.items.map(raw => (typeof raw === 'string') ? { label: raw, on: true } : raw);
       return `
       <div class="glass rounded-3xl p-8 flex flex-col">
-        <h3 class="font-display text-2xl mb-6">${plan.name}</h3>
-        <ul class="space-y-3.5 mb-8 flex-1">
-          ${plan.items.map(it => `
+        ${plan.n ? `<p class="text-[11px] tracking-[0.18em] uppercase text-white/40 mb-3">${plan.n} · ${plan.name}</p>` : ''}
+        <h3 class="font-display text-2xl mb-2">${plan.name}</h3>
+        ${plan.tagline ? `<p class="text-white/60 text-[14px] leading-relaxed mb-1">${plan.tagline}</p>` : ''}
+        ${plan.lead ? `<p class="text-white/45 text-[13px] leading-relaxed mb-5">${plan.lead}</p>` : '<div class="mb-4"></div>'}
+        ${plan.includes ? `<p class="text-[11px] tracking-[0.16em] uppercase text-white/55 mb-3">${plan.includes}</p>` : (plan.lead ? '<p class="text-[11px] tracking-[0.16em] uppercase text-white/55 mb-3">Incluye</p>' : '')}
+        <ul class="space-y-3 mb-6 flex-1">
+          ${items.map(it => `
             <li class="flex items-start gap-2.5 text-[14px] leading-snug ${it.on ? 'text-white/80' : 'text-white/25'}">
-              ${it.on
-                ? '<svg width="15" height="15" viewBox="0 0 20 20" fill="none" class="mt-0.5 shrink-0"><path d="M4 10.5L8 14.5L16 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-                : '<span class="mt-[9px] w-2.5 h-px bg-white/20 shrink-0"></span>'}
+              ${it.on ? CHECK_SVG : '<span class="mt-[9px] w-2.5 h-px bg-white/20 shrink-0"></span>'}
               <span>${it.label}</span>
             </li>`).join('')}
         </ul>
-        <button onclick='openContactForm(${JSON.stringify(quoteMsg)})' class="btn-primary text-center font-semibold px-6 py-3 rounded-full text-sm">Solicitar presupuesto</button>
+        ${plan.note ? `<p class="text-white/55 text-[13px] leading-relaxed border-t border-white/10 pt-4 mb-6">${plan.note}</p>` : ''}
+        <button ${qAttr(quoteMsg, svcValue)} class="btn-primary text-center font-semibold px-6 py-3 rounded-full text-sm">Solicitar presupuesto</button>
       </div>`;
     }).join('');
 
     const customCard = `
-      <div class="glass rounded-3xl p-8 flex flex-col border-dashed">
+      <div class="glass rounded-3xl p-8 flex flex-col border-dashed ${meta ? 'md:col-span-2' : ''}">
         <h3 class="font-display text-2xl mb-3">Plan personalizado</h3>
-        <p class="text-white/55 text-[14px] leading-relaxed mb-8 flex-1">Elegí exactamente lo que tu marca necesita. Armás tu selección y completás tus datos para que te respondamos con una propuesta a medida.</p>
+        <p class="text-white/55 text-[14px] leading-relaxed mb-8 flex-1">Elige exactamente lo que tu marca necesita. Armas tu selección y completas tus datos para que te respondamos con una propuesta a medida.</p>
         <button onclick="openCustomPlan('${category}')" class="btn-ghost text-center font-semibold px-6 py-3 rounded-full text-sm">Crear plan personalizado</button>
       </div>`;
 
-    container.innerHTML = `
+    const gridCls = meta ? 'grid md:grid-cols-2 gap-5' : 'grid md:grid-cols-2 lg:grid-cols-4 gap-5';
+    let html = `
       <div class="py-16 md:py-20 border-t border-white/10">
-        <h2 class="font-display text-3xl mb-3">Planes de ${pricingLabels[category]}</h2>
-        <p class="text-white/55 mb-8 max-w-2xl">Elegí el nivel de acompañamiento que tu marca necesita hoy, o armá tu propio plan a medida.</p>
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">${cards}${customCard}</div>
+        <h2 class="font-display text-3xl md:text-4xl mb-3">${meta ? meta.title : 'Planes de ' + pricingLabels[category]}</h2>
+        <p class="text-white/55 mb-8 max-w-2xl">${meta ? meta.intro : 'Elige el nivel de acompañamiento que tu marca necesita hoy, o arma tu propio plan a medida.'}</p>
+        ${meta && meta.notice ? `<div class="glass rounded-2xl p-5 mb-6 flex flex-col sm:flex-row sm:items-center gap-4"><span class="btn-primary text-sm font-semibold px-4 py-2 rounded-full self-start">${meta.notice.tag}</span><p class="text-white/65 text-[14px] leading-relaxed">${meta.notice.text}</p></div>` : ''}
+        <div class="${gridCls}">${cards}${customCard}</div>
       </div>`;
+
+    if(meta && meta.how){
+      const how = meta.how;
+      html += `
+      <div class="pb-16 md:pb-20">
+        <h3 class="font-display text-2xl mb-5">${how.title}</h3>
+        <div class="glass rounded-3xl p-6 md:p-8">
+          ${how.rows ? how.rows.map((r, i) => `<div class="grid md:grid-cols-[160px_1fr] gap-1 md:gap-6 py-4 ${i ? 'border-t border-white/10' : ''}"><span class="font-semibold text-sm tracking-wider uppercase">${r[0]}</span><span class="text-white/70 text-[15px] leading-relaxed">${r[1]}</span></div>`).join('') : `<p class="text-white/70 text-[15px] leading-relaxed">${how.text}</p>`}
+        </div>
+      </div>`;
+    }
+
+    if(meta && meta.recurrence){
+      const rec = meta.recurrence;
+      html += `
+      <div class="pb-16 md:pb-20 border-t border-white/10 pt-16 md:pt-20">
+        <h3 class="font-display text-3xl mb-8">${rec.title}</h3>
+        <div class="space-y-6">
+          ${rec.groups.map(g => `
+            <div>
+              <div class="grid md:grid-cols-2 gap-5">${g.items.map(it => `
+                <div class="glass rounded-2xl p-6 flex flex-col gap-4 justify-between">
+                  <div><p class="text-[11px] tracking-[0.18em] uppercase text-white/40 mb-2">Web Care</p><h4 class="font-display text-xl mb-1">${it[0]}</h4><p class="text-white/60 text-[14px]">${it[1]}</p></div>
+                  <button ${qAttr('Hola, quiero información sobre el mantenimiento ' + it[0] + '.', pricingServiceValue.web)} class="btn-ghost text-center font-semibold px-5 py-2.5 rounded-full text-sm self-start">Solicitar presupuesto</button>
+                </div>`).join('')}</div>
+              <p class="text-white/45 text-[13px] leading-relaxed mt-3 px-1">${g.note}</p>
+            </div>`).join('')}
+        </div>
+        ${meta.priority ? `<div class="rounded-3xl p-7 mt-8 bg-white text-[#021024]"><p class="text-[11px] tracking-[0.18em] uppercase opacity-55 mb-2">${meta.priority.tag}</p><h4 class="font-display text-xl mb-1">${meta.priority.title}</h4><p class="opacity-75 text-[15px]">${meta.priority.text}</p></div>` : ''}
+      </div>`;
+    }
+
+    if(meta && meta.extras){
+      const ex = meta.extras;
+      html += `
+      <div class="pb-16 md:pb-20 border-t border-white/10 pt-16 md:pt-20">
+        <h3 class="font-display text-3xl mb-3">${ex.title}</h3>
+        <p class="text-white/55 mb-8 max-w-2xl">${ex.intro}</p>
+        <div class="grid sm:grid-cols-2 gap-5">
+          ${ex.items.map(it => `
+            <div class="glass rounded-2xl p-6 flex flex-col gap-4 justify-between">
+              <div><h4 class="font-display text-xl mb-2">${it[0]}</h4><p class="text-white/60 text-[14px] leading-relaxed">${it[1]}</p></div>
+              <button ${qAttr('Hola, quiero presupuestar: ' + it[0] + ' (' + pricingLabels[category] + ').', pricingServiceValue[category])} class="btn-primary text-center font-semibold px-5 py-2.5 rounded-full text-sm self-start">Presupuestar</button>
+            </div>`).join('')}
+        </div>
+        ${meta.closing ? `<div class="rounded-3xl p-7 mt-8 bg-white text-[#021024]"><h4 class="font-display text-xl mb-1">${meta.closing.title}</h4><p class="opacity-75 text-[15px] leading-relaxed">${meta.closing.text}</p></div>` : ''}
+      </div>`;
+    }
+    container.innerHTML = html;
   }
 
-  // ---------- Plan personalizado (custom plan -> contact form) ----------
-  const customPlanItems = {
-    identidad: ['Análisis de rubro','Análisis de competencias','Naming','Logotipo y versiones','Tipografías','Paleta de colores','Iconografía','Recursos gráficos','Papelería corporativa','Manual de marca'],
-    social: ['Análisis de competencias','Informes mensuales','Community manager','Pautas de contenido orgánico','Retoque fotográfico PRO','Reels','Posts','Historias','Calendario de contenido','Pautas de contenido PRO','Manejo de ADS (publicidad)'],
+  // ---------- Plan personalizado (checklist agrupada -> formulario -> correo) ----------
+  const customPlanGroups = {
+    identidad: [{ title: '', items: ['Análisis de rubro','Análisis de competencias','Naming','Logotipo y versiones','Tipografías','Paleta de colores','Iconografía','Recursos gráficos','Papelería corporativa','Manual de marca','Diseño para redes sociales'] }],
+    social: [
+      { title: 'Estrategia y dirección', items: ['Auditoría inicial del perfil','Estrategia mensual de contenido','Planificación y calendario','Dirección creativa de contenido','Dirección creativa estratégica','Dirección creativa integral de marca digital','Conceptos de campaña','Desarrollo de narrativas y líneas de comunicación','Definición de líneas visuales y temáticas','Estrategia de crecimiento','Estrategia multicanal','Estrategia promocional'] },
+      { title: 'Contenido y producción', items: ['Guiones y copywriting','Piezas principales al mes (6–12)','Reels','Stories','Diseño gráfico','Retoque fotográfico','Publicación y programación','Mayor producción de contenido','Campañas y lanzamientos'] },
+      { title: 'Comunidad y perfil', items: ['Community management básico','Optimización continua del perfil','Google Business Profile'] },
+      { title: 'Publicidad y crecimiento', items: ['Meta Ads','Google Ads','Creatividades publicitarias','Segmentación y optimización de campañas','Influencer / creator outreach','Influencer Marketing'] },
+      { title: 'Análisis y reportes', items: ['Análisis de competencia','Identificación de oportunidades y tendencias','Informe mensual','Reporting avanzado','Reporting orientado a negocio','Seguimiento de leads, clics y conversiones','Revisión de conversión web','Recomendaciones de landing pages, funnels y CTA','Reunión mensual','Reunión estratégica mensual','Consultoría estratégica','Mayor disponibilidad y seguimiento'] }
+    ],
+    web: [
+      { title: 'Presencia y captación', items: ['Portfolio, servicios o presentación del negocio','Formularios de contacto o solicitud de cotización','Contacto directo por WhatsApp','Diseño responsive y optimización para móvil','SEO técnico básico y configuración esencial'] },
+      { title: 'Procesos automatizados', items: ['Formularios avanzados con lógica de pedido o reserva','Comandas automáticas por WhatsApp o correo','Cálculo de productos, extras o cantidades','Confirmaciones y automatizaciones básicas'] },
+      { title: 'Venta online', items: ['Catálogo, carrito y checkout','Pasarela de pago','Tarjeta, Apple Pay y Google Pay','Confirmaciones automáticas de pedido y pago','Backend, webhooks y medidas de seguridad','Gestión básica de pedidos'] },
+      { title: 'Integración', items: ['Pedidos y pagos conectados con sistemas internos','Integración con TPV / POS','APIs, webhooks y automatizaciones avanzadas','Flujos multilocal','Sincronización con stock, CRM, ERP u otras herramientas','Arquitectura técnica adaptada al negocio'] },
+      { title: 'Mantenimiento y soporte', items: ['Web Care Starter','Web Care Business','Web Care Commerce','Web Care Integration','Soporte técnico y atención al cliente 24/7'] },
+      { title: 'Extras', items: ['Fotografía profesional','Retoque & dirección visual','Google Business Profile','SEO · GEO · AEO','Arquitectura visual de marca','Otras necesidades'] }
+    ]
   };
 
   function openCustomPlan(category){
     const modal = document.getElementById('custom-plan-modal');
-    document.getElementById('custom-plan-title').textContent = 'Arma tu plan de ' + pricingLabels[category];
+    document.getElementById('custom-plan-title').textContent = (window.I18N ? I18N.tr('Arma tu plan de') : 'Arma tu plan de') + ' ' + (window.I18N ? I18N.tr(pricingLabels[category]) : pricingLabels[category]);
     document.getElementById('custom-plan-category').value = category;
-    document.getElementById('custom-plan-checklist').innerHTML = customPlanItems[category].map((label, i) => `
+    const list = document.getElementById('custom-plan-checklist');
+    list.style.maxHeight = '46vh'; list.style.overflowY = 'auto';
+    list.innerHTML = customPlanGroups[category].map(g => `
+      ${g.title ? `<p class="text-[11px] tracking-[0.16em] uppercase text-white/45 mt-4 mb-1">${g.title}</p>` : ''}
+      ${g.items.map(label => `
       <label class="checkbox-row">
-        <input type="checkbox" value="${label}" />
+        <input type="checkbox" value="${label}" data-group="${g.title}" />
         <span class="text-white/80 text-sm">${label}</span>
-      </label>`).join('');
+      </label>`).join('')}`).join('');
     document.getElementById('custom-plan-notes').value = '';
     modal.classList.add('open');
   }
@@ -589,17 +686,23 @@
 
   function submitCustomPlan(){
     const category = document.getElementById('custom-plan-category').value;
-    const checked = Array.from(document.querySelectorAll('#custom-plan-checklist input:checked')).map(i => i.value);
+    const checked = Array.from(document.querySelectorAll('#custom-plan-checklist input:checked')).map(i => ({ v: i.value, g: i.dataset.group || '' }));
     const notes = document.getElementById('custom-plan-notes').value.trim();
     if(checked.length === 0){
       alert(window.I18N ? I18N.tr('Elegí al menos un ítem para tu plan personalizado.') : 'Elegí al menos un ítem para tu plan personalizado.');
       return;
     }
-    let message = 'Hola, quiero armar un plan personalizado de ' + pricingLabels[category] + ' con lo siguiente:\n\n';
-    message += checked.map(c => '- ' + c).join('\n');
-    if(notes) message += '\n\nNotas adicionales:\n' + notes;
+    const T = (x) => (window.I18N ? I18N.tr(x) : x);
+    let message = T('Hola, quiero armar un plan personalizado de') + ' ' + T(pricingLabels[category]) + ' ' + T('con lo siguiente') + ':\n';
+    const seen = [];
+    checked.forEach(c => { if(seen.indexOf(c.g) === -1) seen.push(c.g); });
+    seen.forEach(g => {
+      message += '\n' + (g ? T(g) + ':\n' : '');
+      message += checked.filter(c => c.g === g).map(c => '- ' + T(c.v)).join('\n') + '\n';
+    });
+    if(notes) message += '\n' + T('Notas adicionales') + ':\n' + notes;
     closeCustomPlan();
-    openContactForm(message);
+    openContactForm(message, pricingServiceValue[category], 'quote');
   }
 
   // ---------- Unified contact form (mail icon, "Solicitar presupuesto", plan personalizado) ----------
@@ -822,6 +925,7 @@
       featuredProject: 'decoplant-branding'
     },
     'web-development': {
+      pricing: 'web',
       eyebrow: 'Web & Digital Development',
       title: 'Diseñamos y desarrollamos productos digitales que funcionan.',
       description: 'Creamos experiencias digitales rápidas, escalables y adaptadas a las necesidades reales de cada negocio. Desde una landing diseñada para convertir hasta plataformas y herramientas internas construidas completamente a medida.',
