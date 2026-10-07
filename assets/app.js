@@ -1444,6 +1444,61 @@
     }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
     els.forEach(el => io.observe(el));
   })();
+  // ---------- Trabajo real por servicio (se muestra en cada página de servicio) ----------
+  // Para añadir un cliente: agrega una línea en el servicio que corresponda.
+  //   { name, what, label, url }  -> url externa (Instagram, Behance, web...)
+  //   { name, what, label, case: 'slug-del-proyecto' } -> abre el caso dentro del portafolio
+  const serviceWork = {
+    'social-media': [
+      { name: 'Inversiones MDS', what: 'Estrategia y gestión de su Instagram', label: 'Ver Instagram', url: 'https://www.instagram.com/inversiones.mds/' }
+      // { name: 'Legacy World', what: 'Redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/…' }
+    ],
+    'content-production': [
+      { name: 'Legacy Podcast', what: 'Podcast producido de punta a punta', label: 'Ver episodio en YouTube', url: 'https://youtu.be/i-frSRSTsq8' },
+      { name: 'Inversiones MDS', what: 'Contenido en video para su marca', label: 'Ver caso', case: 'mds-contenido' },
+      { name: 'Urbantex', what: 'Contenido en video para redes', label: 'Ver caso', case: 'urbantex-contenido' }
+    ],
+    'brand-design': [
+      { name: 'Decoplant', what: 'Naming e identidad visual', label: 'Ver en Behance', url: 'https://www.behance.net/gallery/218332771/DECOPLANT-Branding' },
+      { name: 'Multiservicios RDR', what: 'Identidad visual', label: 'Ver en Behance', url: 'https://www.behance.net/gallery/218334897/RDR-Identidad-Visual' },
+      { name: 'Corporación Tecnoclean', what: 'Identidad visual', label: 'Ver en Behance', url: 'https://www.behance.net/gallery/218332217/Tecnoclean-Identidad-visual' },
+      { name: 'Urbantex', what: 'Identidad visual', label: 'Ver en Behance', url: 'https://www.behance.net/gallery/173188679/URBANTEX-Identidad-Visual' },
+      { name: 'Synergy', what: 'Fichas de producción', label: 'Ver en Behance', url: 'https://www.behance.net/gallery/173188451/Synergy-Store-Ficha-de-produccion' },
+      { name: 'HPS', what: 'Asesoría de marca', label: 'Ver caso', case: 'hps-asesoria' },
+      { name: 'Winners League Unimet', what: 'Indumentaria deportiva', label: 'Ver caso', case: 'winners-producto' }
+    ],
+    'web-development': [
+      { name: 'Legacy World', what: 'Tienda online propia, nacional e internacional', label: 'Ver legacy-world.com', url: 'https://legacy-world.com' }
+    ],
+    'growth-marketing': [],
+    'ai-automation': []
+  };
+
+  function renderServiceWork(){
+    const box = document.getElementById('service-work');
+    if(!box) return;
+    const list = serviceWork[box.dataset.service] || [];
+    if(!list.length){ box.remove(); return; }
+    const base = document.getElementById('home-view') ? '' : '../';
+    const arrow = '<svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M6 14L14 6M7 6h7v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    box.innerHTML = `
+      <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">
+        <h2 class="font-display text-3xl md:text-4xl mb-3">Trabajo real en este servicio</h2>
+        <p class="text-white/55 mb-9 max-w-xl">Mira lo que hemos hecho para otros clientes.</p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          ${list.map(c => {
+            const href = c.url ? c.url : base + '#proyecto-' + c.case;
+            const ext = c.url ? ' target="_blank" rel="noopener"' : '';
+            return `<a href="${href}"${ext} class="glass hover-lift rounded-2xl p-6 flex flex-col justify-between gap-6">
+              <div><h3 class="font-display text-xl mb-1">${c.name}</h3><p class="text-white/60 text-[14px] leading-relaxed">${c.what}</p></div>
+              <span class="inline-flex items-center gap-2 text-sm font-semibold">${c.label} ${arrow}</span>
+            </a>`;
+          }).join('')}
+        </div>
+      </div>`;
+  }
+  renderServiceWork();
+
   window.__appReady = true;
 
   // ---------- Abstract hero visuals per service (no stock photography) ----------
@@ -1498,6 +1553,8 @@
   let currentServiceCtaLabel = 'Enviar proyecto';
 
   function showService(id){
+    // Cada servicio vive en su propia página (más simple y mejor para SEO)
+    if(services[id]){ window.location.href = id + '/'; return; }
     const s = services[id];
     if(!s) return;
     trackEvent('service_view', { service: id });
