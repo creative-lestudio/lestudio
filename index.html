@@ -193,7 +193,7 @@
 
     <div class="flex items-center gap-4">
       <div class="lang-switch" role="group" aria-label="Idioma"><button type="button" data-lang="es" class="is-active" aria-pressed="true">ES</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
-      <a href="#contacto" class="hidden md:inline-block btn-primary text-sm font-semibold px-5 py-2.5 rounded-full">Hablar sobre mi proyecto</a>
+      <a href="#contacto" class="hidden md:inline-block btn-primary text-sm font-semibold px-5 py-2.5 rounded-full">Contáctanos</a>
       <button id="mobile-toggle" class="lg:hidden p-2 -mr-2" aria-label="Abrir menú">
         <svg width="22" height="16" viewBox="0 0 22 16" fill="none"><path d="M0 1H22M0 8H22M0 15H22" stroke="white" stroke-width="1.6"/></svg>
       </button>
@@ -213,7 +213,7 @@
     <div class="h-px bg-white/10"></div>
     <a href="#quienes-somos" onclick="closeMobile()" class="block">Quiénes somos</a>
     <a href="#portafolio" onclick="showPortfolioPage(); closeMobile(); return false;" class="block">Trabajo seleccionado</a>
-    <a href="#contacto" onclick="closeMobile()" class="block btn-primary text-center rounded-full py-3 font-semibold">Hablar sobre mi proyecto</a>
+    <a href="#contacto" onclick="closeMobile()" class="block btn-primary text-center rounded-full py-3 font-semibold">Contáctanos</a>
   </div>
 </header>
 
@@ -236,19 +236,18 @@
     <div class="h-glow" aria-hidden="true"></div>
     <div class="h-wrap">
       <h1 class="font-display h-hero-title hero-in" style="--d:0s">Somos tu equipo de crecimiento digital</h1>
-      <p class="h-hero-lead hero-in" style="--d:.12s">Estrategia, diseño, contenido, tecnología, marketing e IA bajo una misma dirección, para negocios que quieren más clientes y una presencia digital que venda.</p>
+      <p class="h-hero-lead hero-in" style="--d:.12s">
+        Diseñamos tu marca, producimos contenido, gestionamos tus redes, desarrollamos tu web y automatizamos procesos con inteligencia artificial. Todo en un solo equipo, con soluciones profesionales al alcance de cada etapa de tu negocio, para que crecer sea una decisión fácil.
+      </p>
       <div class="h-hero-ctas hero-in" style="--d:.24s">
-        <button onclick="openContactForm('Hola, quiero contaros mi objetivo.')" class="btn-primary btn-lg">Cuéntanos tu objetivo</button>
-        <a href="#casos" class="btn-ghost btn-lg">Ver trabajos</a>
+        <button onclick="openContactForm('Hola, quiero hablar sobre mi proyecto.')" class="btn-primary btn-lg">Hablemos de tu proyecto</button>
+        <a href="#servicios" class="btn-ghost btn-lg">Explorar servicios</a>
       </div>
       <p class="h-hero-note hero-in" style="--d:.34s">Respondemos en menos de 24 horas.</p>
     </div>
-  </section>
 
-  <!-- CLIENTES -->
-  <section class="h-logos" id="clientes" aria-label="Clientes">
-    <p class="h-logos-label">Han confiado en nosotros</p>
-    <div id="logos-marquee-wrap">
+    <div class="h-logos hero-in" style="--d:.5s" id="logos-marquee-wrap">
+      <p class="h-logos-label">Han confiado en nosotros</p>
       <div class="marquee-wrap h-logos-mask">
         <div class="marquee-track gap-16 px-8" id="logos-marquee-track">
           <div class="flex items-center gap-16" id="marquee-a"></div>
@@ -258,16 +257,16 @@
     </div>
   </section>
 
-  <!-- ¿QUÉ QUIERES CONSEGUIR? -->
+  <!-- ¿QUÉ ESTÁ FRENANDO TU NEGOCIO? -->
   <section id="diagnostico" class="h-sec h-sec--line">
     <div class="h-wrap h-narrow">
-      <h2 class="h-title rv">¿Qué quieres conseguir?</h2>
-      <p class="h-lead rv">Elige un objetivo o cuéntanoslo con tus palabras. Te recomendamos por dónde empezar y por qué.</p>
-      <div class="goal-chips rv" id="goal-chips" role="group" aria-label="Objetivos"></div>
+      <h2 class="h-title rv">¿Qué está frenando tu negocio?</h2>
+      <p class="h-lead rv">Cuéntanos tu situación con tus propias palabras. Te explicamos qué haríamos y por qué.</p>
+
       <div class="ai-box rv" id="ai-box">
         <div id="chat-messages" class="ai-thread" aria-live="polite"></div>
         <div class="ai-input">
-          <textarea id="chat-input" rows="2" maxlength="600" placeholder="O cuéntanos qué está frenando tu negocio…" aria-label="Cuéntanos qué está frenando tu negocio"></textarea>
+          <textarea id="chat-input" rows="2" maxlength="600" placeholder="Cuéntanos qué está frenando tu negocio…" aria-label="Cuéntanos qué está frenando tu negocio"></textarea>
           <button id="chat-send" onclick="sendChatMessage()" aria-label="Enviar mensaje">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -276,67 +275,30 @@
     </div>
   </section>
 
-  <!-- CASOS DESTACADOS -->
-  <section id="casos" class="h-sec h-sec--line">
-    <div class="h-wrap">
-      <div class="h-row-head">
-        <div>
-          <h2 class="h-title rv">Problemas reales, resultados reales</h2>
-          <p class="h-lead rv">Así resolvemos retos de negocio. Cada caso explica el reto, la solución y el resultado.</p>
+  <!-- TODO CONECTADO -->
+  <section class="h-sec h-sec--line" id="conectado">
+    <div class="h-wrap h-split">
+      <div class="h-split-copy">
+        <h2 class="h-title rv">Un solo equipo.<br/>Todo conectado.</h2>
+        <div class="h-copy rv">
+          <p>Una marca no crece gracias a una publicación, una página web o una campaña aislada. Crece cuando todas las piezas trabajan juntas.</p>
+          <p>En LE STUDIO combinamos estrategia, diseño, contenido, desarrollo, marketing e inteligencia artificial para construir soluciones conectadas alrededor de un mismo objetivo: el tuyo.</p>
         </div>
-        <a href="proyectos/" class="btn-ghost btn-lg rv" style="flex-shrink:0">Ver todos los proyectos</a>
+        <button onclick="openContactForm('Hola, quiero que me ayuden a definir por dónde empezar.')" class="btn-ghost btn-lg rv" style="margin-top:8px">Quiero definir mi objetivo</button>
       </div>
-      <div class="h-cases">
-      <a href="proyectos/legacy-world-web/" class="h-case rv">
-        <div class="h-case-img"><img src="assets/badge-legacy.png" alt="Proyecto Legacy World: logotipo del cliente" loading="lazy" width="640" height="640"></div>
-        <div class="h-case-body">
-          <p class="h-case-tags">Web & Digital Development</p>
-          <h3 class="font-display">Legacy World</h3>
-          <p class="h-case-p"><b>Reto.</b> <span>Necesitaba vender online a nivel nacional e internacional sin depender de intermediarios.</span></p>
-          <p class="h-case-p"><b>Resultado.</b> <span>Tienda propia con checkout autogestionado y cierre de compra por WhatsApp.</span></p>
-          <span class="h-more">Ver caso <i><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span>
-        </div>
-      </a>
-      <a href="proyectos/mds-redes/" class="h-case rv">
-        <div class="h-case-img"><img src="assets/badge-mds.png" alt="Proyecto Inversiones MDS: logotipo del cliente" loading="lazy" width="640" height="640"></div>
-        <div class="h-case-body">
-          <p class="h-case-tags">Social Media</p>
-          <h3 class="font-display">Inversiones MDS</h3>
-          <p class="h-case-p"><b>Reto.</b> <span>Quería construir una audiencia real, no solo seguidores.</span></p>
-          <p class="h-case-p"><b>Resultado.</b> <span>Hoy es una de las marcas más recordadas de su sector y su Instagram genera leads orgánicos.</span></p>
-          <span class="h-more">Ver caso <i><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span>
-        </div>
-      </a>
-      <a href="proyectos/decoplant-branding/" class="h-case rv">
-        <div class="h-case-img"><img src="assets/badge-decoplant.png" alt="Proyecto Decoplant: logotipo del cliente" loading="lazy" width="640" height="640"></div>
-        <div class="h-case-body">
-          <p class="h-case-tags">Brand & Design</p>
-          <h3 class="font-display">Decoplant</h3>
-          <p class="h-case-p"><b>Reto.</b> <span>Dos líneas de negocio que necesitaban una sola marca coherente.</span></p>
-          <p class="h-case-p"><b>Resultado.</b> <span>Naming e identidad visual completos, creados desde cero.</span></p>
-          <span class="h-more">Ver caso <i><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span>
-        </div>
-      </a>
-      <a href="proyectos/legacy-podcast/" class="h-case rv">
-        <div class="h-case-img"><img src="assets/badge-legacy.png" alt="Proyecto Legacy Podcast: logotipo del cliente" loading="lazy" width="640" height="640"></div>
-        <div class="h-case-body">
-          <p class="h-case-tags">Content Production</p>
-          <h3 class="font-display">Legacy Podcast</h3>
-          <p class="h-case-p"><b>Reto.</b> <span>Lanzar un podcast con concepto y dirección de arte propios.</span></p>
-          <p class="h-case-p"><b>Resultado.</b> <span>35.000 reproducciones orgánicas en el primer episodio, sin pauta paga.</span></p>
-          <span class="h-more">Ver caso <i><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span>
-        </div>
-      </a>
+      <div class="h-stage rv">
+        <div id="sys" class="sys" aria-label="Seis disciplinas conectadas alrededor de tu objetivo"></div>
+        <p class="sys-cap" id="sys-cap" aria-live="polite"></p>
       </div>
     </div>
   </section>
 
-<!-- SERVICIOS / BENTO -->
+  <!-- SERVICIOS / BENTO -->
   <section id="servicios" class="h-sec h-sec--line">
     <div class="h-wrap">
       <div class="h-head">
         <h2 class="h-title rv">Nuestros servicios</h2>
-        <p class="h-lead rv">Cada área resuelve un problema concreto de tu negocio. Combinamos solo las que necesitas.</p>
+        <p class="h-lead rv">Somos un estudio multidisciplinario dedicado a soluciones de diseño, comunicación, producción y tecnología. Cada proyecto combina las piezas que necesita.</p>
       </div>
 
       <div class="h-bento">
@@ -346,8 +308,7 @@
           <div>
             <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"/><path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z"/></svg>
             <h3 class="font-display">Brand &amp; Design</h3>
-            <p class="h-prob">Tu marca no refleja el nivel de tu negocio.</p>
-            <p>Una identidad y un sistema visual coherentes, también para tus redes, que generan confianza y se recuerdan.</p>
+            <p>Identidad visual, branding, naming, diseño para redes sociales, UI/UX y manuales de marca.</p>
             <ul class="h-pills"><li>Identidad visual</li><li>Diseño para redes sociales</li><li>Naming</li><li>UI/UX</li><li>Manual de marca</li></ul>
           </div>
           <div class="h-foot"><div class="app-row" role="list"><span class="app" role="listitem" title="Illustrator" aria-label="Illustrator"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-ai"/></svg></span><span class="app" role="listitem" title="Photoshop" aria-label="Photoshop"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-ps"/></svg></span><span class="app" role="listitem" title="After Effects" aria-label="After Effects"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-ae"/></svg></span><span class="app" role="listitem" title="InDesign" aria-label="InDesign"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-id"/></svg></span><span class="app" role="listitem" title="Adobe XD" aria-label="Adobe XD"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-xd"/></svg></span></div><span class="h-more">Ver servicio <i><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span></div>
@@ -358,8 +319,7 @@
           <div>
             <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             <h3 class="font-display">Social Media</h3>
-            <p class="h-prob">Publicas, pero las redes no te traen clientes.</p>
-            <p>Estrategia, constancia y medición para atraer a las personas correctas.</p>
+            <p>Estrategia, gestión de comunidad y crecimiento en Instagram, TikTok y más.</p>
             <ul class="h-pills"><li>Estrategia</li><li>Comunidad</li><li>Instagram</li><li>TikTok</li></ul>
           </div>
           <div class="h-foot"><div class="app-row" role="list"><span class="app" role="listitem" title="Instagram" aria-label="Instagram"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-ig"/></svg></span><span class="app" role="listitem" title="TikTok" aria-label="TikTok"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-tt"/></svg></span><span class="app" role="listitem" title="YouTube" aria-label="YouTube"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-yt"/></svg></span><span class="app" role="listitem" title="Facebook" aria-label="Facebook"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-fb"/></svg></span></div><span class="h-more">Ver servicio <i><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span></div>
@@ -370,8 +330,7 @@
           <div>
             <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="14" height="14" rx="2" stroke="white" stroke-opacity=".85" stroke-width="1.4"/><path d="M17 9.5L21 7V17L17 14.5" stroke="white" stroke-opacity=".85" stroke-width="1.4" stroke-linejoin="round"/></svg>
             <h3 class="font-display">Content Production</h3>
-            <p class="h-prob">Tu contenido pasa desapercibido.</p>
-            <p>Vídeo y foto con una idea detrás, listos para redes y campañas.</p>
+            <p>Dirección creativa, producción audiovisual, fotografía, video y edición.</p>
           </div>
           <div class="h-foot"><div class="app-row" role="list"><span class="app" role="listitem" title="Photoshop" aria-label="Photoshop"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-ps"/></svg></span><span class="app" role="listitem" title="Premiere Pro" aria-label="Premiere Pro"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-pr"/></svg></span><span class="app" role="listitem" title="After Effects" aria-label="After Effects"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-ae"/></svg></span><span class="app" role="listitem" title="Lightroom" aria-label="Lightroom"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-lr"/></svg></span><span class="app" role="listitem" title="Canva" aria-label="Canva"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-canva"/></svg></span></div><span class="h-more">Ver servicio <i><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span></div>
         </a>
@@ -381,8 +340,7 @@
           <div>
             <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="white" stroke-opacity=".85" stroke-width="1.4"/><path d="M3 8h18" stroke="white" stroke-opacity=".85" stroke-width="1.4"/><circle cx="6" cy="6" r=".6" fill="white" fill-opacity=".85"/><circle cx="8" cy="6" r=".6" fill="white" fill-opacity=".85"/><path d="M8 21h8M12 18v3" stroke="white" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round"/></svg>
             <h3 class="font-display">Web &amp; Digital Development</h3>
-            <p class="h-prob">Tu web existe, pero no capta ni vende.</p>
-            <p>Un sitio que capta clientes, recibe pedidos, reservas y pagos, y se conecta con tus herramientas.</p>
+            <p>E-commerce, landing pages, dashboards y plataformas a medida.</p>
           </div>
           <div class="h-foot"><div class="app-row" role="list"><span class="app" role="listitem" title="Adobe XD" aria-label="Adobe XD"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-xd"/></svg></span><span class="app" role="listitem" title="Shopify" aria-label="Shopify"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-shopify"/></svg></span><span class="app" role="listitem" title="Wix" aria-label="Wix"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-wix"/></svg></span><span class="app" role="listitem" title="WooCommerce" aria-label="WooCommerce"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-woo"/></svg></span><span class="app" role="listitem" title="JavaScript" aria-label="JavaScript"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-js"/></svg></span><span class="app" role="listitem" title="WordPress" aria-label="WordPress"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-wp"/></svg></span><span class="app" role="listitem" title="React" aria-label="React"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-react"/></svg></span></div><span class="h-more">Ver servicio <i><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span></div>
         </a>
@@ -392,8 +350,7 @@
           <div>
             <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M4 17L9 11L13 14L20 6" stroke="white" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 6H20V12" stroke="white" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <h3 class="font-display">Growth &amp; Marketing</h3>
-            <p class="h-prob">Tu negocio no aparece cuando te buscan.</p>
-            <p>SEO, Google Ads, Meta Ads y optimización de conversión, medidos en leads y ventas.</p>
+            <p>SEO, GEO/AEO, Google Ads, Meta Ads y generación de leads.</p>
           </div>
           <div class="h-foot"><div class="app-row" role="list"><span class="app" role="listitem" title="Google" aria-label="Google"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-google"/></svg></span><span class="app" role="listitem" title="Meta" aria-label="Meta"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-meta"/></svg></span><span class="app" role="listitem" title="ChatGPT" aria-label="ChatGPT"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-chatgpt"/></svg></span><span class="app" role="listitem" title="Gemini" aria-label="Gemini"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-gemini"/></svg></span><span class="app" role="listitem" title="Claude" aria-label="Claude"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-claude"/></svg></span><span class="app" role="listitem" title="Google Analytics" aria-label="Google Analytics"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-ga"/></svg></span></div><span class="h-more">Ver servicio <i><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span></div>
         </a>
@@ -403,8 +360,7 @@
           <div class="h-card-main">
             <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none"><rect x="5" y="7" width="14" height="11" rx="3" stroke="white" stroke-opacity=".85" stroke-width="1.4"/><path d="M12 7V4" stroke="white" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="3" r="1" fill="white" fill-opacity=".85"/><circle cx="9" cy="12.5" r="1.3" fill="white" fill-opacity=".85"/><circle cx="15" cy="12.5" r="1.3" fill="white" fill-opacity=".85"/></svg>
             <h3 class="font-display">AI &amp; Automation</h3>
-            <p class="h-prob">Tu equipo pierde horas en tareas repetitivas.</p>
-            <p>Agentes y automatizaciones que responden, clasifican y conectan tus herramientas.</p>
+            <p>Agentes de IA, chatbots y automatización de procesos comerciales. Detectamos dónde pierdes horas y lo automatizamos.</p>
           </div>
           <div class="h-foot"><div class="app-row" role="list"><span class="app" role="listitem" title="n8n" aria-label="n8n"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-n8n"/></svg></span><span class="app" role="listitem" title="Make" aria-label="Make"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-make"/></svg></span><span class="app" role="listitem" title="Zapier" aria-label="Zapier"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-zapier"/></svg></span><span class="app" role="listitem" title="ChatGPT" aria-label="ChatGPT"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-chatgpt"/></svg></span><span class="app" role="listitem" title="Claude" aria-label="Claude"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ap-claude"/></svg></span></div><span class="h-more">Ver servicio <i><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span></div>
         </a>
@@ -413,51 +369,45 @@
     </div>
   </section>
 
-  <!-- TODO CONECTADO -->
-  <section class="h-sec h-sec--line" id="quienes-somos">
-    <div class="h-wrap h-split">
-      <div class="h-split-copy">
-        <h2 class="h-title rv">Un solo equipo.<br/>Todo conectado.</h2>
+  <!-- QUIÉNES SOMOS -->
+  <section id="quienes-somos" class="h-sec h-sec--line">
+    <div class="h-wrap">
+      <h2 class="h-title h-title--xl rv" style="max-width:18ch">Construimos lo que las marcas necesitan para avanzar.</h2>
+
+      <div class="h-about">
         <div class="h-copy rv">
-          <p>Una marca no crece con una pieza aislada. En LE STUDIO conectamos branding, contenido, marketing, tecnología e IA bajo una misma estrategia y un mismo criterio.</p>
+          <p>LE STUDIO es un estudio independiente de estrategia, creatividad y tecnología.</p>
+          <p>Trabajamos con empresas y marcas que necesitan algo más que un proveedor: un equipo capaz de entender el problema, encontrar la oportunidad y convertirla en una solución.</p>
+          <p>Por eso no empezamos preguntando qué quieres publicar. Empezamos preguntando qué quieres conseguir. A partir de ahí, diseñamos la estrategia, construimos la solución y medimos lo que ocurre.</p>
         </div>
-        <button onclick="openContactForm('Hola, quiero que me ayuden a definir por dónde empezar.')" class="btn-ghost btn-lg rv" style="margin-top:8px">Ver cómo podemos ayudarte</button>
+        <div class="h-copy rv">
+          <p><strong>No construimos un equipo enorme. Construimos el equipo adecuado para cada proyecto.</strong> Según lo que necesite cada marca, integramos a los especialistas de cada disciplina, siempre bajo la misma dirección y el mismo criterio.</p>
+          <p class="h-sign">Pensamos. Diseñamos. Construimos. Hacemos crecer.</p>
+        </div>
       </div>
-      <div class="h-stage rv">
-        <div id="sys" class="sys" aria-label="Seis disciplinas conectadas alrededor de tu objetivo"></div>
-        <p class="sys-cap" id="sys-cap" aria-live="polite"></p>
+
+      
+    </div>
+  </section>
+
+  <!-- PORTAFOLIO (preview con auto-scroll) -->
+  <section id="portafolio" class="h-sec h-sec--line" style="overflow:hidden">
+    <div class="h-wrap h-row-head">
+      <div>
+        <h2 class="h-title rv">Trabajo seleccionado</h2>
+        <p class="h-lead rv">Una selección de proyectos en los que estrategia, creatividad y tecnología trabajan juntas.</p>
+      </div>
+      <button onclick="showPortfolioPage()" class="btn-ghost btn-lg rv" style="flex-shrink:0">Ver portafolio completo</button>
+    </div>
+    <div class="marquee-wrap overflow-hidden h-work" id="portfolio-marquee-wrap">
+      <div class="marquee-track gap-5 px-6" id="portfolio-marquee-track">
+        <div class="flex gap-5" id="portfolio-marquee-a"></div>
+        <div class="flex gap-5" id="portfolio-marquee-b"></div>
       </div>
     </div>
   </section>
 
-    <!-- RESULTADOS -->
-  <section id="resultados" class="h-sec h-sec--line">
-    <div class="h-wrap">
-      <h2 class="h-title rv">Resultados reales</h2>
-      <p class="h-lead rv">Datos verificables de proyectos que hemos hecho.</p>
-      <div class="h-stats">
-        <a href="proyectos/legacy-podcast/" class="h-stat glass rv"><b class="font-display">35.000</b><span>reproducciones orgánicas en el primer episodio del podcast de Legacy World</span></a>
-        <a href="proyectos/winners-producto/" class="h-stat glass rv"><b class="font-display">+200</b><span>uniformes diseñados y producidos para una liga completa</span></a>
-        <a href="proyectos/" class="h-stat glass rv"><b class="font-display">12</b><span>proyectos documentados en nuestro portafolio</span></a>
-        <a href="#servicios" class="h-stat glass rv"><b class="font-display">6</b><span>disciplinas bajo una misma dirección</span></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROCESO -->
-  <section id="proceso" class="h-sec h-sec--line">
-    <div class="h-wrap">
-      <h2 class="h-title rv">Cómo trabajamos</h2>
-      <ol class="h-steps">
-        <li class="rv"><span>01</span><h3 class="font-display">Entendemos</h3><p>Analizamos la marca, el negocio y los objetivos.</p></li>
-        <li class="rv"><span>02</span><h3 class="font-display">Diseñamos</h3><p>Convertimos el problema en una estrategia y una solución concreta.</p></li>
-        <li class="rv"><span>03</span><h3 class="font-display">Ejecutamos</h3><p>Producimos, desarrollamos y ponemos la solución en marcha.</p></li>
-        <li class="rv"><span>04</span><h3 class="font-display">Optimizamos</h3><p>Medimos, aprendemos y mejoramos.</p></li>
-      </ol>
-    </div>
-  </section>
-
-<!-- TESTIMONIOS -->
+  <!-- TESTIMONIOS -->
   <section class="h-sec h-sec--line" style="overflow:hidden">
     <div class="h-wrap">
       <h2 class="h-title rv" style="max-width:18ch;margin-bottom:56px">Lo que dicen quienes ya trabajaron con nosotros</h2>
@@ -514,7 +464,7 @@
         <h2 class="h-title h-title--xl rv" style="margin-inline:auto;max-width:14ch">¿Qué quieres construir?</h2>
         <p class="h-lead rv" style="margin:24px auto 0">Cuéntanos qué quieres conseguir, qué quieres mejorar o qué está bloqueando el crecimiento de tu negocio. Analizamos el proyecto y te proponemos el siguiente paso.</p>
         <div class="h-hero-ctas rv">
-          <button onclick="openContactForm('Hola, quiero contaros mi proyecto.')" class="btn-primary btn-lg">Analizar mi proyecto</button>
+          <button onclick="openContactForm('Hola, quiero contarles sobre mi proyecto.')" class="btn-primary btn-lg">Enviar proyecto</button>
           <a href="#" data-msg="Hola, quiero contarles sobre mi proyecto." class="js-whatsapp-link btn-ghost btn-lg" target="_blank" rel="noopener">Hablar por WhatsApp</a>
         </div>
       </div>
@@ -615,7 +565,7 @@
   <!-- 05 — QUÉ PUEDE INCLUIR -->
   <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">
     <h2 class="font-display text-3xl md:text-4xl mb-3">Qué puede incluir</h2>
-    <p class="text-white/55 mb-9 max-w-xl">Piezas concretas que puedes combinar según lo que tu proyecto necesite.</p>
+    <p class="text-white/55 mb-9 max-w-xl">Piezas concretas que podés combinar según lo que tu proyecto necesite.</p>
     <div id="sd-includes" class="flex flex-wrap gap-2.5"></div>
   </div>
 
@@ -648,7 +598,7 @@
   <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-24 border-t border-white/10">
     <div class="text-center max-w-2xl mx-auto mb-14">
       <h2 class="font-display text-3xl md:text-4xl mb-4">¿Qué quieres construir?</h2>
-      <p class="text-white/60 leading-relaxed">Cuéntanos qué quieres conseguir, qué quieres mejorar o qué está bloqueando el crecimiento de tu negocio. Analizamos el proyecto y te proponemos el siguiente paso.</p>
+      <p class="text-white/60 leading-relaxed">Cuéntanos qué querés conseguir, qué querés mejorar o qué está bloqueando el crecimiento de tu negocio. Analizamos el proyecto y te proponemos el siguiente paso.</p>
     </div>
 
     <div class="grid lg:grid-cols-[1.4fr_1fr] gap-5">
@@ -680,14 +630,14 @@
         </div>
         <div id="sd-cta-error-panel" class="hidden text-center py-6">
           <h3 class="font-display text-2xl mb-2">No pudimos enviarlo.</h3>
-          <p class="text-white/55 text-sm mb-6">Escríbenos directo por WhatsApp y lo resolvemos enseguida.</p>
+          <p class="text-white/55 text-sm mb-6">Escribinos directo por WhatsApp y lo resolvemos al toque.</p>
           <button onclick="document.getElementById('sd-cta-error-panel').classList.add('hidden'); document.getElementById('sd-cta-form-panel').classList.remove('hidden');" class="btn-ghost font-semibold px-6 py-3 rounded-full text-sm">Volver al formulario</button>
         </div>
       </div>
 
       <div class="glass rounded-3xl p-8 md:p-10 flex flex-col justify-center">
         <h3 class="font-display text-xl mb-3">¿Prefieres hablar directamente?</h3>
-        <p class="text-white/55 text-sm leading-relaxed mb-8">Escríbenos por WhatsApp y cuéntanos qué necesitas.</p>
+        <p class="text-white/55 text-sm leading-relaxed mb-8">Escribinos por WhatsApp y contanos qué necesitás.</p>
         <a id="sd-whatsapp-link" href="#" class="js-whatsapp-link btn-ghost text-center font-semibold px-7 py-3.5 rounded-full" target="_blank" rel="noopener">Hablar por WhatsApp →</a>
       </div>
     </div>
@@ -715,8 +665,8 @@
     <div id="pd-testimonial" class="mb-14"></div>
 
     <div class="glass rounded-3xl p-10 text-center">
-      <h3 class="font-display text-2xl md:text-3xl mb-4">¿Quieres un resultado parecido?</h3>
-      <p class="text-white/55 mb-8 max-w-md mx-auto">Cuéntanos tu proyecto y vemos cómo encararlo.</p>
+      <h3 class="font-display text-2xl md:text-3xl mb-4">¿Querés un resultado parecido?</h3>
+      <p class="text-white/55 mb-8 max-w-md mx-auto">Contanos tu proyecto y vemos cómo encararlo.</p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
         <button id="pd-service-link" class="btn-primary w-full sm:w-auto text-center font-semibold px-8 py-3.5 rounded-full">Ver el servicio</button>
         <a href="#" class="js-whatsapp-link btn-ghost w-full sm:w-auto text-center font-semibold px-8 py-3.5 rounded-full" target="_blank" rel="noopener">Escríbenos</a>
@@ -744,7 +694,7 @@
 
     <div id="review-form-panel">
       <p class="text-white/45 text-sm mb-3 tracking-[0.15em] uppercase">LE STUDIO</p>
-      <h1 class="font-display text-3xl md:text-4xl mb-4">Cuéntanos cómo te fue.</h1>
+      <h1 class="font-display text-3xl md:text-4xl mb-4">Contanos cómo te fue.</h1>
       <p class="text-white/60 leading-relaxed mb-10">Tu reseña nos ayuda a mostrarle a otras marcas el trabajo que hacemos. Toma menos de un minuto.</p>
 
       <div class="glass rounded-3xl p-8 space-y-4">
@@ -780,7 +730,7 @@
         </div>
         <div>
           <label class="block text-white/55 text-xs mb-1.5">Descripción <span class="text-white/35">*</span></label>
-          <textarea id="review-text" rows="4" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Cuéntanos tu experiencia trabajando con nosotros..."></textarea>
+          <textarea id="review-text" rows="4" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Contanos tu experiencia trabajando con nosotros..."></textarea>
         </div>
         <button id="review-submit-btn" onclick="submitReview()" class="btn-primary w-full text-center font-semibold px-7 py-3.5 rounded-full">Enviar reseña</button>
       </div>
@@ -796,7 +746,7 @@
 
     <div id="review-error-panel" class="hidden text-center py-10">
       <h3 class="font-display text-2xl mb-2">No pudimos enviarla.</h3>
-      <p class="text-white/55 text-sm mb-8">Escríbenos directo por WhatsApp y te la tomamos ahí.</p>
+      <p class="text-white/55 text-sm mb-8">Escribinos directo por WhatsApp y te la tomamos ahí.</p>
       <a href="#" data-msg="Hola, quiero dejarles una reseña." class="js-whatsapp-link btn-primary inline-block font-semibold px-7 py-3.5 rounded-full" target="_blank" rel="noopener">Hablar por WhatsApp</a>
     </div>
 
@@ -807,11 +757,11 @@
 <div id="custom-plan-modal" class="modal-overlay">
   <div class="glass rounded-3xl p-8 max-w-lg w-full max-h-[85vh] overflow-y-auto">
     <h3 id="custom-plan-title" class="font-display text-2xl mb-2">Arma tu plan</h3>
-    <p class="text-white/55 text-sm mb-6">Marca lo que necesitas. En el siguiente paso nos dejas tus datos de contacto.</p>
+    <p class="text-white/55 text-sm mb-6">Marcá lo que necesitás. En el siguiente paso nos dejás tus datos de contacto.</p>
     <input type="hidden" id="custom-plan-category" value="" />
     <div id="custom-plan-checklist" class="space-y-3 mb-6"></div>
     <label class="block text-white/55 text-sm mb-2">Notas adicionales (opcional)</label>
-    <textarea id="custom-plan-notes" rows="3" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30 mb-6" placeholder="Cuéntanos algo más sobre tu proyecto..."></textarea>
+    <textarea id="custom-plan-notes" rows="3" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30 mb-6" placeholder="Contanos algo más sobre tu proyecto..."></textarea>
     <div class="flex flex-col sm:flex-row gap-3">
       <button onclick="submitCustomPlan()" class="btn-primary flex-1 font-semibold px-6 py-3 rounded-full text-sm">Continuar</button>
       <button onclick="closeCustomPlan()" class="btn-ghost flex-1 font-semibold px-6 py-3 rounded-full text-sm">Cancelar</button>
@@ -883,7 +833,7 @@
 
     <div id="contact-error-panel" class="hidden text-center py-6">
       <h3 class="font-display text-2xl mb-2">No pudimos enviarlo.</h3>
-      <p class="text-white/55 text-sm mb-8">Escríbenos directo por WhatsApp o a nuestro correo y lo resolvemos enseguida.</p>
+      <p class="text-white/55 text-sm mb-8">Escribinos directo por WhatsApp o a nuestro correo y lo resolvemos al toque.</p>
       <div class="flex flex-col sm:flex-row gap-3 justify-center">
         <a href="#" data-msg="Hola, quiero contarles sobre mi proyecto." class="js-whatsapp-link btn-primary font-semibold px-6 py-3 rounded-full text-sm" target="_blank" rel="noopener">WhatsApp</a>
         <button onclick="document.getElementById('contact-error-panel').classList.add('hidden'); document.getElementById('contact-form-panel').classList.remove('hidden');" class="btn-ghost font-semibold px-6 py-3 rounded-full text-sm">Volver al formulario</button>
