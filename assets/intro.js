@@ -16,8 +16,22 @@
   };
   var T = TXT[lang];
   document.getElementById('intro-skip').textContent = T.skip;
-  var dateEl = document.getElementById('lock-date');
-  try { var d = new Date().toLocaleDateString(lang === 'en' ? 'en-US' : 'es-ES', { weekday:'long', day:'numeric', month:'long' }); dateEl.textContent = d.charAt(0).toUpperCase() + d.slice(1); } catch(e){}
+  // Fecha y hora reales del dispositivo (zona horaria de quien entra a la página)
+  var dateEl = document.getElementById('lock-date'), timeEl = document.getElementById('lock-time');
+  var locale = lang === 'en' ? 'en-US' : 'es-ES';
+  function tick(){
+    var now = new Date();
+    try {
+      var d = now.toLocaleDateString(locale, { weekday:'long', day:'numeric', month:'long' });
+      dateEl.textContent = d.charAt(0).toUpperCase() + d.slice(1);
+      var parts = new Intl.DateTimeFormat(locale, { hour:'numeric', minute:'2-digit', hour12: lang === 'en' }).formatToParts(now);
+      timeEl.textContent = parts.filter(function(p){ return p.type !== 'dayPeriod' && !(p.type === 'literal' && /\s/.test(p.value)); }).map(function(p){ return p.value; }).join('');
+    } catch(e){
+      timeEl.textContent = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2);
+    }
+  }
+  tick();
+  var clock = setInterval(tick, 1000);
   var line = document.getElementById('intro-line');
   line.innerHTML = T.line.split(' ').map(function(w){ return '<span class="w">' + w + '</span>'; }).join(' ');
   var caps = intro.querySelectorAll('.chart figcaption span');
@@ -38,7 +52,7 @@
 
   function finish(){
     if(done) return; done = true;
-    timers.forEach(clearTimeout);
+    timers.forEach(clearTimeout); clearInterval(clock);
     try { sessionStorage.setItem('intro_seen', '1'); } catch(e){}
     intro.classList.add('out');
     setTimeout(function(){ root.classList.remove('intro-on'); }, 800);
