@@ -483,16 +483,16 @@
       ]},
     ],
     social: [
-      { n: '01', name: 'Starter', tagline: 'Plan de entrada para probar el servicio.', lead: 'Pensado como plan de entrada para probar el servicio.',
+      { n: '01', name: 'Starter', price: { amount: '250 €', unit: '· 30 días' }, tagline: 'Plan de entrada para probar el servicio.', lead: 'Pensado como plan de entrada para probar el servicio.',
         items: ['Auditoría inicial del perfil','Optimización básica','Planificación mensual','Calendario de contenido','Dirección visual básica','Guiones/copies básicos','Diseño y adaptación de piezas','6–8 piezas de contenido','2 reels sencillos','Stories','Publicación/programación','Retoque fotográfico básico','Reporte final del mes'],
         note: 'No incluye: community management continuo, ads, influencers ni estrategia avanzada. Disponible una sola vez por cliente.' },
-      { n: '02', name: 'Basic', tagline: 'Para delegar la gestión habitual de tus redes.', lead: 'Para negocios que quieren delegar la gestión habitual de sus redes.',
+      { n: '02', name: 'Essential', price: { amount: '400 €', unit: '/mes' }, tagline: 'Para delegar la gestión habitual de tus redes.', lead: 'Para negocios que quieren delegar la gestión habitual de sus redes.',
         items: ['Estrategia mensual de contenido','Planificación y calendario','Dirección creativa de contenido','Definición de líneas visuales y temáticas','Guiones y copywriting','8–12 piezas principales al mes','Reels','Stories','Diseño gráfico','Retoque fotográfico','Publicación y programación','Community management básico','Optimización continua del perfil','Informe mensual','Reunión mensual'],
         note: 'Incluye dirección creativa, centrada principalmente en cómo se comunica la marca en redes.' },
-      { n: '03', name: 'Growth', tagline: 'Redes como herramienta de crecimiento y adquisición.', lead: 'Para negocios que quieren utilizar redes como herramienta de crecimiento y adquisición.', includes: 'Incluye todo Basic +',
+      { n: '03', name: 'Growth', price: { amount: '750 €', unit: '/mes' }, tagline: 'Redes como herramienta de crecimiento y adquisición.', lead: 'Para negocios que quieren utilizar redes como herramienta de crecimiento y adquisición.', includes: 'Incluye todo Essential +',
         items: ['Dirección creativa estratégica','Conceptos de campaña','Desarrollo de narrativas y líneas de comunicación','Mayor producción de contenido','Estrategia de crecimiento','Gestión de Meta Ads o Google Ads','Creatividades publicitarias','Segmentación y optimización de campañas','Influencer / creator outreach','Análisis de competencia','Identificación de oportunidades y tendencias','Reporting avanzado','Seguimiento de leads, clics y conversiones cuando sea posible','Reunión estratégica mensual'],
         note: 'Inversión publicitaria e influencers no incluidos.' },
-      { n: '04', name: 'Advance', tagline: 'Para delegar gran parte de tu ecosistema digital.', lead: 'Para negocios que quieren delegar gran parte de su ecosistema digital.', includes: 'Incluye todo Growth +',
+      { n: '04', name: 'Scale', price: { amount: '1.200 €', unit: '/mes' }, tagline: 'Para delegar gran parte de tu ecosistema digital.', lead: 'Para negocios que quieren delegar gran parte de su ecosistema digital.', includes: 'Incluye todo Growth +',
         items: ['Dirección creativa integral de marca digital','Estrategia multicanal','Meta Ads','Google Ads','Influencer Marketing','Google Business Profile','Campañas y lanzamientos','Estrategia promocional','Coordinación entre redes, web, anuncios y presencia local','Revisión de conversión web','Recomendaciones de landing pages, funnels y CTA','Reporting orientado a negocio','Consultoría estratégica','Mayor disponibilidad y seguimiento','Reuniones estratégicas periódicas'],
         note: 'Producción audiovisual profesional, inversión publicitaria, influencers y desarrollos web importantes se presupuestan aparte.' },
     ],
@@ -503,7 +503,7 @@
         items: ['Todo lo esencial del plan Starter','Formularios avanzados con lógica de pedido o reserva','Comandas automáticas por WhatsApp o correo','Cálculo de productos, extras o cantidades cuando aplique','Confirmaciones y automatizaciones básicas'] },
       { n: '03', name: 'E-commerce', tagline: 'Pedidos + pagos.', lead: 'Para negocios que tramitan pedidos y pagos directamente desde su web mediante una pasarela de pago segura.',
         items: ['Catálogo, carrito y checkout','Pasarela de pago','Tarjeta, Apple Pay y Google Pay cuando la plataforma lo permita','Confirmaciones automáticas de pedido y pago','Backend, webhooks y medidas de seguridad cuando sean necesarios','Gestión básica de pedidos'] },
-      { n: '04', name: 'Commerce Integration', tagline: 'Ecosistema conectado. Según presupuesto.', lead: 'Para negocios que necesitan que la web forme parte de su ecosistema de ventas y operación. Se cotiza según presupuesto.',
+      { n: '04', name: 'Commerce Integration', cta: 'Solicitar presupuesto', tagline: 'Ecosistema conectado. Según presupuesto.', lead: 'Para negocios que necesitan que la web forme parte de su ecosistema de ventas y operación. Se cotiza según presupuesto.',
         items: ['Pedidos y pagos conectados con sistemas internos','Integración con TPV / POS','APIs, webhooks y automatizaciones avanzadas','Flujos multilocal cuando sea necesario','Sincronización con stock, CRM, ERP u otras herramientas','Arquitectura técnica adaptada al negocio'] },
     ],
   };
@@ -515,11 +515,12 @@
     social: {
       title: 'Un plan para cada etapa de tu marca',
       intro: 'Desde probar el servicio hasta delegar gran parte de tu ecosistema digital. Elegimos el nivel según lo que tu negocio necesita conseguir en redes.',
+      notice: { tag: 'Desde', text: 'Los importes indicados son precios desde. El presupuesto final se ajusta a lo que tu negocio necesita conseguir.' },
       how: { title: 'Cómo elegimos el plan', rows: [
         ['Starter', 'Una primera toma de contacto para probar el servicio, disponible una sola vez por cliente.'],
-        ['Basic', 'Gestión habitual de las redes, con dirección creativa centrada en cómo se comunica la marca.'],
+        ['Essential', 'Gestión habitual de las redes, con dirección creativa centrada en cómo se comunica la marca.'],
         ['Growth', 'Se pasa de dirigir contenido a dirigir campañas orientadas al crecimiento.'],
-        ['Advance', 'Dirección integral de la marca digital, coordinando redes, web, anuncios y presencia local.'] ] }
+        ['Scale', 'Dirección integral de la marca digital, coordinando redes, web, anuncios y presencia local.'] ] }
     },
     web: {
       title: 'Webs que hacen más por tu negocio',
@@ -562,6 +563,7 @@
       <div class="glass rounded-3xl p-8 flex flex-col">
         ${plan.n ? `<p class="text-[11px] tracking-[0.18em] uppercase text-white/40 mb-3">${plan.n} · ${plan.name}</p>` : ''}
         <h3 class="font-display text-2xl mb-2">${plan.name}</h3>
+        ${plan.price ? `<p class="mb-3"><span class="text-xs text-white/45 mr-1.5">Desde</span><span class="font-display text-3xl">${plan.price.amount}</span> <span class="text-white/50 text-sm">${plan.price.unit}</span></p>` : ''}
         ${plan.tagline ? `<p class="text-white/60 text-[14px] leading-relaxed mb-1">${plan.tagline}</p>` : ''}
         ${plan.lead ? `<p class="text-white/45 text-[13px] leading-relaxed mb-5">${plan.lead}</p>` : '<div class="mb-4"></div>'}
         ${plan.includes ? `<p class="text-[11px] tracking-[0.16em] uppercase text-white/55 mb-3">${plan.includes}</p>` : (plan.lead ? '<p class="text-[11px] tracking-[0.16em] uppercase text-white/55 mb-3">Incluye</p>' : '')}
@@ -573,7 +575,7 @@
             </li>`).join('')}
         </ul>
         ${plan.note ? `<p class="text-white/55 text-[13px] leading-relaxed border-t border-white/10 pt-4 mb-6">${plan.note}</p>` : ''}
-        <button ${qAttr(quoteMsg, svcValue)} class="btn-primary text-center font-semibold px-6 py-3 rounded-full text-sm">Solicitar presupuesto</button>
+        <button ${qAttr(quoteMsg, svcValue)} class="btn-primary text-center font-semibold px-6 py-3 rounded-full text-sm">${plan.cta || 'Hablar sobre este plan'}</button>
       </div>`;
     }).join('');
 
@@ -615,7 +617,7 @@
               <div class="grid md:grid-cols-2 gap-5">${g.items.map(it => `
                 <div class="glass rounded-2xl p-6 flex flex-col gap-4 justify-between">
                   <div><p class="text-[11px] tracking-[0.18em] uppercase text-white/40 mb-2">Web Care</p><h4 class="font-display text-xl mb-1">${it[0]}</h4><p class="text-white/60 text-[14px]">${it[1]}</p></div>
-                  <button ${qAttr('Hola, quiero información sobre el mantenimiento ' + it[0] + '.', pricingServiceValue.web)} class="btn-ghost text-center font-semibold px-5 py-2.5 rounded-full text-sm self-start">Solicitar presupuesto</button>
+                  <button ${qAttr('Hola, quiero información sobre el mantenimiento ' + it[0] + '.', pricingServiceValue.web)} class="btn-ghost text-center font-semibold px-5 py-2.5 rounded-full text-sm self-start">Hablar sobre este plan</button>
                 </div>`).join('')}</div>
               <p class="text-white/45 text-[13px] leading-relaxed mt-3 px-1">${g.note}</p>
             </div>`).join('')}
@@ -634,7 +636,7 @@
           ${ex.items.map(it => `
             <div class="glass rounded-2xl p-6 flex flex-col gap-4 justify-between">
               <div><h4 class="font-display text-xl mb-2">${it[0]}</h4><p class="text-white/60 text-[14px] leading-relaxed">${it[1]}</p></div>
-              <button ${qAttr('Hola, quiero presupuestar: ' + it[0] + ' (' + pricingLabels[category] + ').', pricingServiceValue[category])} class="btn-primary text-center font-semibold px-5 py-2.5 rounded-full text-sm self-start">Presupuestar</button>
+              <button ${qAttr('Hola, quiero presupuestar: ' + it[0] + ' (' + pricingLabels[category] + ').', pricingServiceValue[category])} class="btn-primary text-center font-semibold px-5 py-2.5 rounded-full text-sm self-start">Consultar</button>
             </div>`).join('')}
         </div>
         ${meta.closing ? `<div class="rounded-3xl p-7 mt-8 bg-white text-[#021024]"><h4 class="font-display text-xl mb-1">${meta.closing.title}</h4><p class="opacity-75 text-[15px] leading-relaxed">${meta.closing.text}</p></div>` : ''}
@@ -826,7 +828,7 @@
       description: 'Gestionamos tus redes sociales como un canal de negocio, no como un simple calendario de publicaciones. Definimos la estrategia, planificamos el contenido, gestionamos la comunidad y analizamos el rendimiento para construir una presencia digital coherente y orientada al crecimiento.',
       ctaLabel: 'Quiero hacer crecer mis redes',
       intro: [
-        'Cualquiera puede programar publicaciones. Lo que separa una red social que vende de una que solo existe es la estrategia detrás: saber para quién hablás, qué querés lograr con cada pieza y cómo se conecta un mes con el siguiente.',
+        'Cualquiera puede programar publicaciones. Lo que separa una red social que vende de una que solo existe es la estrategia detrás: saber para quién hablas, qué quieres lograr con cada pieza y cómo se conecta un mes con el siguiente.',
         'Trabajamos con marcas que ya entendieron que las redes no son gratis solo porque no se pagan en pauta — cuestan tiempo, consistencia y criterio. Nosotros ponemos las tres cosas, para que vos no tengas que estar pendiente de qué publicar hoy.'
       ],
       whatWeDo: [
@@ -845,7 +847,7 @@
       pricing: 'social',
       faq: [
         { q: '¿Qué redes sociales gestionáis?', a: 'Principalmente Instagram y TikTok, aunque nos adaptamos a la plataforma donde esté tu audiencia. Lo definimos juntos según tu marca y tu objetivo, no aplicamos la misma fórmula a todos los clientes.' },
-        { q: '¿También producís el contenido?', a: 'Sí. La estrategia y la producción van de la mano dentro de este servicio, y si necesitás piezas más elaboradas, se conecta directo con Content Production sin fricción entre equipos.' },
+        { q: '¿También producís el contenido?', a: 'Sí. La estrategia y la producción van de la mano dentro de este servicio, y si necesitas piezas más elaboradas, se conecta directo con Content Production sin fricción entre equipos.' },
         { q: '¿Podemos contratar únicamente estrategia?', a: 'Sí, es posible. Muchos clientes ya tienen equipo interno de community management y solo necesitan la definición estratégica y el calendario. Lo conversamos según tu caso.' },
         { q: '¿Gestionáis comentarios y mensajes?', a: 'Sí, el community management incluye responder comentarios y mensajes directos dentro del horario y el tono que definamos juntos para tu marca.' },
         { q: '¿Cuánto contenido se publica al mes?', a: 'Depende del plan que elijas. Los tres niveles —básico, intermedio y avanzado— tienen cantidades distintas de posts, reels e historias, detalladas en la sección de planes.' },
@@ -881,7 +883,7 @@
         { q: '¿Trabajáis con video y fotografía?', a: 'Sí, ambos formatos forman parte del servicio y normalmente se planifican juntos dentro de una misma producción para aprovechar cada sesión.' },
         { q: '¿Podéis producir contenido para redes?', a: 'Sí, es uno de los usos más frecuentes: contenido vertical, reels y piezas pensadas específicamente para el consumo en redes sociales.' },
         { q: '¿También os encargáis de la edición?', a: 'Sí, montaje, color, sonido y motion graphics están incluidos — no entregamos material crudo sin terminar.' },
-        { q: '¿Podemos contratar únicamente la producción?', a: 'Sí, si ya tenés un equipo de edición interno podemos encargarnos solo de la parte de grabación y dirección creativa.' },
+        { q: '¿Podemos contratar únicamente la producción?', a: 'Sí, si ya tienes un equipo de edición interno podemos encargarnos solo de la parte de grabación y dirección creativa.' },
         { q: '¿Trabajáis con campañas publicitarias?', a: 'Sí, producimos piezas pensadas para campañas pagas, coordinado con el equipo de Growth & Marketing cuando el proyecto lo requiere.' },
         { q: '¿Podéis crear diferentes formatos a partir de una producción?', a: 'Sí, de una misma sesión solemos adaptar múltiples piezas: reel, historia, corte horizontal y vertical, para aprovechar mejor cada producción.' },
         { q: '¿Trabajáis con contenido generado mediante IA?', a: 'Lo evaluamos caso por caso. Priorizamos producción real, pero hay procesos puntuales (como algunas adaptaciones o pruebas de concepto) donde la IA puede sumar sin reemplazar la producción original.' }
@@ -915,7 +917,7 @@
       faq: [
         { q: '¿Creáis identidades de marca desde cero?', a: 'Sí, es uno de los proyectos más completos que hacemos: desde el naming y el concepto hasta el manual de marca final.' },
         { q: '¿También trabajáis sobre marcas existentes?', a: 'Sí, muchos proyectos son de evolución de marca: mantenemos lo que ya funciona y corregimos lo que genera inconsistencia.' },
-        { q: '¿Qué incluye un proyecto de branding?', a: 'Depende del nivel elegido — tenés el detalle exacto en la sección de planes de esta página, desde identidad básica hasta un sistema de marca completo.' },
+        { q: '¿Qué incluye un proyecto de branding?', a: 'Depende del nivel elegido — tienes el detalle exacto en la sección de planes de esta página, desde identidad básica hasta un sistema de marca completo.' },
         { q: '¿Diseñáis únicamente el logo?', a: 'Podemos, pero recomendamos pensarlo como parte de un sistema: tipografías, paleta y aplicaciones, para que el logo funcione bien en cualquier contexto.' },
         { q: '¿Trabajáis también diseño para redes sociales?', a: 'Sí. Diseñamos posts, historias, carruseles, portadas y plantillas editables usando el mismo sistema visual de tu marca, para que redes, web y papelería se vean como una sola cosa.' },
         { q: '¿Podéis diseñar la interfaz de una web o aplicación?', a: 'Sí, el diseño UI/UX forma parte de este servicio y se coordina directamente con el equipo de Web & Digital Development cuando hay que construirla.' },
@@ -954,7 +956,7 @@
         { q: '¿Podéis conectar diferentes herramientas?', a: 'Sí, las integraciones vía API con CRM, email o pasarelas de pago son parte habitual de estos proyectos.' },
         { q: '¿Desarrolláis dashboards?', a: 'Sí, paneles internos para visualizar datos o gestionar operaciones son uno de los productos que más construimos a medida.' },
         { q: '¿Podéis mantener una web después del lanzamiento?', a: 'Sí, ofrecemos mantenimiento y soporte continuo para que el sitio siga funcionando bien mucho después de publicado.' },
-        { q: '¿Podéis crear una plataforma digital desde cero?', a: 'Sí, es uno de los proyectos más completos: relevamos el proceso real de tu negocio y construimos la herramienta alrededor de eso.' }
+        { q: '¿Podéis crear una plataforma digital desde cero?', a: 'Sí, es uno de los proyectos más completos: analizamos el proceso real de tu negocio y construimos la herramienta alrededor de eso.' }
       ],
       related: ['brand-design', 'growth-marketing', 'ai-automation'],
       featuredProject: 'legacy-world-ecommerce'
@@ -1192,10 +1194,11 @@
     }
   }
 
-  function aBuildReply(userText){
+  function aBuildReply(userText, goalArg){
     const norm = aNorm(userText);
     const intent = aIntent(norm);
     let scored = aScoreServices(norm);
+    if(goalArg && goalArg.services){ scored = goalArg.services.map((id, i) => ({ id, score: 10 - i })); }
 
     // seguimiento: si no hay servicio pero ya hablamos de uno, lo reutilizamos
     let usedContext = false;
@@ -1212,7 +1215,7 @@
     const quoteBtn = (serviceId) => aButton('Solicitar cotización', 'btn-primary', () => {
       openContactForm(aQuoteMessage(userText, serviceId), serviceId ? assistantServices[serviceId].name : '', 'quote');
     });
-    const talkBtn = () => aButton('Hablar con el equipo', 'btn-ghost', () => {
+    const talkBtn = () => aButton('Analizar mi proyecto', 'btn-ghost', () => {
       openContactForm((window.I18N ? I18N.tr('Hola, quiero que me ayuden con lo siguiente') : 'Hola, quiero que me ayuden con lo siguiente') + ': ' + userText.slice(0, 400));
     });
 
@@ -1260,7 +1263,7 @@
     if(primary){
       const s = assistantServices[primary];
       const tag = aEl('span', 'msg-tag', '<span>Te recomendamos</span>: ' + s.name);
-      paragraphs.push(tag.outerHTML + '<br/><span>' + s.intro + '</span>');
+      paragraphs.push(tag.outerHTML + '<br/><span>' + ((goalArg && goalArg.intro) || s.intro) + '</span>');
       paragraphs.push('<span>' + s.why + '</span>');
       paragraphs.push('<strong>Lo que haríamos:</strong> <span>' + s.deliver + '</span>');
       if(s.proof) paragraphs.push('<span>' + s.proof + '</span>');
@@ -1300,11 +1303,11 @@
     return data && data.reply ? String(data.reply) : '';
   }
 
-  async function sendChatMessage(){
+  async function sendChatMessage(preset, goal){
     const input = document.getElementById('chat-input');
     const sendBtn = document.getElementById('chat-send');
     if(!input || assistantState.busy) return;
-    const text = input.value.trim();
+    const text = (typeof preset === 'string' ? preset : input.value).trim();
     if(!text) return;
 
     assistantState.busy = true;
@@ -1316,7 +1319,7 @@
     trackEvent('assistant_message', { page: document.title });
 
     const bubble = aTyping();
-    const reply = aBuildReply(text);
+    const reply = (goal && goal.id === 'unsure') ? aUnsureReply(text) : aBuildReply(text, goal);
     const apiEnabled = CONFIG.CHAT_API_ENDPOINT && CONFIG.CHAT_API_ENDPOINT !== 'PLACEHOLDER';
     let apiText = '';
     if(apiEnabled){
@@ -1339,6 +1342,41 @@
     sendBtn.disabled = false;
     input.focus({ preventScroll: true });
   }
+
+  const GOALS = [
+    { id: 'clients', label: 'Conseguir más clientes', text: 'Quiero conseguir más clientes', services: ['growth-marketing', 'social-media'],
+      intro: 'Conseguir más clientes casi nunca depende de una sola acción: hay que ser encontrado, generar confianza y convertir esa atención en contactos.' },
+    { id: 'image', label: 'Mejorar mi imagen', text: 'Quiero mejorar la imagen de mi marca', services: ['brand-design', 'content-production'],
+      intro: 'Cuando la imagen de una marca no está a la altura de su negocio, la gente duda antes de comprar.' },
+    { id: 'sell', label: 'Vender online', text: 'Quiero vender online', services: ['web-development', 'growth-marketing'],
+      intro: 'Vender online necesita dos cosas a la vez: una tienda que convierta y un flujo de personas que llegue a ella.' },
+    { id: 'social', label: 'Mejorar mis redes sociales', text: 'Quiero mejorar mis redes sociales', services: ['social-media', 'content-production'],
+      intro: 'Las redes funcionan cuando hay estrategia, constancia y medición detrás, no solo publicaciones sueltas.' },
+    { id: 'automate', label: 'Automatizar procesos', text: 'Quiero automatizar procesos de mi negocio', services: ['ai-automation'],
+      intro: 'Las tareas repetitivas se pueden automatizar para que tu equipo dedique su tiempo a lo que de verdad aporta valor.' },
+    { id: 'web', label: 'Crear una web', text: 'Quiero crear una web', services: ['web-development', 'brand-design'],
+      intro: 'Una web no es solo una página bonita: tiene que captar clientes, vender o gestionar pedidos y reservas.' },
+    { id: 'unsure', label: 'No estoy seguro', text: 'No estoy seguro de por dónde empezar', services: [] }
+  ];
+
+  function aUnsureReply(userText){
+    const T = (x) => (window.I18N ? I18N.tr(x) : x);
+    return {
+      paragraphs: ['No pasa nada, es lo más habitual. Cuéntame en una frase a qué se dedica tu negocio y qué te gustaría mejorar, o pídenos que analicemos tu proyecto y te proponemos por dónde empezar.'],
+      actions: [aButton('Analizar mi proyecto', 'btn-primary', () => openContactForm(T('Hola, quiero que me ayuden a definir por dónde empezar') + '.'))]
+    };
+  }
+
+  (function initGoalChips(){
+    const box = document.getElementById('goal-chips');
+    if(!box) return;
+    box.innerHTML = GOALS.map(g => `<button type="button" class="chip" data-goal="${g.id}">${g.label}</button>`).join('');
+    box.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-goal]'); if(!b) return;
+      const goal = GOALS.find(g => g.id === b.dataset.goal);
+      if(goal) sendChatMessage(goal.text, goal);
+    });
+  })();
 
   renderTestimonials();
   (function initAssistantInput(){
@@ -1487,7 +1525,7 @@
         <p class="text-white/55 mb-9 max-w-xl">Mira lo que hemos hecho para otros clientes.</p>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           ${list.map(c => {
-            const href = c.url ? c.url : base + '#proyecto-' + c.case;
+            const href = c.url ? c.url : base + 'proyectos/' + c.case + '/';
             const ext = c.url ? ' target="_blank" rel="noopener"' : '';
             return `<a href="${href}"${ext} class="glass hover-lift rounded-2xl p-6 flex flex-col justify-between gap-6">
               <div><h3 class="font-display text-xl mb-1">${c.name}</h3><p class="text-white/60 text-[14px] leading-relaxed">${c.what}</p></div>
@@ -1667,7 +1705,7 @@
     const message = document.getElementById('sd-cta-message').value.trim();
 
     if(!name || !email || !message){
-      alert(window.I18N ? I18N.tr('Por favor completá al menos nombre, email y contanos sobre el proyecto.') : 'Por favor completá al menos nombre, email y contanos sobre el proyecto.');
+      alert(window.I18N ? I18N.tr('Por favor completá al menos nombre, email y cuéntanos sobre el proyecto.') : 'Por favor completá al menos nombre, email y cuéntanos sobre el proyecto.');
       return;
     }
 
@@ -1707,6 +1745,7 @@
 
   // ---------- Portfolio gallery page ----------
   function showPortfolioPage(){
+    window.location.href = 'proyectos/'; return;
     document.getElementById('home-view').style.display = 'none';
     document.getElementById('service-detail-view').style.display = 'none';
     document.getElementById('project-detail-view').style.display = 'none';
@@ -1741,6 +1780,7 @@
   }
 
   function showProject(slug){
+    if(projects[slug]){ window.location.href = 'proyectos/' + slug + '/'; return; }
     const p = projects[slug];
     if(!p) return;
     trackEvent('portfolio_click', { project: slug });
@@ -1957,7 +1997,7 @@
     document.getElementById('review-success-panel').classList.add('hidden');
     document.getElementById('review-error-panel').classList.add('hidden');
 
-    document.title = 'Dejanos tu reseña — LE STUDIO';
+    document.title = 'Déjanos tu reseña — LE STUDIO';
     window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
     if(location.hash.slice(1) !== 'resena'){
       history.pushState({review: true}, '', '#resena');

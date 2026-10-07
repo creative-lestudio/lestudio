@@ -35,4 +35,43 @@
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://lestudio-crea.com/proyectos//</loc>
+  </url>
+  <url>
+    <loc>https://lestudio-crea.com/proyectos/legacy-podcast/</loc>
+  </url>
+  <url>
+    <loc>https://lestudio-crea.com/proyectos/legacy-world-web/</loc>
+  </url>
+  <url>
+    <loc>https://lestudio-crea.com/proyectos/decoplant-branding/</loc>
+  </url>
+  <url>
+    <loc>https://lestudio-crea.com/proyectos/mds-redes/</loc>
+  </url>
+  <url>
+    <loc>https://lestudio-crea.com/proyectos/mds-contenido/</loc>
+  </url>
+  <url>
+    <loc>https://lestudio-crea.com/proyectos/rdr-identidad/</loc>
+  </url>
+  <url>
+    <loc>https://lestudio-crea.com/proyectos/tecnoclean-identidad/</loc>
+  </url>
+  <url>
+    <loc>https://lestudio-crea.com/proyectos/urbantex-identidad/</loc>
+  </url>
+  <url>
+    <loc>https://lestudio-crea.com/proyectos/urbantex-contenido/</loc>
+  </url>
+  <url>
+    <loc>https://lestudio-crea.com/proyectos/synergy-fichas/</loc>
+  </url>
+  <url>
+    <loc>https://lestudio-crea.com/proyectos/hps-asesoria/</loc>
+  </url>
+  <url>
+    <loc>https://lestudio-crea.com/proyectos/winners-producto/</loc>
+  </url>
 </urlset>
