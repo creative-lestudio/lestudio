@@ -251,6 +251,28 @@
       solution: 'Gestionamos la presencia en redes sociales de Inversiones MDS: estrategia, calendario editorial y gestión diaria de su comunidad, con el objetivo puesto en la calidad de la audiencia, no solo en el volumen.',
       result: 'Hoy Inversiones MDS es una de las marcas más recordadas de su sector y con mejor presencia en redes, y su Instagram se convirtió en un generador constante de leads orgánicos.',
     },
+    'legacy-redes': {
+      name: 'Legacy World — Redes',
+      client: 'Legacy World',
+      badge: 'legacy',
+      tags: ['Social Media'],
+      service: 'social-media',
+      embedType: 'instagram',
+      linkUrl: 'https://www.instagram.com/legacyworld_/',
+      challenge: 'Legacy World necesitaba que su Instagram transmitiera la misma identidad que su marca y su tienda, y funcionara como canal de comunidad y de venta.',
+      solution: 'Gestionamos la presencia de Legacy World en Instagram: línea editorial, contenido y gestión de su comunidad, alineados con el resto del ecosistema de la marca.',
+    },
+    'pizzi-redes': {
+      name: 'Pizzi — Redes',
+      client: 'Pizzi',
+      badge: 'pizzi',
+      tags: ['Social Media'],
+      service: 'social-media',
+      embedType: 'instagram',
+      linkUrl: 'https://www.instagram.com/pizzi.es/',
+      challenge: 'Pizzi necesitaba una presencia en Instagram con identidad propia, constante y pensada para atraer a su audiencia.',
+      solution: 'Nos encargamos del manejo de las redes sociales de Pizzi: estrategia, contenido y gestión diaria de su comunidad en Instagram.',
+    },
     'mds-contenido': {
       name: 'Inversiones MDS — Contenido',
       client: 'Inversiones MDS',
@@ -358,7 +380,8 @@
     urbantex: "assets/badge-urbantex.png",
     hps: "assets/badge-hps.png",
     synergy: "assets/badge-synergy.png",
-    winners: "assets/badge-winners.png"
+    winners: "assets/badge-winners.png",
+    pizzi: "assets/badge-pizzi.png"
   };
   // One tile per CLIENT, not per project — clients with multiple projects (like
   // Legacy World) still get grouped into a single portfolio entry, with all their
@@ -380,24 +403,41 @@
     return seen;
   }
 
-  function renderHomePortfolioMarquee(){
-    if(!document.getElementById('portfolio-marquee-a')) return;
-    const entries = getUniqueClientEntries();
-    const cardHTML = entries.map(entry => `
-        <button onclick="showProject('${entry.slug}')" class="glass hover-lift rounded-2xl overflow-hidden text-left flex flex-col shrink-0 w-64">
-          <div class="aspect-video">
-            <img src="${portfolioBadges[entry.badge]}" alt="${entry.client}" class="w-full h-full object-cover" />
+  // Una línea por cliente para que cada tarjeta se lea de un vistazo.
+  const clientBlurb = {
+    'Inversiones MDS': 'Audiencia real y leads orgánicos desde su Instagram.',
+    'Legacy World': 'Podcast, tienda online y redes de una misma marca.',
+    'Pizzi': 'Manejo de redes sociales en Instagram.',
+    'Decoplant': 'Naming e identidad visual para dos líneas de negocio.',
+    'Multiservicios RDR': 'Identidad visual completa.',
+    'Corporación Tecnoclean': 'Identidad visual completa.',
+    'Urbantex': 'Identidad visual y contenido en video para redes.',
+    'HPS': 'Asesoría de marca y canales de conversión.',
+    'Synergy': 'Fichas de producción para su tienda.',
+    'Winners League Unimet': 'Más de 200 uniformes para toda la liga.'
+  };
+
+  function portfolioCardHTML(entry){
+    return `
+        <button onclick="showProject('${entry.slug}')" class="pf-card glass hover-lift text-left" aria-label="Ver ${entry.client}">
+          <div class="pf-media">
+            <img src="${portfolioBadges[entry.badge]}" alt="${entry.client}" loading="lazy" />
           </div>
-          <div class="p-4">
-            <h3 class="font-display text-base mb-1">${entry.client}</h3>
-            <p class="text-white/50 text-[12px]">${entry.tags.join(', ')}</p>
+          <div class="pf-body">
+            <h3 class="font-display">${entry.client}</h3>
+            <p class="pf-blurb">${clientBlurb[entry.client] || ''}</p>
+            <div class="pf-tags">${entry.tags.map(t => `<span class="tag-pill">${t}</span>`).join('')}</div>
+            <span class="pf-cta">Ver caso <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M6 14L14 6M7 6h7v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </div>
-        </button>`).join('');
-    document.getElementById('portfolio-marquee-a').innerHTML = cardHTML;
-    document.getElementById('portfolio-marquee-b').innerHTML = cardHTML;
+        </button>`;
   }
-  renderHomePortfolioMarquee();
-  initDragMarquee('portfolio-marquee-wrap', 'portfolio-marquee-track', 0.4);
+
+  function renderHomePortfolio(){
+    const grid = document.getElementById('portfolio-home-grid');
+    if(!grid) return;
+    grid.innerHTML = getUniqueClientEntries().slice(0, 6).map(portfolioCardHTML).join('');
+  }
+  renderHomePortfolio();
 
   // ---------- Testimonials, sourced directly from real project data ----------
   function starsHTML(count){
@@ -1450,8 +1490,9 @@
   //   { name, what, label, case: 'slug-del-proyecto' } -> abre el caso dentro del portafolio
   const serviceWork = {
     'social-media': [
-      { name: 'Inversiones MDS', what: 'Estrategia y gestión de su Instagram', label: 'Ver Instagram', url: 'https://www.instagram.com/inversiones.mds/' }
-      // { name: 'Legacy World', what: 'Redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/…' }
+      { name: 'Legacy World', handle: 'legacyworld_', what: 'Redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/legacyworld_/', badge: 'legacy' },
+      { name: 'Inversiones MDS', handle: 'inversiones.mds', what: 'Estrategia y gestión de su Instagram', label: 'Ver Instagram', url: 'https://www.instagram.com/inversiones.mds/', badge: 'mds' },
+      { name: 'Pizzi', handle: 'pizzi.es', what: 'Manejo de redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/pizzi.es/', badge: 'pizzi' }
     ],
     'content-production': [
       { name: 'Legacy Podcast', what: 'Podcast producido de punta a punta', label: 'Ver episodio en YouTube', url: 'https://youtu.be/i-frSRSTsq8' },
@@ -1474,12 +1515,45 @@
     'ai-automation': []
   };
 
+  // Mockup de iPhone (plata) con el perfil de cada cliente; al pulsarlo abre su Instagram.
+  function renderPhoneWork(box, list, base){
+    const tiles = (n) => Array.from({length: 9}, (_, i) => `<i style="--t:${(i * 37 + n * 11) % 100}"></i>`).join('');
+    box.innerHTML = `
+      <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">
+        <h2 class="font-display text-3xl md:text-4xl mb-3">Clientes de este servicio</h2>
+        <p class="text-white/55 mb-12 max-w-xl">Toca un perfil para verlo en Instagram.</p>
+        <div class="ph-row">
+          ${list.map((c, n) => `
+            <a href="${c.url}" target="_blank" rel="noopener" class="ph-link" aria-label="${c.name}: ver @${c.handle} en Instagram">
+              <div class="ph">
+                <span class="ph-btn ph-btn--a"></span><span class="ph-btn ph-btn--b"></span><span class="ph-btn ph-btn--c"></span><span class="ph-btn ph-btn--p"></span>
+                <div class="ph-screen">
+                  <span class="ph-island"></span>
+                  <div class="ph-ui">
+                    <div class="ph-top"><span>${c.handle}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 9l7 7 7-7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    <div class="ph-head">
+                      <img src="${base}${portfolioBadges[c.badge]}" alt="" />
+                      <div class="ph-stats"><b>${c.name}</b><span>${c.what}</span></div>
+                    </div>
+                    <div class="ph-follow">Ver perfil</div>
+                    <div class="ph-grid">${tiles(n)}</div>
+                  </div>
+                  <span class="ph-home"></span>
+                </div>
+              </div>
+              <span class="ph-cap"><b>${c.name}</b><span>@${c.handle} ↗</span></span>
+            </a>`).join('')}
+        </div>
+      </div>`;
+  }
+
   function renderServiceWork(){
     const box = document.getElementById('service-work');
     if(!box) return;
     const list = serviceWork[box.dataset.service] || [];
     if(!list.length){ box.remove(); return; }
     const base = document.getElementById('home-view') ? '' : '../';
+    if(list.some(c => c.handle)){ renderPhoneWork(box, list, base); return; }
     const arrow = '<svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M6 14L14 6M7 6h7v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     box.innerHTML = `
       <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">
@@ -1715,16 +1789,16 @@
     closeMobile();
     closeDropdown();
 
-    document.getElementById('portfolio-gallery-grid').innerHTML = getUniqueClientEntries().map(entry => `
-        <button onclick="showProject('${entry.slug}')" class="glass hover-lift rounded-2xl overflow-hidden text-left flex flex-col">
-          <div class="aspect-video">
-            <img src="${portfolioBadges[entry.badge]}" alt="${entry.client}" class="w-full h-full object-cover" />
-          </div>
-          <div class="p-6">
-            <h3 class="font-display text-lg mb-1.5">${entry.client}</h3>
-            <p class="text-white/50 text-[13px]">${entry.tags.join(', ')}</p>
-          </div>
-        </button>`).join('');
+    const entries = getUniqueClientEntries();
+    const filters = ['Todos'].concat(entries.reduce((acc, e) => { e.tags.forEach(t => { if(!acc.includes(t)) acc.push(t); }); return acc; }, []));
+    const filterEl = document.getElementById('portfolio-filters');
+    const gridEl = document.getElementById('portfolio-gallery-grid');
+    const paint = (active) => {
+      filterEl.innerHTML = filters.map(f => `<button type="button" data-f="${f}" class="pf-chip${f === active ? ' is-active' : ''}">${f}</button>`).join('');
+      gridEl.innerHTML = entries.filter(e => active === 'Todos' || e.tags.includes(active)).map(portfolioCardHTML).join('');
+    };
+    filterEl.onclick = (ev) => { const b = ev.target.closest('[data-f]'); if(b) paint(b.dataset.f); };
+    paint('Todos');
 
     document.title = 'Trabajo seleccionado — LE STUDIO';
     window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
