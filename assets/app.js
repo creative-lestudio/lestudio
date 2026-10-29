@@ -1509,11 +1509,51 @@
       { name: 'Winners League Unimet', what: 'Indumentaria deportiva', label: 'Ver caso', case: 'winners-producto' }
     ],
     'web-development': [
-      { name: 'Legacy World', what: 'Tienda online propia, nacional e internacional', label: 'Ver legacy-world.com', url: 'https://legacy-world.com' }
+      { name: 'Legacy World', what: 'Tienda online propia, nacional e internacional', url: 'https://legacy-world.com', shot: 'assets/web-legacy.jpg' },
+      { name: 'Pizzi', what: 'Pedidos online para recoger', url: 'https://creative-lestudio.github.io/pizzi/', shot: 'assets/web-pizzi.jpg' },
+      { name: 'Repite', what: 'Proyecto web', url: 'https://repite-silk.vercel.app/', shot: 'assets/web-repite.jpg' },
+      { name: 'Finanzas', what: 'App de finanzas personales', url: 'https://creative-lestudio.github.io/finanzas/', shot: 'assets/web-finanzas.jpg' }
     ],
     'growth-marketing': [],
     'ai-automation': []
   };
+
+  // Ventana de Safari con una pestaña por sitio; al pulsar la pantalla se abre el sitio real.
+  function renderBrowserWork(box, list, base){
+    const host = (u) => u.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    const arrow = '<svg width="13" height="13" viewBox="0 0 20 20" fill="none"><path d="M6 14L14 6M7 6h7v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    box.innerHTML = `
+      <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">
+        <h2 class="font-display text-3xl md:text-4xl mb-3">Webs de este servicio</h2>
+        <p class="text-white/55 mb-12 max-w-xl">Elige una pestaña y toca la pantalla para visitar el sitio.</p>
+        <div class="sf" id="sf">
+          <div class="sf-bar">
+            <span class="sf-dots"><i></i><i></i><i></i></span>
+            <div class="sf-tabs" role="tablist">
+              ${list.map((c, i) => `<button type="button" role="tab" class="sf-tab${i === 0 ? ' is-active' : ''}" data-i="${i}" aria-selected="${i === 0}">${c.name}</button>`).join('')}
+            </div>
+          </div>
+          <div class="sf-url"><span class="sf-lock"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><rect x=".6" y="5" width="8.8" height="6.4" rx="1.6" fill="currentColor"/><path d="M2.4 5V3.6a2.6 2.6 0 015.2 0V5" stroke="currentColor" stroke-width="1.2"/></svg></span><span id="sf-host"></span></div>
+          <a id="sf-view" class="sf-view" href="#" target="_blank" rel="noopener"></a>
+        </div>
+        <p id="sf-cap" class="sf-cap"></p>
+      </div>`;
+    const view = box.querySelector('#sf-view'), hostEl = box.querySelector('#sf-host'), cap = box.querySelector('#sf-cap');
+    const tabs = Array.from(box.querySelectorAll('.sf-tab'));
+    const show = (i) => {
+      const c = list[i];
+      tabs.forEach((t, n) => { t.classList.toggle('is-active', n === i); t.setAttribute('aria-selected', n === i); });
+      hostEl.textContent = host(c.url);
+      view.href = c.url;
+      view.setAttribute('aria-label', 'Visitar ' + host(c.url));
+      view.classList.remove('is-in');
+      view.innerHTML = `<img src="${base}${c.shot}" alt="Sitio web de ${c.name}" onerror="this.remove()" /><span class="sf-fallback"><b>${c.name}</b><em>${host(c.url)}</em></span><span class="sf-open">Visitar sitio ${arrow}</span>`;
+      requestAnimationFrame(() => view.classList.add('is-in'));
+      cap.innerHTML = `<b>${c.name}</b> · ${c.what}`;
+    };
+    tabs.forEach((t, n) => t.addEventListener('click', () => show(n)));
+    show(0);
+  }
 
   // Mockup de iPhone (plata) con el perfil de cada cliente; al pulsarlo abre su Instagram.
   function renderPhoneWork(box, list, base){
@@ -1545,6 +1585,7 @@
     if(!list.length){ box.remove(); return; }
     const base = document.getElementById('home-view') ? '' : '../';
     if(list.some(c => c.handle)){ renderPhoneWork(box, list, base); return; }
+    if(list.some(c => c.shot)){ renderBrowserWork(box, list, base); return; }
     const arrow = '<svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M6 14L14 6M7 6h7v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     box.innerHTML = `
       <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">

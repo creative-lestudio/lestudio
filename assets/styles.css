@@ -592,3 +592,35 @@
 }
 @media (prefers-reduced-motion:reduce){ .ph, .pf-media img{ transition:none; } .ph-link:hover .ph{ transform:none; } }
 .ph-shot{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+
+/* ---------- Mockup ventana Safari (macOS) ---------- */
+.sf{ max-width:980px; margin:0 auto; border-radius:14px; overflow:hidden; background:#1d1f24;
+  box-shadow:0 0 0 1px rgba(255,255,255,.14), 0 40px 80px -24px rgba(0,0,0,.7), 0 0 90px -30px rgba(120,170,255,.4); }
+.sf-bar{ display:flex; align-items:center; gap:14px; padding:10px 14px 0; background:linear-gradient(#3a3d44,#2f3238); }
+.sf-dots{ display:flex; gap:7px; padding-bottom:10px; flex-shrink:0; }
+.sf-dots i{ width:12px; height:12px; border-radius:50%; background:#ff5f57; }
+.sf-dots i:nth-child(2){ background:#febc2e; } .sf-dots i:nth-child(3){ background:#28c840; }
+.sf-tabs{ display:flex; gap:2px; flex:1; min-width:0; overflow-x:auto; scrollbar-width:none; }
+.sf-tabs::-webkit-scrollbar{ display:none; }
+.sf-tab{ border:0; font-family:inherit; cursor:pointer; flex:1 1 0; min-width:96px; max-width:210px; padding:8px 14px; border-radius:9px 9px 0 0; font-size:12.5px; color:rgba(255,255,255,.6); background:rgba(255,255,255,.04);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; transition:background .2s ease,color .2s ease; }
+.sf-tab:hover{ background:rgba(255,255,255,.09); color:#fff; }
+.sf-tab.is-active{ background:#1d1f24; color:#fff; font-weight:600; }
+.sf-url{ display:flex; align-items:center; justify-content:center; gap:7px; padding:8px 14px; background:#1d1f24; border-bottom:1px solid rgba(255,255,255,.08); }
+.sf-url > span:last-child{ min-width:0; width:min(420px,100%); padding:5px 14px; border-radius:8px; background:rgba(255,255,255,.08); color:rgba(255,255,255,.75); font-size:12.5px; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sf-lock{ display:none; }
+.sf-view{ color:#fff; text-decoration:none; position:relative; display:block; aspect-ratio:8/5; overflow:hidden; background:#0b1630; opacity:0; transition:opacity .45s ease; }
+.sf-view.is-in{ opacity:1; }
+.sf-view img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top; z-index:1; transition:transform .8s var(--ease,ease); }
+.sf-view:hover img{ transform:scale(1.025); }
+.sf-fallback{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; background:linear-gradient(135deg,#052659,#021024); }
+.sf-fallback b{ font-family:'Clash Grotesk',system-ui,sans-serif; font-size:clamp(1.6rem,4vw,2.6rem); }
+.sf-fallback em{ font-style:normal; color:var(--mist-2); font-size:.95rem; }
+.sf-open{ position:absolute; right:16px; bottom:16px; z-index:2; display:inline-flex; align-items:center; gap:6px; padding:9px 16px; border-radius:999px; background:#fff; color:var(--navy-deep); font-size:.85rem; font-weight:600;
+  opacity:0; transform:translateY(8px); transition:opacity .3s ease, transform .3s ease; }
+.sf-view:hover .sf-open, .sf-view:focus-visible .sf-open{ opacity:1; transform:none; }
+.sf-cap{ margin-top:22px; text-align:center; color:var(--mist-2); font-size:.95rem; }
+.sf-cap b{ color:#fff; }
+@media (hover:none){ .sf-open{ opacity:1; transform:none; } }
+@media (max-width:639px){ .sf-dots{ display:none; } .sf-bar{ padding-left:8px; } }
+@media (prefers-reduced-motion:reduce){ .sf-view, .sf-view img, .sf-open{ transition:none; } }
