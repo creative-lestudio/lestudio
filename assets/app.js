@@ -291,6 +291,7 @@
         'https://www.instagram.com/reel/DcCOq3bMTae/',
         'https://www.instagram.com/reel/DYQbxXGIRS3/'
       ],
+      reelShots: ['assets/reel-mds-1.jpg', 'assets/reel-mds-2.jpg', 'assets/reel-mds-3.jpg'],
       solution: 'Producimos y editamos contenido en video para Inversiones MDS, pensado específicamente para reforzar su presencia como marca de referencia en el sector de diagnóstico médico.',
     },
     'rdr-identidad': {
@@ -341,6 +342,7 @@
         'https://www.instagram.com/reel/CqovtDTLwdJ/',
         'https://www.instagram.com/reel/CqtYf3SLfgM/'
       ],
+      reelShots: ['assets/reel-urbantex-1.jpg', 'assets/reel-urbantex-2.jpg', 'assets/reel-urbantex-3.jpg'],
       solution: 'Producimos y editamos contenido en video para Urbantex, reforzando su identidad ya trabajada con piezas audiovisuales pensadas para redes.',
     },
     'synergy-fichas': {
@@ -1503,13 +1505,16 @@
       { name: 'Pizzi', handle: 'pizzi.es', what: 'Manejo de redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/pizzi.es/', badge: 'pizzi', shot: 'assets/profile-pizzi.jpg' }
     ],
     'content-production': [
-      { group: 'Podcast', title: 'Legacy Podcast EP.01', what: 'Cómo pasar de hacer TikToks a vivir de las redes, con Cesar Oliveira', views: '36K', url: 'https://youtu.be/i-frSRSTsq8', shot: 'assets/video-podcast-1.jpg', wide: true, source: 'YouTube' },
-      { group: 'Podcast', title: 'Legacy Podcast EP.02', what: 'NEOMAI: «Quiero representar a Venezuela y ganar un Grammy»', views: '2.3K', url: 'https://youtu.be/4IU4OL3d9WE', shot: 'assets/video-podcast-2.jpg', wide: true, source: 'YouTube' },
-      { group: 'Contenido viral', title: 'Clip de Legacy Podcast', what: '@legacyworld_', views: '2.4M', url: 'https://www.tiktok.com/@legacyworld_/video/7602753224323501320', shot: 'assets/video-legacy-1.jpg', source: 'TikTok' },
-      { group: 'Contenido viral', title: 'Neomai en Legacy Podcast', what: '@legacyworld_', views: '591.6K', url: 'https://www.tiktok.com/@legacyworld_/video/7642136557578636562', shot: 'assets/video-legacy-2.jpg', source: 'TikTok' },
-      { group: 'Contenido viral', title: 'Clip de Legacy Podcast', what: '@legacyworld_', views: '478.1K', url: 'https://www.tiktok.com/@legacyworld_/video/7602391908966599944', shot: 'assets/video-legacy-3.jpg', source: 'TikTok' },
-      { group: 'Contenido viral', title: 'Suzuki Jimny 4x4', what: '@kiacentromarca', views: '128.1K', url: 'https://www.tiktok.com/@kiacentromarca/video/7441352485589077304', shot: 'assets/video-kia-1.jpg', source: 'TikTok' },
-      { group: 'Contenido viral', title: 'Kia Picanto 2025', what: '@kiacentromarca', views: '111.6K', url: 'https://www.tiktok.com/@kiacentromarca/video/7461770092091591941', shot: 'assets/video-kia-2.jpg', source: 'TikTok' }
+      { segment: 'Producción audiovisual', group: 'Podcast', title: 'Legacy Podcast EP.01', what: 'Cómo pasar de hacer TikToks a vivir de las redes, con Cesar Oliveira', views: '36K', url: 'https://youtu.be/i-frSRSTsq8', shot: 'assets/video-podcast-1.jpg', wide: true, source: 'YouTube' },
+      { segment: 'Producción audiovisual', group: 'Podcast', title: 'Legacy Podcast EP.02', what: 'NEOMAI: «Quiero representar a Venezuela y ganar un Grammy»', views: '2.3K', url: 'https://youtu.be/4IU4OL3d9WE', shot: 'assets/video-podcast-2.jpg', wide: true, source: 'YouTube' },
+      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Clip de Legacy Podcast', what: '@legacyworld_', views: '2.4M', url: 'https://www.tiktok.com/@legacyworld_/video/7602753224323501320', shot: 'assets/video-legacy-1.jpg', source: 'TikTok' },
+      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Neomai en Legacy Podcast', what: '@legacyworld_', views: '591.6K', url: 'https://www.tiktok.com/@legacyworld_/video/7642136557578636562', shot: 'assets/video-legacy-2.jpg', source: 'TikTok' },
+      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Clip de Legacy Podcast', what: '@legacyworld_', views: '478.1K', url: 'https://www.tiktok.com/@legacyworld_/video/7602391908966599944', shot: 'assets/video-legacy-3.jpg', source: 'TikTok' },
+      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Suzuki Jimny 4x4', what: '@kiacentromarca', views: '128.1K', url: 'https://www.tiktok.com/@kiacentromarca/video/7441352485589077304', shot: 'assets/video-kia-1.jpg', source: 'TikTok' },
+      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Kia Picanto 2025', what: '@kiacentromarca', views: '111.6K', url: 'https://www.tiktok.com/@kiacentromarca/video/7461770092091591941', shot: 'assets/video-kia-2.jpg', source: 'TikTok' },
+      { segment: 'AI Generated Content', title: 'AI Reel 1', what: 'Contenido generado con IA', url: 'https://www.instagram.com/reel/De2Rg-qRFKT/', shot: 'assets/reel-ai-1.jpg', source: 'Instagram' },
+      { segment: 'AI Generated Content', title: 'AI Reel 2', what: 'Contenido generado con IA', url: 'https://www.instagram.com/reel/DezkDceRO77/', shot: 'assets/reel-ai-2.jpg', source: 'Instagram' },
+      { segment: 'AI Generated Content', title: 'AI Reel 3', what: 'Contenido generado con IA', url: 'https://www.instagram.com/reel/DepzmWrok84/', shot: 'assets/reel-ai-3.jpg', source: 'Instagram' }
     ],
     'brand-design': [
       { name: 'Legacy World', what: 'Brand building y dirección creativa', url: 'https://www.behance.net/gallery/255634519/LEGACY-WORLD-Brand-Building-Creative-Direction', shot: 'assets/brand-legacy.jpg' },
@@ -1560,46 +1565,61 @@
       </div>`;
   }
 
-  // Carrusel de videos (podcast y contenido viral); al pulsar una tarjeta se abre el video original.
+  // Carrusel de videos con dos segmentos (producción audiovisual y AI Generated Content);
+  // al pulsar una tarjeta se abre el video original.
   function renderVideoWork(box, list, base){
-    const groups = ['Todos'].concat(list.reduce((acc, c) => { if(!acc.includes(c.group)) acc.push(c.group); return acc; }, []));
+    const segments = list.reduce((acc, c) => { if(!acc.includes(c.segment)) acc.push(c.segment); return acc; }, []);
     const play = '<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
     const arrow = (d) => `<svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="${d}" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
     box.innerHTML = `
       <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">
         <h2 class="font-display text-3xl md:text-4xl mb-3">Videos que hemos producido</h2>
-        <p class="text-white/55 mb-8 max-w-xl">Desliza y toca un video para verlo en su plataforma original.</p>
+        <p class="text-white/55 mb-8 max-w-xl">Elige un segmento y toca un video para verlo en su plataforma original.</p>
+        <div class="vc-seg" id="vc-seg" role="tablist">${segments.map((g, i) => `<button type="button" role="tab" data-s="${g}" class="vc-seg-btn${i === 0 ? ' is-active' : ''}" aria-selected="${i === 0}">${g}</button>`).join('')}</div>
         <div class="vc-top">
-          <div class="pf-filters vc-filters" id="vc-filters">${groups.map((g, i) => `<button type="button" data-g="${g}" class="pf-chip${i === 0 ? ' is-active' : ''}">${g}</button>`).join('')}</div>
+          <div class="pf-filters vc-filters" id="vc-filters"></div>
           <div class="vc-arrows"><button type="button" id="vc-prev" aria-label="Anterior">${arrow('M12 4L6 10l6 6')}</button><button type="button" id="vc-next" aria-label="Siguiente">${arrow('M8 4l6 6-6 6')}</button></div>
         </div>
         <div class="vc-track" id="vc-track" tabindex="0">
           ${list.map(c => `
-            <a class="vc-card${c.wide ? ' vc-wide' : ''}" data-g="${c.group}" href="${c.url}" target="_blank" rel="noopener" aria-label="${c.title}: ver en ${c.source}">
+            <a class="vc-card${c.wide ? ' vc-wide' : ''}" data-s="${c.segment}" data-g="${c.group || ''}" href="${c.url}" target="_blank" rel="noopener" aria-label="${c.title}: ver en ${c.source}">
               <img src="${base}${c.shot}" alt="${c.title}" loading="lazy" />
-              <span class="vc-views">${c.views} vistas</span>
+              ${c.views ? `<span class="vc-views">${c.views} vistas</span>` : ''}
               <span class="vc-play">${play}</span>
               <span class="vc-cap"><b>${c.title}</b><em>${c.what}</em><i>${c.source}</i></span>
             </a>`).join('')}
         </div>
         <p class="bb-more"><span>También: <a href="${base}#proyecto-mds-contenido">Inversiones MDS</a> · <a href="${base}#proyecto-urbantex-contenido">Urbantex</a></span></p>
       </div>`;
-    const track = box.querySelector('#vc-track'), prev = box.querySelector('#vc-prev'), next = box.querySelector('#vc-next');
+    const track = box.querySelector('#vc-track'), prev = box.querySelector('#vc-prev'), next = box.querySelector('#vc-next'), filtersEl = box.querySelector('#vc-filters');
     const cards = Array.from(track.querySelectorAll('.vc-card'));
-    const edge = () => { prev.disabled = track.scrollLeft < 8; next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 8; };
+    let seg = segments[0], grp = 'Todos';
+    const arrows = box.querySelector('.vc-arrows');
+    const edge = () => {
+      prev.disabled = track.scrollLeft < 8; next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 8;
+      arrows.style.visibility = track.scrollWidth > track.clientWidth + 8 ? '' : 'hidden';
+    };
     const step = () => Math.max(240, Math.round(track.clientWidth * 0.8));
+    const paint = () => {
+      const groups = list.filter(c => c.segment === seg && c.group).reduce((acc, c) => { if(!acc.includes(c.group)) acc.push(c.group); return acc; }, []);
+      filtersEl.style.display = groups.length > 1 ? '' : 'none';
+      filtersEl.innerHTML = groups.length > 1 ? ['Todos'].concat(groups).map(g => `<button type="button" data-g="${g}" class="pf-chip${g === grp ? ' is-active' : ''}">${g}</button>`).join('') : '';
+      cards.forEach(c => c.classList.toggle('is-off', c.dataset.s !== seg || (grp !== 'Todos' && c.dataset.g !== grp)));
+      track.scrollLeft = 0; edge();
+    };
     prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
     next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
     track.addEventListener('scroll', edge, { passive: true });
     track.addEventListener('keydown', (e) => { if(e.key === 'ArrowRight') next.click(); if(e.key === 'ArrowLeft') prev.click(); });
-    box.querySelector('#vc-filters').addEventListener('click', (e) => {
-      const b = e.target.closest('[data-g]'); if(!b) return;
-      box.querySelectorAll('#vc-filters .pf-chip').forEach(x => x.classList.toggle('is-active', x === b));
-      cards.forEach(c => c.classList.toggle('is-off', b.dataset.g !== 'Todos' && c.dataset.g !== b.dataset.g));
-      track.scrollLeft = 0; edge();
+    box.querySelector('#vc-seg').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-s]'); if(!b) return;
+      seg = b.dataset.s; grp = 'Todos';
+      box.querySelectorAll('#vc-seg .vc-seg-btn').forEach(x => { const on = x === b; x.classList.toggle('is-active', on); x.setAttribute('aria-selected', on); });
+      paint();
     });
+    filtersEl.addEventListener('click', (e) => { const b = e.target.closest('[data-g]'); if(!b) return; grp = b.dataset.g; paint(); });
     window.addEventListener('resize', edge);
-    requestAnimationFrame(edge);
+    paint();
   }
 
   // Escaparate de identidad visual: portada grande + lista de proyectos; al pulsar la portada se abre el caso en Behance.
