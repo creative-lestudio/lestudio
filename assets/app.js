@@ -2294,8 +2294,8 @@
     const root = document.documentElement;
     // El dock está disponible en cuanto se baja un poco, suba o baje la persona.
     root.classList.toggle('scrolled', currentY > 80);
-    // El menú superior solo se oculta mientras se baja.
-    const shouldHide = currentY > 80 && scrollDirection === 'down';
+    // El menú superior (con el logo) se mantiene siempre visible en todas las páginas.
+    const shouldHide = false;
     const now = performance.now();
     if(shouldHide !== scrolledState && (now - lastToggleTime) > SCROLL_TOGGLE_COOLDOWN){
       scrolledState = shouldHide;
