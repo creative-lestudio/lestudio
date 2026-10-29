@@ -206,6 +206,7 @@
       tags: ['Content Production'],
       service: 'content-production',
       embedType: 'youtube',
+      thumb: 'assets/video-podcast-1.jpg',
       videoId: 'i-frSRSTsq8',
       embedUrl: 'https://www.youtube.com/embed/i-frSRSTsq8',
       linkUrl: 'https://youtu.be/i-frSRSTsq8',
@@ -220,6 +221,7 @@
       tags: ['Web & Digital Development'],
       service: 'web-development',
       embedType: 'link',
+      webShot: 'assets/web-legacy.jpg',
       linkUrl: 'https://legacy-world.com',
       linkLabel: 'Ver legacy-world.com',
       challenge: 'Legacy World necesitaba una tienda online propia, capaz de vender a nivel nacional e internacional, con un checkout confiable y sin depender de intermediarios para procesar pagos.',
@@ -233,6 +235,7 @@
       tags: ['Brand & Design'],
       service: 'brand-design',
       embedType: 'behance',
+      cover: 'assets/brand-decoplant.jpg',
       embedUrl: 'https://www.behance.net/embed/project/218332771?ilo0=1',
       linkUrl: 'https://www.behance.net/gallery/218332771/DECOPLANT-Branding',
       challenge: 'Decoplant necesitaba una identidad capaz de representar dos líneas de negocio a la vez —decoración y plantas artificiales— sin que la marca se sintiera dividida ni genérica en ninguna de las dos.',
@@ -246,6 +249,7 @@
       tags: ['Social Media'],
       service: 'social-media',
       embedType: 'instagram',
+      handle: 'inversiones.mds', shot: 'assets/profile-mds.jpg',
       linkUrl: 'https://www.instagram.com/inversiones.mds/',
       challenge: 'Inversiones MDS necesitaba algo más que seguidores: buscaba construir, a través de su Instagram, una audiencia real con potencial de convertirse en clientes.',
       solution: 'Gestionamos la presencia en redes sociales de Inversiones MDS: estrategia, calendario editorial y gestión diaria de su comunidad, con el objetivo puesto en la calidad de la audiencia, no solo en el volumen.',
@@ -258,6 +262,7 @@
       tags: ['Social Media'],
       service: 'social-media',
       embedType: 'instagram',
+      handle: 'legacyworld_', shot: 'assets/profile-legacy.jpg',
       linkUrl: 'https://www.instagram.com/legacyworld_/',
       challenge: 'Legacy World necesitaba que su Instagram transmitiera la misma identidad que su marca y su tienda, y funcionara como canal de comunidad y de venta.',
       solution: 'Gestionamos la presencia de Legacy World en Instagram: línea editorial, contenido y gestión de su comunidad, alineados con el resto del ecosistema de la marca.',
@@ -269,6 +274,7 @@
       tags: ['Social Media'],
       service: 'social-media',
       embedType: 'instagram',
+      handle: 'pizzi.es', shot: 'assets/profile-pizzi.jpg',
       linkUrl: 'https://www.instagram.com/pizzi.es/',
       challenge: 'Pizzi necesitaba una presencia en Instagram con identidad propia, constante y pensada para atraer a su audiencia.',
       solution: 'Nos encargamos del manejo de las redes sociales de Pizzi: estrategia, contenido y gestión diaria de su comunidad en Instagram.',
@@ -295,6 +301,7 @@
       tags: ['Brand & Design'],
       service: 'brand-design',
       embedType: 'behance',
+      cover: 'assets/brand-rdr.jpg',
       embedUrl: 'https://www.behance.net/embed/project/218334897?ilo0=1',
       linkUrl: 'https://www.behance.net/gallery/218334897/RDR-Identidad-Visual',
       solution: 'Desarrollamos la identidad visual completa de Multiservicios RDR, construyendo un sistema de marca claro y aplicable a todos sus puntos de contacto.',
@@ -306,6 +313,7 @@
       tags: ['Brand & Design'],
       service: 'brand-design',
       embedType: 'behance',
+      cover: 'assets/brand-tecnoclean.jpg',
       embedUrl: 'https://www.behance.net/embed/project/218332217?ilo0=1',
       linkUrl: 'https://www.behance.net/gallery/218332217/Tecnoclean-Identidad-visual',
       solution: 'Desarrollamos la identidad visual completa de Corporación Tecnoclean: logotipo, paleta de colores, tipografías y sistema de marca aplicado a sus distintos materiales.',
@@ -1524,6 +1532,34 @@
     'ai-automation': []
   };
 
+  // Maquetas reutilizables (iPhone con perfil, ventana de Safari)
+  function phoneHTML(c, src){
+    return `
+      <a href="${c.url}" target="_blank" rel="noopener" class="ph-link" aria-label="${c.name}: ver @${c.handle} en Instagram">
+        <div class="ph">
+          <span class="ph-btn ph-btn--a"></span><span class="ph-btn ph-btn--b"></span><span class="ph-btn ph-btn--c"></span><span class="ph-btn ph-btn--p"></span>
+          <div class="ph-screen">
+            <span class="ph-island"></span>
+            <img class="ph-shot" src="${src}" alt="Perfil de Instagram de @${c.handle}" loading="lazy" />
+            <span class="ph-home"></span>
+          </div>
+        </div>
+        <span class="ph-cap"><b>${c.name}</b><span>@${c.handle} ↗</span></span>
+      </a>`;
+  }
+  function safariHTML(c, src){
+    const host = c.url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    return `
+      <div class="sf">
+        <div class="sf-bar"><span class="sf-dots"><i></i><i></i><i></i></span><div class="sf-tabs"><span class="sf-tab is-active">${c.name}</span></div></div>
+        <div class="sf-url"><span>${host}</span></div>
+        <a class="sf-view is-in" href="${c.url}" target="_blank" rel="noopener" aria-label="Visitar ${host}">
+          <img src="${src}" alt="Sitio web de ${c.name}" />
+          <span class="sf-open">Visitar sitio <svg width="13" height="13" viewBox="0 0 20 20" fill="none"><path d="M6 14L14 6M7 6h7v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      </div>`;
+  }
+
   // Carrusel de videos (podcast y contenido viral); al pulsar una tarjeta se abre el video original.
   function renderVideoWork(box, list, base){
     const groups = ['Todos'].concat(list.reduce((acc, c) => { if(!acc.includes(c.group)) acc.push(c.group); return acc; }, []));
@@ -1653,18 +1689,7 @@
         <h2 class="font-display text-3xl md:text-4xl mb-3">Clientes de este servicio</h2>
         <p class="text-white/55 mb-12 max-w-xl">Toca un perfil para verlo en Instagram.</p>
         <div class="ph-row">
-          ${list.map(c => `
-            <a href="${c.url}" target="_blank" rel="noopener" class="ph-link" aria-label="${c.name}: ver @${c.handle} en Instagram">
-              <div class="ph">
-                <span class="ph-btn ph-btn--a"></span><span class="ph-btn ph-btn--b"></span><span class="ph-btn ph-btn--c"></span><span class="ph-btn ph-btn--p"></span>
-                <div class="ph-screen">
-                  <span class="ph-island"></span>
-                  <img class="ph-shot" src="${base}${c.shot}" alt="Perfil de Instagram de @${c.handle}" loading="lazy" />
-                  <span class="ph-home"></span>
-                </div>
-              </div>
-              <span class="ph-cap"><b>${c.name}</b><span>@${c.handle} ↗</span></span>
-            </a>`).join('')}
+          ${list.map(c => phoneHTML(c, base + c.shot)).join('')}
         </div>
       </div>`;
   }
@@ -2004,13 +2029,20 @@
     if(p.embedType === 'youtube'){
       embedEl.innerHTML = `
         <a href="${p.linkUrl}" target="_blank" rel="noopener" class="group relative block aspect-video rounded-2xl overflow-hidden glass">
-          <img src="https://img.youtube.com/vi/${p.videoId}/hqdefault.jpg" alt="${p.name}" class="w-full h-full object-cover" />
+          <img src="${p.thumb || ('https://img.youtube.com/vi/' + p.videoId + '/hqdefault.jpg')}" alt="${p.name}" class="w-full h-full object-cover" />
           <div class="absolute inset-0 bg-black/25 group-hover:bg-black/15 transition-colors flex items-center justify-center">
             <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/95 group-hover:scale-105 transition-transform flex items-center justify-center shadow-xl">
               <svg width="26" height="26" viewBox="0 0 24 24" fill="#021024"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
           <span class="absolute bottom-4 right-4 text-white/90 text-xs bg-black/50 backdrop-blur-sm px-3 py-1.5 rounded-full">Ver en YouTube →</span>
+        </a>`;
+    } else if(p.embedType === 'behance' && p.cover){
+      embedEl.innerHTML = `
+        <a href="${p.linkUrl}" target="_blank" rel="noopener" class="bb-stage is-in" style="aspect-ratio:1200/939;max-width:760px;margin-inline:auto" aria-label="${p.name}: ver el proyecto en Behance">
+          <img src="${p.cover}" alt="${p.name}" />
+          <span class="bb-cap"><b>${p.client}</b><em>${p.name}</em></span>
+          <span class="bb-open">Ver en Behance <svg width="13" height="13" viewBox="0 0 20 20" fill="none"><path d="M6 14L14 6M7 6h7v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </a>`;
     } else if(p.embedType === 'behance'){
       embedEl.innerHTML = `
@@ -2021,6 +2053,8 @@
             <p class="text-white font-medium text-sm">Ver el proyecto completo en Behance</p>
           </div>
         </a>`;
+    } else if(p.embedType === 'instagram' && p.shot){
+      embedEl.innerHTML = `<div class="ph-row">${phoneHTML({ name: p.client, handle: p.handle, url: p.linkUrl }, p.shot)}</div>`;
     } else if(p.embedType === 'instagram'){
       embedEl.innerHTML = `
         <div class="glass rounded-2xl p-10 text-center">
@@ -2028,6 +2062,13 @@
           <p class="text-white/55 text-sm mb-6">Este proyecto vive directamente en redes sociales.</p>
           <a href="${p.linkUrl}" target="_blank" rel="noopener" class="btn-ghost inline-block font-semibold px-7 py-3 rounded-full text-sm">Ver perfil en Instagram →</a>
         </div>`;
+    } else if(p.embedType === 'reels' && p.reelShots){
+      embedEl.innerHTML = `<div class="vc-track">${(p.reelLinks || []).map((url, i) => `
+        <a class="vc-card" href="${url}" target="_blank" rel="noopener" aria-label="Reel ${i + 1}: ver en Instagram">
+          <img src="${p.reelShots[i]}" alt="Reel ${i + 1} de ${p.client}" loading="lazy" />
+          <span class="vc-play"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="vc-cap"><b>Reel ${i + 1}</b><i>Instagram</i></span>
+        </a>`).join('')}</div>`;
     } else if(p.embedType === 'reels'){
       const reelsHtml = (p.reelLinks || []).map((url, i) => `
         <a href="${url}" target="_blank" rel="noopener" class="glass hover-lift rounded-2xl p-6 flex items-center justify-between gap-3">
@@ -2038,6 +2079,8 @@
           <span class="text-white/40 text-xs">Ver en Instagram →</span>
         </a>`).join('');
       embedEl.innerHTML = `<div class="grid sm:grid-cols-3 gap-4">${reelsHtml}</div>`;
+    } else if(p.embedType === 'link' && p.webShot){
+      embedEl.innerHTML = safariHTML({ name: p.client, url: p.linkUrl }, p.webShot);
     } else if(p.embedType === 'link'){
       embedEl.innerHTML = `
         <a href="${p.linkUrl}" target="_blank" rel="noopener" class="glass hover-lift rounded-2xl p-10 flex flex-col items-center text-center gap-4">
