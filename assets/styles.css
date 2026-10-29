@@ -716,3 +716,8 @@ ul.sv-collapsed > li.sv-more{ display:none; }
 .vc-cap i{ font-style:normal; margin-top:4px; font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); }
 @media (max-width:639px){ .vc-arrows{ display:none; } .vc-card{ width:200px; } }
 @media (prefers-reduced-motion:reduce){ .vc-card, .vc-card img, .vc-play{ transition:none; } .vc-card:hover{ transform:none; } .vc-card:hover img{ transform:none; } }
+.vc-seg{ display:inline-flex; gap:4px; padding:5px; margin-bottom:26px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.05); max-width:100%; overflow-x:auto; scrollbar-width:none; }
+.vc-seg::-webkit-scrollbar{ display:none; }
+.vc-seg-btn{ padding:10px 22px; border-radius:999px; border:0; background:none; color:var(--mist-2); font-family:inherit; font-size:.9rem; font-weight:600; white-space:nowrap; cursor:pointer; transition:background .25s ease,color .25s ease; }
+.vc-seg-btn:hover{ color:#fff; }
+.vc-seg-btn.is-active{ background:#fff; color:var(--navy-deep); }
