@@ -64,7 +64,7 @@
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@500,600,700&display=swap">
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="assets/styles.css?v=3">
+<link rel="stylesheet" href="assets/styles.css?v=4">
 <script>try{if(!sessionStorage.getItem("intro_seen")&&!/[?&]nointro/.test(location.search)&&!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("intro-on");setTimeout(function(){document.documentElement.classList.remove("intro-on")},16000)}}catch(e){}</script>
 <script>document.documentElement.classList.add("js");setTimeout(function(){if(!window.__appReady)document.documentElement.classList.remove("js")},3500);</script>
 </head>
@@ -391,7 +391,7 @@
   </section>
 
   <!-- PORTAFOLIO (preview con auto-scroll) -->
-  <section id="portafolio" class="h-sec h-sec--line" style="overflow:hidden">
+  <section id="portafolio" class="h-sec h-sec--line">
     <div class="h-wrap h-row-head">
       <div>
         <h2 class="h-title rv">Trabajo seleccionado</h2>
@@ -399,11 +399,8 @@
       </div>
       <button onclick="showPortfolioPage()" class="btn-ghost btn-lg rv" style="flex-shrink:0">Ver portafolio completo</button>
     </div>
-    <div class="marquee-wrap overflow-hidden h-work" id="portfolio-marquee-wrap">
-      <div class="marquee-track gap-5 px-6" id="portfolio-marquee-track">
-        <div class="flex gap-5" id="portfolio-marquee-a"></div>
-        <div class="flex gap-5" id="portfolio-marquee-b"></div>
-      </div>
+    <div class="h-wrap">
+      <div id="portfolio-home-grid" class="pf-grid"></div>
     </div>
   </section>
 
@@ -683,8 +680,9 @@
       Volver al inicio
     </button>
     <h1 class="font-display text-4xl md:text-5xl mb-5">Trabajo seleccionado</h1>
-    <p class="text-white/60 leading-relaxed max-w-xl mb-14">Una selección de proyectos en los que estrategia, creatividad y tecnología trabajan juntas.</p>
-    <div id="portfolio-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    <p class="text-white/60 leading-relaxed max-w-xl mb-8">Una selección de proyectos en los que estrategia, creatividad y tecnología trabajan juntas.</p>
+    <div id="portfolio-filters" class="pf-filters"></div>
+    <div id="portfolio-gallery-grid" class="pf-grid"></div>
   </div>
 </section>
 
