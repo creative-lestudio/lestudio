@@ -1490,9 +1490,9 @@
   //   { name, what, label, case: 'slug-del-proyecto' } -> abre el caso dentro del portafolio
   const serviceWork = {
     'social-media': [
-      { name: 'Legacy World', handle: 'legacyworld_', what: 'Redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/legacyworld_/', badge: 'legacy' },
-      { name: 'Inversiones MDS', handle: 'inversiones.mds', what: 'Estrategia y gestión de su Instagram', label: 'Ver Instagram', url: 'https://www.instagram.com/inversiones.mds/', badge: 'mds' },
-      { name: 'Pizzi', handle: 'pizzi.es', what: 'Manejo de redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/pizzi.es/', badge: 'pizzi' }
+      { name: 'Legacy World', handle: 'legacyworld_', what: 'Redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/legacyworld_/', badge: 'legacy', shot: 'assets/profile-legacy.jpg' },
+      { name: 'Inversiones MDS', handle: 'inversiones.mds', what: 'Estrategia y gestión de su Instagram', label: 'Ver Instagram', url: 'https://www.instagram.com/inversiones.mds/', badge: 'mds', shot: 'assets/profile-mds.jpg' },
+      { name: 'Pizzi', handle: 'pizzi.es', what: 'Manejo de redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/pizzi.es/', badge: 'pizzi', shot: 'assets/profile-pizzi.jpg' }
     ],
     'content-production': [
       { name: 'Legacy Podcast', what: 'Podcast producido de punta a punta', label: 'Ver episodio en YouTube', url: 'https://youtu.be/i-frSRSTsq8' },
@@ -1517,27 +1517,18 @@
 
   // Mockup de iPhone (plata) con el perfil de cada cliente; al pulsarlo abre su Instagram.
   function renderPhoneWork(box, list, base){
-    const tiles = (n) => Array.from({length: 9}, (_, i) => `<i style="--t:${(i * 37 + n * 11) % 100}"></i>`).join('');
     box.innerHTML = `
       <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">
         <h2 class="font-display text-3xl md:text-4xl mb-3">Clientes de este servicio</h2>
         <p class="text-white/55 mb-12 max-w-xl">Toca un perfil para verlo en Instagram.</p>
         <div class="ph-row">
-          ${list.map((c, n) => `
+          ${list.map(c => `
             <a href="${c.url}" target="_blank" rel="noopener" class="ph-link" aria-label="${c.name}: ver @${c.handle} en Instagram">
               <div class="ph">
                 <span class="ph-btn ph-btn--a"></span><span class="ph-btn ph-btn--b"></span><span class="ph-btn ph-btn--c"></span><span class="ph-btn ph-btn--p"></span>
                 <div class="ph-screen">
                   <span class="ph-island"></span>
-                  <div class="ph-ui">
-                    <div class="ph-top"><span>${c.handle}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 9l7 7 7-7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                    <div class="ph-head">
-                      <img src="${base}${portfolioBadges[c.badge]}" alt="" />
-                      <div class="ph-stats"><b>${c.name}</b><span>${c.what}</span></div>
-                    </div>
-                    <div class="ph-follow">Ver perfil</div>
-                    <div class="ph-grid">${tiles(n)}</div>
-                  </div>
+                  <img class="ph-shot" src="${base}${c.shot}" alt="Perfil de Instagram de @${c.handle}" loading="lazy" />
                   <span class="ph-home"></span>
                 </div>
               </div>

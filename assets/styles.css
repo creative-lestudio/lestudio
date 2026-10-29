@@ -591,3 +591,4 @@
   .ph-link{ scroll-snap-align:center; flex-shrink:0; }
 }
 @media (prefers-reduced-motion:reduce){ .ph, .pf-media img{ transition:none; } .ph-link:hover .ph{ transform:none; } }
+.ph-shot{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
