@@ -1511,8 +1511,10 @@
     'web-development': [
       { name: 'Legacy World', what: 'Tienda online propia, nacional e internacional', url: 'https://legacy-world.com', shot: 'assets/web-legacy.jpg' },
       { name: 'Pizzi', what: 'Pedidos online para recoger', url: 'https://creative-lestudio.github.io/pizzi/', shot: 'assets/web-pizzi.jpg' },
-      { name: 'Repite', what: 'Proyecto web', url: 'https://repite-silk.vercel.app/', shot: 'assets/web-repite.jpg' },
-      { name: 'Finanzas', what: 'App de finanzas personales', url: 'https://creative-lestudio.github.io/finanzas/', shot: 'assets/web-finanzas.jpg' }
+      { name: 'Repite', what: 'Tarjeta de sellos digital para fidelizar clientes', url: 'https://repite-silk.vercel.app/', shot: 'assets/web-repite.jpg' },
+      { name: 'Finanzas', what: 'App de finanzas personales', url: 'https://creative-lestudio.github.io/finanzas/', shot: 'assets/web-finanzas.jpg' },
+      { name: 'Karoli Sushi', what: 'Pedidos online para un sushi en Aravaca, Madrid', url: 'https://creative-lestudio.github.io/KaroliSushi/', shot: 'assets/web-karoli.jpg' },
+      { name: 'Venezuela Food', what: 'Web de tapas y picoteo venezolano en Madrid', url: 'https://creative-lestudio.github.io/venezuela-food/', shot: 'assets/web-venezuelafood.jpg' }
     ],
     'growth-marketing': [],
     'ai-automation': []
@@ -1604,6 +1606,39 @@
       </div>`;
   }
   renderServiceWork();
+
+  // ---------- Páginas de servicio: resumir listas largas (el contenido sigue en el DOM) ----------
+  (function condenseServicePage(){
+    if(!document.getElementById('que-incluye')) return;
+    const LIMIT = 6;
+    document.querySelectorAll('main .glass ul').forEach(ul => {
+      const items = ul.querySelectorAll(':scope > li');
+      if(items.length <= LIMIT + 1) return;
+      items.forEach((li, i) => { if(i >= LIMIT) li.classList.add('sv-more'); });
+      ul.classList.add('sv-collapsed');
+      const btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 'sv-toggle'; btn.setAttribute('aria-expanded', 'false');
+      btn.textContent = 'Ver todo lo que incluye';
+      btn.addEventListener('click', () => {
+        const open = ul.classList.toggle('sv-collapsed') === false;
+        btn.textContent = open ? 'Ver menos' : 'Ver todo lo que incluye';
+        btn.setAttribute('aria-expanded', String(open));
+      });
+      ul.insertAdjacentElement('afterend', btn);
+    });
+    const faqs = document.querySelectorAll('details.faq-item');
+    if(faqs.length > 4){
+      faqs.forEach((d, i) => { if(i >= 4) d.classList.add('sv-more', 'is-hidden'); });
+      const more = document.createElement('button');
+      more.type = 'button'; more.className = 'sv-faq-toggle'; more.textContent = 'Ver más preguntas';
+      more.addEventListener('click', () => {
+        const hidden = faqs[4].classList.contains('is-hidden');
+        faqs.forEach((d, i) => { if(i >= 4) d.classList.toggle('is-hidden', !hidden); });
+        more.textContent = hidden ? 'Ver menos preguntas' : 'Ver más preguntas';
+      });
+      faqs[faqs.length - 1].insertAdjacentElement('afterend', more);
+    }
+  })();
 
   window.__appReady = true;
 
