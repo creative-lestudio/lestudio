@@ -1495,9 +1495,13 @@
       { name: 'Pizzi', handle: 'pizzi.es', what: 'Manejo de redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/pizzi.es/', badge: 'pizzi', shot: 'assets/profile-pizzi.jpg' }
     ],
     'content-production': [
-      { name: 'Legacy Podcast', what: 'Podcast producido de punta a punta', label: 'Ver episodio en YouTube', url: 'https://youtu.be/i-frSRSTsq8' },
-      { name: 'Inversiones MDS', what: 'Contenido en video para su marca', label: 'Ver caso', case: 'mds-contenido' },
-      { name: 'Urbantex', what: 'Contenido en video para redes', label: 'Ver caso', case: 'urbantex-contenido' }
+      { group: 'Podcast', title: 'Legacy Podcast EP.01', what: 'Cómo pasar de hacer TikToks a vivir de las redes, con Cesar Oliveira', views: '36K', url: 'https://youtu.be/i-frSRSTsq8', shot: 'assets/video-podcast-1.jpg', wide: true, source: 'YouTube' },
+      { group: 'Podcast', title: 'Legacy Podcast EP.02', what: 'NEOMAI: «Quiero representar a Venezuela y ganar un Grammy»', views: '2.3K', url: 'https://youtu.be/4IU4OL3d9WE', shot: 'assets/video-podcast-2.jpg', wide: true, source: 'YouTube' },
+      { group: 'Contenido viral', title: 'Clip de Legacy Podcast', what: '@legacyworld_', views: '2.4M', url: 'https://www.tiktok.com/@legacyworld_/video/7602753224323501320', shot: 'assets/video-legacy-1.jpg', source: 'TikTok' },
+      { group: 'Contenido viral', title: 'Neomai en Legacy Podcast', what: '@legacyworld_', views: '591.6K', url: 'https://www.tiktok.com/@legacyworld_/video/7642136557578636562', shot: 'assets/video-legacy-2.jpg', source: 'TikTok' },
+      { group: 'Contenido viral', title: 'Clip de Legacy Podcast', what: '@legacyworld_', views: '478.1K', url: 'https://www.tiktok.com/@legacyworld_/video/7602391908966599944', shot: 'assets/video-legacy-3.jpg', source: 'TikTok' },
+      { group: 'Contenido viral', title: 'Suzuki Jimny 4x4', what: '@kiacentromarca', views: '128.1K', url: 'https://www.tiktok.com/@kiacentromarca/video/7441352485589077304', shot: 'assets/video-kia-1.jpg', source: 'TikTok' },
+      { group: 'Contenido viral', title: 'Kia Picanto 2025', what: '@kiacentromarca', views: '111.6K', url: 'https://www.tiktok.com/@kiacentromarca/video/7461770092091591941', shot: 'assets/video-kia-2.jpg', source: 'TikTok' }
     ],
     'brand-design': [
       { name: 'Legacy World', what: 'Brand building y dirección creativa', url: 'https://www.behance.net/gallery/255634519/LEGACY-WORLD-Brand-Building-Creative-Direction', shot: 'assets/brand-legacy.jpg' },
@@ -1519,6 +1523,48 @@
     'growth-marketing': [],
     'ai-automation': []
   };
+
+  // Carrusel de videos (podcast y contenido viral); al pulsar una tarjeta se abre el video original.
+  function renderVideoWork(box, list, base){
+    const groups = ['Todos'].concat(list.reduce((acc, c) => { if(!acc.includes(c.group)) acc.push(c.group); return acc; }, []));
+    const play = '<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+    const arrow = (d) => `<svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="${d}" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    box.innerHTML = `
+      <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">
+        <h2 class="font-display text-3xl md:text-4xl mb-3">Videos que hemos producido</h2>
+        <p class="text-white/55 mb-8 max-w-xl">Desliza y toca un video para verlo en su plataforma original.</p>
+        <div class="vc-top">
+          <div class="pf-filters vc-filters" id="vc-filters">${groups.map((g, i) => `<button type="button" data-g="${g}" class="pf-chip${i === 0 ? ' is-active' : ''}">${g}</button>`).join('')}</div>
+          <div class="vc-arrows"><button type="button" id="vc-prev" aria-label="Anterior">${arrow('M12 4L6 10l6 6')}</button><button type="button" id="vc-next" aria-label="Siguiente">${arrow('M8 4l6 6-6 6')}</button></div>
+        </div>
+        <div class="vc-track" id="vc-track" tabindex="0">
+          ${list.map(c => `
+            <a class="vc-card${c.wide ? ' vc-wide' : ''}" data-g="${c.group}" href="${c.url}" target="_blank" rel="noopener" aria-label="${c.title}: ver en ${c.source}">
+              <img src="${base}${c.shot}" alt="${c.title}" loading="lazy" />
+              <span class="vc-views">${c.views} vistas</span>
+              <span class="vc-play">${play}</span>
+              <span class="vc-cap"><b>${c.title}</b><em>${c.what}</em><i>${c.source}</i></span>
+            </a>`).join('')}
+        </div>
+        <p class="bb-more"><span>También: <a href="${base}#proyecto-mds-contenido">Inversiones MDS</a> · <a href="${base}#proyecto-urbantex-contenido">Urbantex</a></span></p>
+      </div>`;
+    const track = box.querySelector('#vc-track'), prev = box.querySelector('#vc-prev'), next = box.querySelector('#vc-next');
+    const cards = Array.from(track.querySelectorAll('.vc-card'));
+    const edge = () => { prev.disabled = track.scrollLeft < 8; next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 8; };
+    const step = () => Math.max(240, Math.round(track.clientWidth * 0.8));
+    prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+    track.addEventListener('scroll', edge, { passive: true });
+    track.addEventListener('keydown', (e) => { if(e.key === 'ArrowRight') next.click(); if(e.key === 'ArrowLeft') prev.click(); });
+    box.querySelector('#vc-filters').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-g]'); if(!b) return;
+      box.querySelectorAll('#vc-filters .pf-chip').forEach(x => x.classList.toggle('is-active', x === b));
+      cards.forEach(c => c.classList.toggle('is-off', b.dataset.g !== 'Todos' && c.dataset.g !== b.dataset.g));
+      track.scrollLeft = 0; edge();
+    });
+    window.addEventListener('resize', edge);
+    requestAnimationFrame(edge);
+  }
 
   // Escaparate de identidad visual: portada grande + lista de proyectos; al pulsar la portada se abre el caso en Behance.
   function renderBrandWork(box, list, base){
@@ -1630,6 +1676,7 @@
     if(!list.length){ box.remove(); return; }
     const base = document.getElementById('home-view') ? '' : '../';
     if(list.some(c => c.handle)){ renderPhoneWork(box, list, base); return; }
+    if(box.dataset.service === 'content-production'){ renderVideoWork(box, list, base); return; }
     if(box.dataset.service === 'brand-design'){ renderBrandWork(box, list, base); return; }
     if(list.some(c => c.shot)){ renderBrowserWork(box, list, base); return; }
     const arrow = '<svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M6 14L14 6M7 6h7v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
