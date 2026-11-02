@@ -88,7 +88,7 @@
     { name: "HPS", logo: "hps" },
     { name: "DFratelli", logo: "dfratelli" },
     { name: "Winners League Unimet", logo: "winners" },
-    { name: "Cliente de LE STUDIO", logo: "wm" },
+    { name: "Caracas Mary", logo: "wm" },
   ];
 
   const marqueeLogos = {
