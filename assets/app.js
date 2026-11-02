@@ -82,6 +82,7 @@
     { name: "Multiservicios RDR", logo: "rdr" },
     { name: "Corporación Tecnoclean", logo: "tecnoclean" },
     { name: "Inprecasa", logo: "inprecasa" },
+    { name: "Repite", logo: "repite" },
     { name: "Decoplant", logo: "decoplant" },
     { name: "925", logo: "925" },
     { name: "Synergy", logo: "synergy" },
@@ -104,6 +105,7 @@
     pizzi: "assets/marquee-pizzi.png",
     urbanisima: "assets/marquee-urbanisima.png",
     inprecasa: "assets/marquee-inprecasa.png",
+    repite: "assets/marquee-repite.png",
     "925": "assets/marquee-925.png",
     dfratelli: "assets/marquee-dfratelli.png",
     wm: "assets/marquee-wm.png"
