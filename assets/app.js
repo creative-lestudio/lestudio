@@ -75,18 +75,24 @@
   // ---------- Marquee content (logos only, equal size & spacing) ----------
   const clients = [
     { name: "Inversiones MDS", logo: "mds" },
+    { name: "Legacy World", logo: "legacy" },
+    { name: "Pizzi", logo: "pizzi" },
+    { name: "Urbantex", logo: "urbantex" },
+    { name: "Grupo Urbanísima", logo: "urbanisima" },
     { name: "Multiservicios RDR", logo: "rdr" },
     { name: "Corporación Tecnoclean", logo: "tecnoclean" },
+    { name: "Inprecasa", logo: "inprecasa" },
     { name: "Decoplant", logo: "decoplant" },
-    { name: "Legacy World", logo: "legacy" },
-    { name: "Urbantex", logo: "urbantex" },
-    { name: "HPS", logo: "hps" },
+    { name: "925", logo: "925" },
     { name: "Synergy", logo: "synergy" },
+    { name: "HPS", logo: "hps" },
+    { name: "DFratelli", logo: "dfratelli" },
     { name: "Winners League Unimet", logo: "winners" },
+    { name: "Cliente de LE STUDIO", logo: "wm" },
   ];
 
   const marqueeLogos = {
-        mds: "assets/marquee-mds.png",
+    mds: "assets/marquee-mds.png",
     rdr: "assets/marquee-rdr.png",
     tecnoclean: "assets/marquee-tecnoclean.png",
     decoplant: "assets/marquee-decoplant.png",
@@ -94,20 +100,26 @@
     urbantex: "assets/marquee-urbantex.png",
     hps: "assets/marquee-hps.png",
     synergy: "assets/marquee-synergy.png",
-    winners: "assets/marquee-winners.png"
+    winners: "assets/marquee-winners.png",
+    pizzi: "assets/marquee-pizzi.png",
+    urbanisima: "assets/marquee-urbanisima.png",
+    inprecasa: "assets/marquee-inprecasa.png",
+    "925": "assets/marquee-925.png",
+    dfratelli: "assets/marquee-dfratelli.png",
+    wm: "assets/marquee-wm.png"
   };
 
-  function renderMarqueeSet(containerId){
-    const el = document.getElementById(containerId);
-    if(!el) return;
-    el.innerHTML = clients.map(c => `
-      <div class="flex items-center justify-center shrink-0 w-40 h-10">
-        <img src="${marqueeLogos[c.logo]}" alt="${c.name}" class="max-h-8 max-w-[130px] w-auto object-contain opacity-80" />
-      </div>
-    `).join("");
+  // Sección "Han confiado en nosotros": dos carruseles grandes en sentidos opuestos, con el logo en blanco.
+  function renderClientRows(){
+    const tile = (c) => `<div class="cl-tile"><img src="${marqueeLogos[c.logo]}" alt="${c.name}" /></div>`;
+    const half = Math.ceil(clients.length / 2);
+    const rows = [clients.slice(0, half), clients.slice(half).concat(clients.slice(0, 1))];
+    rows.forEach((row, i) => {
+      const html = row.map(tile).join('');
+      ['a', 'b'].forEach(k => { const el = document.getElementById('cl-' + (i + 1) + k); if(el) el.innerHTML = html; });
+    });
   }
-  renderMarqueeSet('marquee-a');
-  renderMarqueeSet('marquee-b');
+  renderClientRows();
 
   // ---------- Draggable auto-scroll marquee (logos + portfolio) ----------
   // Auto-scrolls continuously, pauses on hover, and can be grabbed/dragged
@@ -182,7 +194,8 @@
       if(moved){ e.stopPropagation(); e.preventDefault(); moved = false; }
     }, true);
   }
-  initDragMarquee('logos-marquee-wrap', 'logos-marquee-track', 0.5);
+  initDragMarquee('cl-wrap-1', 'cl-track-1', 0.6);
+  initDragMarquee('cl-wrap-2', 'cl-track-2', -0.6);
 
   // ---------- Portfolio (color logos + real descriptions) ----------
   // ---------- Reseñas reales de clientes ----------

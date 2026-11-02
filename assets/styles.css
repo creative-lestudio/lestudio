@@ -721,3 +721,13 @@ ul.sv-collapsed > li.sv-more{ display:none; }
 .vc-seg-btn{ padding:10px 22px; border-radius:999px; border:0; background:none; color:var(--mist-2); font-family:inherit; font-size:.9rem; font-weight:600; white-space:nowrap; cursor:pointer; transition:background .25s ease,color .25s ease; }
 .vc-seg-btn:hover{ color:#fff; }
 .vc-seg-btn.is-active{ background:#fff; color:var(--navy-deep); }
+
+/* ---------- Han confiado en nosotros ---------- */
+.cl-eyebrow{ display:inline-block; margin-bottom:18px; padding:6px 16px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.05); font-size:.8125rem; letter-spacing:.08em; text-transform:uppercase; color:var(--mist-1); }
+.cl-rows{ display:grid; gap:20px; margin-top:clamp(44px,6vw,80px); }
+.cl-marquee{ overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); }
+.cl-set{ display:flex; gap:20px; padding-right:20px; }
+.cl-tile{ flex:0 0 auto; display:flex; align-items:center; justify-content:center; width:clamp(210px,22vw,300px); height:clamp(104px,11vw,148px); padding:24px 30px; border-radius:26px; border:1px solid var(--line);
+  background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02)); box-shadow:0 20px 40px -28px rgba(0,0,0,.6); transition:border-color .35s ease, background .35s ease; }
+.cl-tile img{ max-width:82%; max-height:clamp(38px,4.4vw,64px); width:auto; height:auto; object-fit:contain; opacity:.92; pointer-events:none; }
+.cl-tile:hover{ border-color:rgba(255,255,255,.3); background:rgba(255,255,255,.1); }
