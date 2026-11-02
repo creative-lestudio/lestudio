@@ -64,7 +64,7 @@
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@500,600,700&display=swap">
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="assets/styles.css?v=10">
+<link rel="stylesheet" href="assets/styles.css?v=11">
 <script>try{if(!sessionStorage.getItem("intro_seen")&&!/[?&]nointro/.test(location.search)&&!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("intro-on");setTimeout(function(){document.documentElement.classList.remove("intro-on")},16000)}}catch(e){}</script>
 <script>document.documentElement.classList.add("js");setTimeout(function(){if(!window.__appReady)document.documentElement.classList.remove("js")},3500);</script>
 </head>
@@ -253,7 +253,10 @@
       <p class="cl-eyebrow rv">Clientes</p>
       <h2 class="h-title rv" style="margin-inline:auto;max-width:16ch">Han confiado en nosotros</h2>
       <p class="h-lead rv" style="margin:20px auto 0">Marcas de distintos sectores que han trabajado con LE STUDIO.</p>
-      <div id="clients-grid" class="cl-grid"></div>
+    </div>
+    <div class="cl-rows" aria-label="Marcas que han confiado en nosotros">
+      <div class="marquee-wrap cl-marquee" id="cl-wrap-1"><div class="marquee-track" id="cl-track-1"><div class="cl-set" id="cl-1a"></div><div class="cl-set" id="cl-1b"></div></div></div>
+      <div class="marquee-wrap cl-marquee" id="cl-wrap-2"><div class="marquee-track" id="cl-track-2"><div class="cl-set" id="cl-2a"></div><div class="cl-set" id="cl-2b"></div></div></div>
     </div>
   </section>
 

@@ -109,15 +109,17 @@
     wm: "assets/marquee-wm.png"
   };
 
-  // Sección "Han confiado en nosotros": una ficha por marca, con el logo en blanco.
-  (function renderClientsGrid(){
-    const grid = document.getElementById('clients-grid');
-    if(!grid) return;
-    grid.innerHTML = clients.map((c, i) => `
-      <div class="cl-tile rv" style="--rd:${(i % 5) * 0.06}s">
-        <img src="${marqueeLogos[c.logo]}" alt="${c.name}" loading="lazy" />
-      </div>`).join('');
-  })();
+  // Sección "Han confiado en nosotros": dos carruseles grandes en sentidos opuestos, con el logo en blanco.
+  function renderClientRows(){
+    const tile = (c) => `<div class="cl-tile"><img src="${marqueeLogos[c.logo]}" alt="${c.name}" /></div>`;
+    const half = Math.ceil(clients.length / 2);
+    const rows = [clients.slice(0, half), clients.slice(half).concat(clients.slice(0, 1))];
+    rows.forEach((row, i) => {
+      const html = row.map(tile).join('');
+      ['a', 'b'].forEach(k => { const el = document.getElementById('cl-' + (i + 1) + k); if(el) el.innerHTML = html; });
+    });
+  }
+  renderClientRows();
 
   // ---------- Draggable auto-scroll marquee (logos + portfolio) ----------
   // Auto-scrolls continuously, pauses on hover, and can be grabbed/dragged
@@ -192,7 +194,8 @@
       if(moved){ e.stopPropagation(); e.preventDefault(); moved = false; }
     }, true);
   }
-  initDragMarquee('logos-marquee-wrap', 'logos-marquee-track', 0.5);
+  initDragMarquee('cl-wrap-1', 'cl-track-1', 0.6);
+  initDragMarquee('cl-wrap-2', 'cl-track-2', -0.6);
 
   // ---------- Portfolio (color logos + real descriptions) ----------
   // ---------- Reseñas reales de clientes ----------
