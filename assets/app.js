@@ -1724,7 +1724,7 @@
     const arrow = '<svg width="13" height="13" viewBox="0 0 20 20" fill="none"><path d="M6 14L14 6M7 6h7v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     box.innerHTML = `
       <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">
-        <h2 class="font-display text-3xl md:text-4xl mb-3">Webs de este servicio</h2>
+        <h2 class="font-display text-3xl md:text-4xl mb-3">${box.dataset.title || 'Webs de este servicio'}</h2>
         <p class="text-white/55 mb-12 max-w-xl">Elige una pestaña y toca la pantalla para visitar el sitio.</p>
         <div class="sf" id="sf">
           <div class="sf-bar">
@@ -1766,6 +1766,9 @@
         </div>
       </div>`;
   }
+
+  // La página de hostelería muestra solo las webs de restauración
+  serviceWork['hosteleria'] = serviceWork['web-development'].filter(c => ['Pizzi', 'Karoli Sushi', 'Venezuela Food', 'Repite'].includes(c.name));
 
   function renderServiceWork(){
     const box = document.getElementById('service-work');

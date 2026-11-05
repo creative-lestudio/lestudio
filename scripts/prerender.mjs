@@ -22,7 +22,7 @@ const port = server.address().port;
 
 const jobs = [
   { page: 'index.html', ids: ['cl-1a', 'cl-1b', 'cl-2a', 'cl-2b', 'portfolio-home-grid', 'testimonials-static-grid'] },
-  ...['social-media', 'content-production', 'brand-design', 'web-development', 'growth-marketing', 'ai-automation']
+  ...['social-media', 'content-production', 'brand-design', 'web-development', 'growth-marketing', 'ai-automation', 'hosteleria']
     .map((s) => ({ page: `${s}/index.html`, ids: ['service-work'] })),
 ];
 
