@@ -40,7 +40,7 @@
 }
 </script>
 <link rel="preload" href="../assets/fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/styles.css?v=13">
+<link rel="stylesheet" href="../assets/styles.css?v=14">
 <link rel="stylesheet" href="../assets/tailwind.css?v=2">
 </head>
 <body class="antialiased">
@@ -277,8 +277,8 @@
     <p class="text-white/55 text-sm mb-6">Marca lo que necesitas. En el siguiente paso nos dejas tus datos de contacto.</p>
     <input type="hidden" id="custom-plan-category" value="" />
     <div id="custom-plan-checklist" class="space-y-3 mb-6"></div>
-    <label class="block text-white/55 text-sm mb-2">Notas adicionales (opcional)</label>
-    <textarea id="custom-plan-notes" rows="3" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30 mb-6" placeholder="Cuéntanos algo más sobre tu proyecto..."></textarea>
+    <label for="custom-plan-notes" class="block text-white/55 text-sm mb-2">Notas adicionales (opcional)</label>
+          <textarea id="custom-plan-notes" rows="3" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30 mb-6" placeholder="Cuéntanos algo más sobre tu proyecto..."></textarea>
     <div class="flex flex-col sm:flex-row gap-3">
       <button onclick="submitCustomPlan()" class="btn-primary flex-1 font-semibold px-6 py-3 rounded-full text-sm">Continuar</button>
       <button onclick="closeCustomPlan()" class="btn-ghost flex-1 font-semibold px-6 py-3 rounded-full text-sm">Cancelar</button>
@@ -292,29 +292,29 @@
 <div id="contact-modal" class="modal-overlay">
   <div class="glass rounded-3xl p-8 max-w-lg w-full max-h-[85vh] overflow-y-auto">
 
-    <div id="contact-form-panel">
+    <form id="contact-form-panel" novalidate onsubmit="submitContactForm(); return false;">
       <h3 id="contact-title" class="font-display text-2xl mb-2">¿Hablamos de tu proyecto?</h3>
       <p id="contact-sub" class="text-white/55 text-sm mb-6">Completa tus datos y te respondemos en menos de 24 horas.</p>
 
       <div class="space-y-4 mb-2">
         <div>
-          <label class="block text-white/55 text-xs mb-1.5">Nombre <span class="text-white/35">*</span></label>
-          <input type="text" id="contact-name" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Tu nombre" />
+          <label for="contact-name" class="block text-white/55 text-xs mb-1.5">Nombre <span class="text-white/35">*</span></label>
+          <input type="text" id="contact-name" autocomplete="name" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Tu nombre" />
         </div>
         <div>
-          <label class="block text-white/55 text-xs mb-1.5">Email <span class="text-white/35">*</span></label>
-          <input type="email" id="contact-email" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="tu@correo.com" />
+          <label for="contact-email" class="block text-white/55 text-xs mb-1.5">Email <span class="text-white/35">*</span></label>
+          <input type="email" id="contact-email" autocomplete="email" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="tu@correo.com" />
         </div>
         <div>
-          <label class="block text-white/55 text-xs mb-1.5">Teléfono <span class="text-white/35">(opcional)</span></label>
-          <input type="tel" id="contact-phone" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="+58 424 1859724" />
+          <label for="contact-phone" class="block text-white/55 text-xs mb-1.5">Teléfono <span class="text-white/35">(opcional)</span></label>
+          <input type="tel" id="contact-phone" autocomplete="tel" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="+58 424 1859724" />
         </div>
         <div>
-          <label class="block text-white/55 text-xs mb-1.5">Empresa</label>
-          <input type="text" id="contact-company" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Tu empresa (opcional)" />
+          <label for="contact-company" class="block text-white/55 text-xs mb-1.5">Empresa</label>
+          <input type="text" id="contact-company" autocomplete="organization" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Tu empresa (opcional)" />
         </div>
         <div>
-          <label class="block text-white/55 text-xs mb-1.5">Servicio</label>
+          <label for="contact-service" class="block text-white/55 text-xs mb-1.5">Servicio</label>
           <select id="contact-service" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white/80">
             <option value="Social Media" class="bg-[#052659]">Social Media</option>
             <option value="Content Production" class="bg-[#052659]">Content Production</option>
@@ -325,21 +325,27 @@
             <option value="No estoy seguro" class="bg-[#052659]" selected>No estoy seguro</option>
           </select>
         </div>
+        <div id="contact-when-wrap" class="hidden">
+          <label for="contact-when" class="block text-white/55 text-xs mb-1.5">¿Cuándo te viene bien la llamada? <span class="text-white/35">(opcional)</span></label>
+          <input type="text" id="contact-when" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Ej.: mañanas entre semana, a partir de las 17:00" />
+        </div>
         <div>
-          <label class="block text-white/55 text-xs mb-1.5">Mensaje <span class="text-white/35">*</span></label>
+          <label for="contact-message" class="block text-white/55 text-xs mb-1.5">Mensaje <span class="text-white/35">*</span></label>
           <textarea id="contact-message" rows="4" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Hola, escríbenos..."></textarea>
         </div>
+        <input type="text" name="_gotcha" id="contact-gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp-field" />
         <label class="checkbox-row">
           <input type="checkbox" id="contact-terms" />
-          <span class="text-white/60 text-xs">Acepto que LE STUDIO me contacte para responder mi solicitud.</span>
+          <span class="text-white/60 text-xs">He leído y acepto la <a href="../privacidad/" class="underline underline-offset-4" target="_blank" rel="noopener">política de privacidad</a> y que LE STUDIO me contacte para responder mi solicitud.</span>
         </label>
+        <p id="contact-error-msg" class="form-error hidden" role="alert" aria-live="assertive"></p>
       </div>
 
       <div class="flex flex-col sm:flex-row gap-3 mt-6">
-        <button id="contact-submit-btn" onclick="submitContactForm()" class="btn-primary flex-1 font-semibold px-6 py-3 rounded-full text-sm">Enviar</button>
-        <button onclick="closeContactForm()" class="btn-ghost flex-1 font-semibold px-6 py-3 rounded-full text-sm">Cancelar</button>
+        <button id="contact-submit-btn" type="submit" class="btn-primary flex-1 font-semibold px-6 py-3 rounded-full text-sm">Enviar</button>
+        <button type="button" onclick="closeContactForm()" class="btn-ghost flex-1 font-semibold px-6 py-3 rounded-full text-sm">Cancelar</button>
       </div>
-    </div>
+    </form>
 
     <div id="contact-success-panel" class="hidden text-center py-6">
       <div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-5">
@@ -365,7 +371,7 @@
 
 
 <script src="../assets/config.js?v=1"></script>
-<script src="../assets/app.js?v=7" defer></script>
-<script src="../assets/i18n.js?v=7" defer></script>
+<script src="../assets/app.js?v=8" defer></script>
+<script src="../assets/i18n.js?v=8" defer></script>
 </body>
 </html>

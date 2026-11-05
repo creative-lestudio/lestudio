@@ -842,3 +842,13 @@ html[data-theme="light"] option{ background:#ffffff; color:#052659; }
 html[data-theme="light"] .h-glow{ opacity:.55; }
 html[data-theme="light"] ::selection{ background:rgb(var(--ink) / .16); }
 html[data-theme="light"] .modal-overlay{ background:rgba(5,38,89,.45); }
+
+/* ---------- Formularios: señuelo antispam y errores ---------- */
+.hp-field{ position:absolute !important; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none; }
+.form-error{ color:#d6453d; font-size:.8125rem; line-height:1.4; margin-top:2px; }
+html[data-theme="dark"] .form-error{ color:#ff9b93; }
+[aria-invalid="true"]{ border-color:#d6453d !important; }
+.legal{ margin-top:clamp(36px,5vw,56px); display:grid; gap:14px; color:var(--mist-1); font-size:1.0125rem; line-height:1.75; }
+.legal h2{ font-family:var(--font-display); font-weight:500; letter-spacing:-.02em; font-size:1.35rem; color:rgb(var(--ink)); margin-top:26px; }
+.legal ul{ display:grid; gap:10px; padding-left:1.1rem; list-style:disc; }
+.legal strong{ color:rgb(var(--ink)); font-weight:600; }

@@ -775,8 +775,27 @@
   }
 
   // ---------- Unified contact form (mail icon, "Solicitar presupuesto", plan personalizado) ----------
+  // ---------- Origen del contacto (UTM, referrer, página de entrada) ----------
+  // Se guarda solo durante la sesión de la pestaña y se adjunta a cada formulario.
+  (function captureAttribution(){
+    try {
+      if(sessionStorage.getItem('attr')) return;
+      const q = new URLSearchParams(location.search);
+      const data = { landing: location.pathname, referrer: document.referrer || '' };
+      ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'].forEach(k => { if(q.get(k)) data[k] = q.get(k); });
+      sessionStorage.setItem('attr', JSON.stringify(data));
+    } catch(e){}
+  })();
+  function getAttribution(){
+    try { return JSON.parse(sessionStorage.getItem('attr') || '{}'); } catch(e){ return {}; }
+  }
+
   // ---------- Shared lead submission: real endpoint if configured, else mailto ----------
   async function submitLead(fields, kind){
+    // Antispam: si el campo señuelo viene relleno es un robot; fingimos éxito sin enviar nada.
+    if(fields._gotcha){ return { ok: true }; }
+    delete fields._gotcha;
+    fields = Object.assign({}, fields, { _page: location.pathname, _lang: document.documentElement.getAttribute('lang') || 'es' }, getAttribution());
     if(CONFIG.FORM_ENDPOINT && CONFIG.FORM_ENDPOINT !== 'PLACEHOLDER'){
       try {
         const subjectLine = (kind === 'review' ? 'Nueva reseña de cliente — ' : 'Nueva solicitud — ') + (fields.company || fields.service || 'LE STUDIO');
@@ -825,12 +844,21 @@
       const hasOpt = Array.from(svcSel.options).some(o => o.value === serviceValue);
       if(hasOpt) svcSel.value = serviceValue;
     }
-    document.getElementById('contact-message').value = prefillMessage || '';
+    document.getElementById('contact-message').value = prefillMessage || (mode === 'audit' ? 'Quiero reservar la auditoría gratuita de sistemas digitales de mi negocio.' : '');
     document.getElementById('contact-terms').checked = false;
+    const whenWrap = document.getElementById('contact-when-wrap');
+    if(whenWrap) whenWrap.classList.toggle('hidden', mode !== 'audit');
+    const whenInput = document.getElementById('contact-when'); if(whenInput) whenInput.value = '';
+    const gotchaInput = document.getElementById('contact-gotcha'); if(gotchaInput) gotchaInput.value = '';
+    const errBox = document.getElementById('contact-error-msg'); if(errBox){ errBox.classList.add('hidden'); errBox.textContent = ''; }
+    document.querySelectorAll('#contact-form-panel [aria-invalid]').forEach(el => el.removeAttribute('aria-invalid'));
     const titleEl = document.getElementById('contact-title');
     const subEl = document.getElementById('contact-sub');
     if(titleEl && subEl){
-      if(mode === 'quote'){
+      if(mode === 'audit'){
+        titleEl.textContent = 'Reserva tu auditoría gratuita';
+        subEl.textContent = 'Una llamada de 30 minutos para revisar los sistemas digitales de tu negocio. Dinos cuándo te viene bien y te llamamos.';
+      } else if(mode === 'quote'){
         titleEl.textContent = 'Solicita tu cotización';
         subEl.textContent = 'Cuéntanos qué necesitas y te enviamos una propuesta a medida en menos de 24 horas.';
       } else {
@@ -858,20 +886,26 @@
     const message = document.getElementById('contact-message').value.trim();
     const terms = document.getElementById('contact-terms').checked;
 
-    if(!name || !email || !message){
-      alert(window.I18N ? I18N.tr('Por favor completa nombre, email y mensaje.') : 'Por favor completa nombre, email y mensaje.');
-      return;
-    }
-    if(!terms){
-      alert(window.I18N ? I18N.tr('Necesitamos que aceptes ser contactado para poder responderte.') : 'Necesitamos que aceptes ser contactado para poder responderte.');
-      return;
-    }
+    const tr = (t) => (window.I18N ? I18N.tr(t) : t);
+    const fail = (msg, el) => {
+      const box = document.getElementById('contact-error-msg');
+      if(box){ box.textContent = tr(msg); box.classList.remove('hidden'); }
+      document.querySelectorAll('#contact-form-panel [aria-invalid]').forEach(x => x.removeAttribute('aria-invalid'));
+      if(el){ el.setAttribute('aria-invalid', 'true'); el.focus(); }
+    };
+    if(!name){ return fail('Por favor, dinos tu nombre.', document.getElementById('contact-name')); }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ return fail('Introduce un email válido para poder responderte.', document.getElementById('contact-email')); }
+    if(!message){ return fail('Cuéntanos brevemente qué necesitas.', document.getElementById('contact-message')); }
+    if(!terms){ return fail('Necesitamos que aceptes la política de privacidad para poder responderte.', document.getElementById('contact-terms')); }
+    const errBox = document.getElementById('contact-error-msg'); if(errBox) errBox.classList.add('hidden');
+    const when = (document.getElementById('contact-when') || {}).value || '';
+    const gotcha = (document.getElementById('contact-gotcha') || {}).value || '';
 
     const btn = document.getElementById('contact-submit-btn');
     btn.disabled = true;
     btn.textContent = 'Enviando...';
 
-    const result = await submitLead({ name, email, phone, company, service, message });
+    const result = await submitLead(Object.assign({ name, email, phone, company, service, message, _gotcha: gotcha }, when ? { preferred_time: when } : {}));
 
     btn.disabled = false;
     btn.textContent = 'Enviar';
@@ -2286,15 +2320,19 @@
     const message = document.getElementById('review-text').value.trim();
 
     if(!name || !company || !role || !message){
-      alert(window.I18N ? I18N.tr('Por favor completa tu nombre, tu empresa, tu cargo y la descripción.') : 'Por favor completa tu nombre, tu empresa, tu cargo y la descripción.');
+      const box = document.getElementById('review-error-msg');
+      const msg = window.I18N ? I18N.tr('Por favor completa tu nombre, tu empresa, tu cargo y la descripción.') : 'Por favor completa tu nombre, tu empresa, tu cargo y la descripción.';
+      if(box){ box.textContent = msg; box.classList.remove('hidden'); } else { alert(msg); }
       return;
     }
+    const rbox = document.getElementById('review-error-msg'); if(rbox) rbox.classList.add('hidden');
+    const rgot = (document.getElementById('review-gotcha') || {}).value || '';
 
     const btn = document.getElementById('review-submit-btn');
     btn.disabled = true;
     btn.textContent = 'Enviando...';
 
-    const result = await submitLead({ name, company, role, service, rating: selectedRating, message }, 'review');
+    const result = await submitLead({ name, company, role, service, rating: selectedRating, message, _gotcha: rgot }, 'review');
 
     btn.disabled = false;
     btn.textContent = 'Enviar reseña';
