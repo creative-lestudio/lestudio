@@ -1,22 +1,22 @@
 // ==========================================================================
-  // CONFIG — cambiá estos valores en UN solo lugar. Todo el sitio los usa
-  // desde acá (WhatsApp, correo, formulario y analítica).
+  // CONFIG — cambia estos valores en UN solo lugar. Todo el sitio los usa
+  // desde aquí (WhatsApp, correo, formulario y analítica).
   // ==========================================================================
   const CONFIG = {
     WHATSAPP_NUMBER: '584241859724',          // sin "+", sin espacios
     EMAIL: 'creative.lestudio@gmail.com',
 
-    // Poné acá tu endpoint real de Formspree o Web3Forms cuando lo tengas
+    // Poné aquí tu endpoint real de Formspree o Web3Forms cuando lo tengas
     // (ej: 'https://formspree.io/f/xxxxxxx'). Mientras esto sea 'PLACEHOLDER',
     // el formulario sigue funcionando por correo (mailto) automáticamente.
     FORM_ENDPOINT: 'https://formspree.io/f/xkjnvaae',
 
-    // Cuando conectes un asistente real por API (item pendiente), pegá acá su
+    // Cuando conectes un asistente real por API (item pendiente), pega aquí su
     // endpoint. Mientras sea 'PLACEHOLDER', el chat de "¿Qué está frenando tu
     // negocio?" responde con una lógica simple local, por palabras clave.
     CHAT_API_ENDPOINT: 'PLACEHOLDER',
 
-    // Pegá acá tu ID de Google Analytics 4 (ej: 'G-XXXXXXXXXX') y tu ID de
+    // Pegá aquí tu ID de Google Analytics 4 (ej: 'G-XXXXXXXXXX') y tu ID de
     // Meta Pixel cuando los tengas. Mientras estén vacíos, no se carga nada.
     GA_MEASUREMENT_ID: '',
     META_PIXEL_ID: ''
@@ -754,7 +754,7 @@
     const checked = Array.from(document.querySelectorAll('#custom-plan-checklist input:checked')).map(i => ({ v: i.value, g: i.dataset.group || '' }));
     const notes = document.getElementById('custom-plan-notes').value.trim();
     if(checked.length === 0){
-      alert(window.I18N ? I18N.tr('Elegí al menos un ítem para tu plan personalizado.') : 'Elegí al menos un ítem para tu plan personalizado.');
+      alert(window.I18N ? I18N.tr('Elige al menos un ítem para tu plan personalizado.') : 'Elige al menos un ítem para tu plan personalizado.');
       return;
     }
     const T = (x) => (window.I18N ? I18N.tr(x) : x);
@@ -855,7 +855,7 @@
     const terms = document.getElementById('contact-terms').checked;
 
     if(!name || !email || !message){
-      alert(window.I18N ? I18N.tr('Por favor completá nombre, email y mensaje.') : 'Por favor completá nombre, email y mensaje.');
+      alert(window.I18N ? I18N.tr('Por favor completa nombre, email y mensaje.') : 'Por favor completa nombre, email y mensaje.');
       return;
     }
     if(!terms){
@@ -891,8 +891,8 @@
       description: 'Gestionamos tus redes sociales como un canal de negocio, no como un simple calendario de publicaciones. Definimos la estrategia, planificamos el contenido, gestionamos la comunidad y analizamos el rendimiento para construir una presencia digital coherente y orientada al crecimiento.',
       ctaLabel: 'Quiero hacer crecer mis redes',
       intro: [
-        'Cualquiera puede programar publicaciones. Lo que separa una red social que vende de una que solo existe es la estrategia detrás: saber para quién hablás, qué querés lograr con cada pieza y cómo se conecta un mes con el siguiente.',
-        'Trabajamos con marcas que ya entendieron que las redes no son gratis solo porque no se pagan en pauta — cuestan tiempo, consistencia y criterio. Nosotros ponemos las tres cosas, para que vos no tengas que estar pendiente de qué publicar hoy.'
+        'Cualquiera puede programar publicaciones. Lo que separa una red social que vende de una que solo existe es la estrategia detrás: saber para quién hablas, qué quieres lograr con cada pieza y cómo se conecta un mes con el siguiente.',
+        'Trabajamos con marcas que ya entendieron que las redes no son gratis solo porque no se pagan en pauta — cuestan tiempo, consistencia y criterio. Nosotros ponemos las tres cosas, para que no tengas que estar pendiente de qué publicar hoy.'
       ],
       whatWeDo: [
         { name: 'Estrategia de redes', desc: 'Definimos qué comunicar, a quién, cómo y con qué objetivo.' },
@@ -910,11 +910,11 @@
       pricing: 'social',
       faq: [
         { q: '¿Qué redes sociales gestionáis?', a: 'Principalmente Instagram y TikTok, aunque nos adaptamos a la plataforma donde esté tu audiencia. Lo definimos juntos según tu marca y tu objetivo, no aplicamos la misma fórmula a todos los clientes.' },
-        { q: '¿También producís el contenido?', a: 'Sí. La estrategia y la producción van de la mano dentro de este servicio, y si necesitás piezas más elaboradas, se conecta directo con Content Production sin fricción entre equipos.' },
+        { q: '¿También produces el contenido?', a: 'Sí. La estrategia y la producción van de la mano dentro de este servicio, y si necesitas piezas más elaboradas, se conecta directo con Content Production sin fricción entre equipos.' },
         { q: '¿Podemos contratar únicamente estrategia?', a: 'Sí, es posible. Muchos clientes ya tienen equipo interno de community management y solo necesitan la definición estratégica y el calendario. Lo conversamos según tu caso.' },
         { q: '¿Gestionáis comentarios y mensajes?', a: 'Sí, el community management incluye responder comentarios y mensajes directos dentro del horario y el tono que definamos juntos para tu marca.' },
         { q: '¿Cuánto contenido se publica al mes?', a: 'Depende del plan que elijas. Los tres niveles —básico, intermedio y avanzado— tienen cantidades distintas de posts, reels e historias, detalladas en la sección de planes.' },
-        { q: '¿Cómo medís los resultados?', a: 'Con informes mensuales que muestran alcance, interacción y crecimiento real, explicados en lenguaje simple — no solo una captura de métricas sin contexto.' },
+        { q: '¿Cómo mides los resultados?', a: 'Con informes mensuales que muestran alcance, interacción y crecimiento real, explicados en lenguaje simple — no solo una captura de métricas sin contexto.' },
         { q: '¿Trabajáis con marcas que están empezando?', a: 'Sí. De hecho ahí es donde más valor aporta tener una estrategia clara desde el día uno, en vez de publicar sin un rumbo definido.' }
       ],
       related: ['content-production', 'brand-design', 'growth-marketing'],
@@ -946,7 +946,7 @@
         { q: '¿Trabajáis con video y fotografía?', a: 'Sí, ambos formatos forman parte del servicio y normalmente se planifican juntos dentro de una misma producción para aprovechar cada sesión.' },
         { q: '¿Podéis producir contenido para redes?', a: 'Sí, es uno de los usos más frecuentes: contenido vertical, reels y piezas pensadas específicamente para el consumo en redes sociales.' },
         { q: '¿También os encargáis de la edición?', a: 'Sí, montaje, color, sonido y motion graphics están incluidos — no entregamos material crudo sin terminar.' },
-        { q: '¿Podemos contratar únicamente la producción?', a: 'Sí, si ya tenés un equipo de edición interno podemos encargarnos solo de la parte de grabación y dirección creativa.' },
+        { q: '¿Podemos contratar únicamente la producción?', a: 'Sí, si ya tienes un equipo de edición interno podemos encargarnos solo de la parte de grabación y dirección creativa.' },
         { q: '¿Trabajáis con campañas publicitarias?', a: 'Sí, producimos piezas pensadas para campañas pagas, coordinado con el equipo de Growth & Marketing cuando el proyecto lo requiere.' },
         { q: '¿Podéis crear diferentes formatos a partir de una producción?', a: 'Sí, de una misma sesión solemos adaptar múltiples piezas: reel, historia, corte horizontal y vertical, para aprovechar mejor cada producción.' },
         { q: '¿Trabajáis con contenido generado mediante IA?', a: 'Lo evaluamos caso por caso. Priorizamos producción real, pero hay procesos puntuales (como algunas adaptaciones o pruebas de concepto) donde la IA puede sumar sin reemplazar la producción original.' }
@@ -980,7 +980,7 @@
       faq: [
         { q: '¿Creáis identidades de marca desde cero?', a: 'Sí, es uno de los proyectos más completos que hacemos: desde el naming y el concepto hasta el manual de marca final.' },
         { q: '¿También trabajáis sobre marcas existentes?', a: 'Sí, muchos proyectos son de evolución de marca: mantenemos lo que ya funciona y corregimos lo que genera inconsistencia.' },
-        { q: '¿Qué incluye un proyecto de branding?', a: 'Depende del nivel elegido — tenés el detalle exacto en la sección de planes de esta página, desde identidad básica hasta un sistema de marca completo.' },
+        { q: '¿Qué incluye un proyecto de branding?', a: 'Depende del nivel elegido — tienes el detalle exacto en la sección de planes de esta página, desde identidad básica hasta un sistema de marca completo.' },
         { q: '¿Diseñáis únicamente el logo?', a: 'Podemos, pero recomendamos pensarlo como parte de un sistema: tipografías, paleta y aplicaciones, para que el logo funcione bien en cualquier contexto.' },
         { q: '¿Trabajáis también diseño para redes sociales?', a: 'Sí. Diseñamos posts, historias, carruseles, portadas y plantillas editables usando el mismo sistema visual de tu marca, para que redes, web y papelería se vean como una sola cosa.' },
         { q: '¿Podéis diseñar la interfaz de una web o aplicación?', a: 'Sí, el diseño UI/UX forma parte de este servicio y se coordina directamente con el equipo de Web & Digital Development cuando hay que construirla.' },
@@ -1030,7 +1030,7 @@
       description: 'Construimos estrategias para que tu marca sea encontrada, considerada y elegida. Combinamos posicionamiento orgánico, publicidad digital, presencia en buscadores de IA y estrategias de captación para construir un sistema de adquisición conectado.',
       ctaLabel: 'Quiero encontrar oportunidades de crecimiento',
       intro: [
-        'Que te encuentren es el primer paso, no el objetivo. El objetivo es que te elijan a vos y no a la competencia que apareció al lado en la misma búsqueda.',
+        'Que te encuentren es el primer paso, no el objetivo. El objetivo es que te elijan a ti y no a la competencia que apareció al lado en la misma búsqueda.',
         'Por eso no separamos SEO, publicidad y contenido en compartimentos aislados: los conectamos en un mismo sistema, donde cada canal refuerza a los demás en vez de competir por el mismo presupuesto.'
       ],
       whatWeDo: [
@@ -1052,7 +1052,7 @@
         { q: '¿También gestionáis Meta Ads?', a: 'Sí, campañas en Instagram y Facebook, coordinadas con el resto de la estrategia de contenido y marca.' },
         { q: '¿Podéis combinar SEO y publicidad?', a: 'Sí, de hecho lo recomendamos: el orgánico construye una base sostenible mientras la pauta genera resultados más inmediatos.' },
         { q: '¿Qué significa aparecer en buscadores de IA?', a: 'Significa que cuando alguien le pregunta algo relacionado con tu rubro a ChatGPT, Gemini u otro sistema similar, tu marca tiene más probabilidad de ser mencionada o considerada dentro de esa respuesta. No es algo que se pueda garantizar puntualmente, pero sí se puede trabajar de forma consistente.' },
-        { q: '¿Cómo medís los resultados?', a: 'Con analítica y reporting periódico sobre tráfico, posiciones, conversión y rendimiento de cada campaña.' },
+        { q: '¿Cómo mides los resultados?', a: 'Con analítica y reporting periódico sobre tráfico, posiciones, conversión y rendimiento de cada campaña.' },
         { q: '¿Trabajáis con empresas que ya tienen equipo de marketing?', a: 'Sí, en varios proyectos trabajamos como un equipo especializado que complementa al equipo interno, no como reemplazo.' }
       ],
       related: ['social-media', 'content-production', 'web-development']
@@ -1068,7 +1068,7 @@
       ],
       intro: [
         'La mayoría de los procesos que le quitan tiempo a un equipo no requieren una persona pensando — requieren que alguien mueva información de un lado a otro. Ahí es exactamente donde entra la automatización.',
-        'No empezamos por la tecnología. Empezamos por entender cómo funciona tu operación hoy, y después decidimos si hace falta un agente de IA, un flujo automatizado, o simplemente conectar dos herramientas que ya usás.'
+        'No empezamos por la tecnología. Empezamos por entender cómo funciona tu operación hoy, y después decidimos si hace falta un agente de IA, un flujo automatizado, o simplemente conectar dos herramientas que ya usas.'
       ],
       whatWeDo: [
         { name: 'AI Agents', desc: 'Agentes capaces de ejecutar tareas y trabajar con información de la empresa.' },
@@ -1086,7 +1086,7 @@
       ],
       faq: [
         { q: '¿Qué procesos se pueden automatizar?', a: 'Cualquier tarea repetitiva basada en reglas claras: seguimiento de leads, respuestas frecuentes, envío de documentos, actualización de datos entre sistemas, entre muchas otras.' },
-        { q: '¿Podéis crear un agente de IA personalizado?', a: 'Sí, entrenado con información real de tu negocio para que responda y actúe de forma coherente con cómo trabajás.' },
+        { q: '¿Podéis crear un agente de IA personalizado?', a: 'Sí, entrenado con información real de tu negocio para que responda y actúe de forma coherente con cómo trabajas.' },
         { q: '¿Los chatbots pueden utilizar información de nuestra empresa?', a: 'Sí, ese es justamente el punto: que respondan con tus datos reales, no con respuestas genéricas desconectadas de tu negocio.' },
         { q: '¿Podéis conectar la IA con nuestro CRM?', a: 'Sí, las integraciones con CRM son una de las bases más comunes de estos proyectos, para que la información fluya sin cargarla dos veces.' },
         { q: '¿La IA puede atender clientes automáticamente?', a: 'Sí, con escalamiento a un humano cuando la consulta lo amerita — nunca dejamos a tu cliente sin respuesta ni atrapado en un bucle.' },
@@ -1897,7 +1897,7 @@
     } else {
       testimonialWrap.innerHTML = `
         <div class="glass rounded-3xl p-8 md:p-10 text-center border-dashed">
-          <p class="text-white/40 text-sm italic">Todavía no sumamos un testimonio específico de este servicio — pronto vas a poder leerlo acá.</p>
+          <p class="text-white/40 text-sm italic">Todavía no sumamos un testimonio específico de este servicio — pronto vas a poder leerlo aquí.</p>
         </div>`;
     }
 
@@ -1959,7 +1959,7 @@
     const message = document.getElementById('sd-cta-message').value.trim();
 
     if(!name || !email || !message){
-      alert(window.I18N ? I18N.tr('Por favor completá al menos nombre, email y contanos sobre el proyecto.') : 'Por favor completá al menos nombre, email y contanos sobre el proyecto.');
+      alert(window.I18N ? I18N.tr('Por favor completa al menos nombre, email y cuéntanos sobre el proyecto.') : 'Por favor completa al menos nombre, email y cuéntanos sobre el proyecto.');
       return;
     }
 
@@ -2147,7 +2147,7 @@
       storyEl.className = 'grid grid-cols-1 gap-5 mb-14';
       storyEl.innerHTML = `
         <div class="glass rounded-2xl p-7 text-center">
-          <p class="text-white/40 text-sm italic">Estamos documentando el detalle de este proyecto — pronto vas a poder leerlo acá.</p>
+          <p class="text-white/40 text-sm italic">Estamos documentando el detalle de este proyecto — pronto vas a poder leerlo aquí.</p>
         </div>`;
     }
 
@@ -2228,7 +2228,7 @@
   }
   window.addEventListener('popstate', routeFromHash);
 
-  // ---------- Review request page (compartí #resena con tus clientes) ----------
+  // ---------- Review request page (comparte #resena con tus clientes) ----------
   let selectedRating = 0;
   function renderReviewStars(){
     const wrap = document.getElementById('review-stars');
@@ -2267,7 +2267,7 @@
     document.getElementById('review-success-panel').classList.add('hidden');
     document.getElementById('review-error-panel').classList.add('hidden');
 
-    document.title = 'Dejanos tu reseña — LE STUDIO';
+    document.title = 'Déjanos tu reseña — LE STUDIO';
     window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
     if(location.hash.slice(1) !== 'resena'){
       history.pushState({review: true}, '', '#resena');
@@ -2282,7 +2282,7 @@
     const message = document.getElementById('review-text').value.trim();
 
     if(!name || !company || !role || !message){
-      alert(window.I18N ? I18N.tr('Por favor completá tu nombre, tu empresa, tu cargo y la descripción.') : 'Por favor completá tu nombre, tu empresa, tu cargo y la descripción.');
+      alert(window.I18N ? I18N.tr('Por favor completa tu nombre, tu empresa, tu cargo y la descripción.') : 'Por favor completa tu nombre, tu empresa, tu cargo y la descripción.');
       return;
     }
 
