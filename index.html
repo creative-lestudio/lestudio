@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script>try{var t=localStorage.getItem("theme");document.documentElement.setAttribute("data-theme",t==="dark"?"dark":"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
+<meta name="theme-color" content="#ffffff">
 <title>LE STUDIO — Creative, Digital &amp; AI Studio</title>
 <meta name="description" content="LE STUDIO es un estudio de estrategia, creatividad y tecnología. Diseñamos marcas, producimos contenido, desarrollamos productos digitales y aplicamos IA para ayudar a empresas a crecer.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -63,8 +65,8 @@
 </script>
 
 <link rel="preload" href="assets/fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/styles.css?v=12">
-<link rel="stylesheet" href="assets/tailwind.css?v=1">
+<link rel="stylesheet" href="assets/styles.css?v=13">
+<link rel="stylesheet" href="assets/tailwind.css?v=2">
 <script>try{if(!sessionStorage.getItem("intro_seen")&&!/[?&]nointro/.test(location.search)&&!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("intro-on");setTimeout(function(){document.documentElement.classList.remove("intro-on")},16000)}}catch(e){}</script>
 <script>document.documentElement.classList.add("js");setTimeout(function(){if(!window.__appReady)document.documentElement.classList.remove("js")},3500);</script>
 </head>
@@ -149,7 +151,7 @@
 <header id="site-header" class="sticky top-0 z-50 backdrop-blur-xl bg-[#021024]/70 border-b border-white/10">
   <div class="max-w-7xl mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
     <a href="#" onclick="goHome(); return false;" class="shrink-0">
-      <img src="assets/logo-white.png" alt="LE STUDIO" class="h-8 md:h-9 w-auto" />
+      <span class="logo-mask" style="--logo:url(/assets/logo-white.png)"><img src="assets/logo-white.png" alt="LE STUDIO" class="h-8 md:h-9 w-auto" /></span>
     </a>
 
     <nav class="hidden lg:flex items-center gap-10 text-[15px] text-white/80">
@@ -192,17 +194,17 @@
     </nav>
 
     <div class="flex items-center gap-4">
-      <div class="lang-switch" role="group" aria-label="Idioma"><button type="button" data-lang="es" class="is-active" aria-pressed="true">ES</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+      <div class="lang-switch" role="group" aria-label="Idioma"><button type="button" data-lang="es" class="is-active" aria-pressed="true">ES</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div><button type="button" class="theme-toggle" data-theme-toggle aria-label="Cambiar entre tema claro y oscuro"><svg class="ico-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.2A8 8 0 0 1 9.8 4 8.2 8.2 0 1 0 20 14.2z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><svg class="ico-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
       <a href="#contacto" class="hidden md:inline-block btn-primary text-sm font-semibold px-5 py-2.5 rounded-full">Contáctanos</a>
       <button id="mobile-toggle" class="lg:hidden p-2 -mr-2" aria-label="Abrir menú">
-        <svg width="22" height="16" viewBox="0 0 22 16" fill="none"><path d="M0 1H22M0 8H22M0 15H22" stroke="white" stroke-width="1.6"/></svg>
+        <svg width="22" height="16" viewBox="0 0 22 16" fill="none"><path d="M0 1H22M0 8H22M0 15H22" stroke="currentColor" stroke-width="1.6"/></svg>
       </button>
     </div>
   </div>
 
   <!-- mobile menu -->
   <div id="mobile-menu" class="hidden lg:hidden border-t border-white/10 bg-[#021024]/95 px-6 py-6 space-y-5 text-white/85">
-    <div class="lang-switch lang-switch--menu" role="group" aria-label="Idioma"><button type="button" data-lang="es" class="is-active" aria-pressed="true">ES</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+    <div class="lang-switch lang-switch--menu" role="group" aria-label="Idioma"><button type="button" data-lang="es" class="is-active" aria-pressed="true">ES</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div><button type="button" class="theme-toggle theme-toggle--menu" data-theme-toggle aria-label="Cambiar entre tema claro y oscuro"><svg class="ico-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.2A8 8 0 0 1 9.8 4 8.2 8.2 0 1 0 20 14.2z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><svg class="ico-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
     <p class="text-xs uppercase tracking-wider text-white/40">Servicios</p>
     <a href="social-media/" class="block">Social Media</a>
     <a href="content-production/" class="block">Content Production</a>
@@ -309,7 +311,7 @@
         <a href="brand-design/" class="h-card span-3 rv" style="--ac:255,154,0;--gx:85%;--gy:0%">
           <svg class="h-card-bg" viewBox="0 0 24 24" fill="none"><path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"/><path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z"/></svg>
           <div>
-            <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"/><path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z"/></svg>
+            <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"/><path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z"/></svg>
             <h3 class="font-display">Brand &amp; Design</h3>
             <p>Identidad visual, branding, naming, diseño para redes sociales, UI/UX y manuales de marca.</p>
             <ul class="h-pills"><li>Identidad visual</li><li>Diseño para redes sociales</li><li>Naming</li><li>UI/UX</li><li>Manual de marca</li></ul>
@@ -320,7 +322,7 @@
         <a href="social-media/" class="h-card span-3 rv" style="--ac:225,48,108;--gx:15%;--gy:0%">
           <svg class="h-card-bg" viewBox="0 0 24 24" fill="none"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           <div>
-            <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             <h3 class="font-display">Social Media</h3>
             <p>Estrategia, gestión de comunidad y crecimiento en Instagram, TikTok y más.</p>
             <ul class="h-pills"><li>Estrategia</li><li>Comunidad</li><li>Instagram</li><li>TikTok</li></ul>
@@ -331,7 +333,7 @@
         <a href="content-production/" class="h-card span-2 rv" style="--ac:153,153,255;--gx:50%;--gy:100%">
           <svg class="h-card-bg" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="14" height="14" rx="2"/><path d="M17 9.5L21 7v10l-4-2.5"/></svg>
           <div>
-            <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="14" height="14" rx="2" stroke="white" stroke-opacity=".85" stroke-width="1.4"/><path d="M17 9.5L21 7V17L17 14.5" stroke="white" stroke-opacity=".85" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="14" height="14" rx="2" stroke="currentColor" stroke-opacity=".85" stroke-width="1.4"/><path d="M17 9.5L21 7V17L17 14.5" stroke="currentColor" stroke-opacity=".85" stroke-width="1.4" stroke-linejoin="round"/></svg>
             <h3 class="font-display">Content Production</h3>
             <p>Dirección creativa, producción audiovisual, fotografía, video y edición.</p>
           </div>
@@ -341,7 +343,7 @@
         <a href="web-development/" class="h-card span-2 rv" style="--ac:149,191,71;--gx:100%;--gy:50%">
           <svg class="h-card-bg" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8M12 18v3"/></svg>
           <div>
-            <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="white" stroke-opacity=".85" stroke-width="1.4"/><path d="M3 8h18" stroke="white" stroke-opacity=".85" stroke-width="1.4"/><circle cx="6" cy="6" r=".6" fill="white" fill-opacity=".85"/><circle cx="8" cy="6" r=".6" fill="white" fill-opacity=".85"/><path d="M8 21h8M12 18v3" stroke="white" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-opacity=".85" stroke-width="1.4"/><path d="M3 8h18" stroke="currentColor" stroke-opacity=".85" stroke-width="1.4"/><circle cx="6" cy="6" r=".6" fill="currentColor" fill-opacity=".85"/><circle cx="8" cy="6" r=".6" fill="currentColor" fill-opacity=".85"/><path d="M8 21h8M12 18v3" stroke="currentColor" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round"/></svg>
             <h3 class="font-display">Web &amp; Digital Development</h3>
             <p>E-commerce, landing pages, dashboards y plataformas a medida.</p>
           </div>
@@ -351,7 +353,7 @@
         <a href="growth-marketing/" class="h-card span-2 rv" style="--ac:66,133,244;--gx:0%;--gy:60%">
           <svg class="h-card-bg" viewBox="0 0 24 24" fill="none"><path d="M4 17l5-6 4 3 7-8"/><path d="M14 6h6v6"/></svg>
           <div>
-            <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M4 17L9 11L13 14L20 6" stroke="white" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 6H20V12" stroke="white" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M4 17L9 11L13 14L20 6" stroke="currentColor" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 6H20V12" stroke="currentColor" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <h3 class="font-display">Growth &amp; Marketing</h3>
             <p>SEO, GEO/AEO, Google Ads, Meta Ads y generación de leads.</p>
           </div>
@@ -361,7 +363,7 @@
         <a href="ai-automation/" class="h-card h-card--wide span-6 rv" style="--ac:234,75,113;--gx:90%;--gy:50%">
           <svg class="h-card-bg" viewBox="0 0 24 24" fill="none"><rect x="5" y="7" width="14" height="11" rx="3"/><path d="M12 7V4"/><circle cx="9" cy="12.5" r="1.3"/><circle cx="15" cy="12.5" r="1.3"/></svg>
           <div class="h-card-main">
-            <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none"><rect x="5" y="7" width="14" height="11" rx="3" stroke="white" stroke-opacity=".85" stroke-width="1.4"/><path d="M12 7V4" stroke="white" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="3" r="1" fill="white" fill-opacity=".85"/><circle cx="9" cy="12.5" r="1.3" fill="white" fill-opacity=".85"/><circle cx="15" cy="12.5" r="1.3" fill="white" fill-opacity=".85"/></svg>
+            <svg class="h-ico" width="30" height="30" viewBox="0 0 24 24" fill="none"><rect x="5" y="7" width="14" height="11" rx="3" stroke="currentColor" stroke-opacity=".85" stroke-width="1.4"/><path d="M12 7V4" stroke="currentColor" stroke-opacity=".85" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="3" r="1" fill="currentColor" fill-opacity=".85"/><circle cx="9" cy="12.5" r="1.3" fill="currentColor" fill-opacity=".85"/><circle cx="15" cy="12.5" r="1.3" fill="currentColor" fill-opacity=".85"/></svg>
             <h3 class="font-display">AI &amp; Automation</h3>
             <p>Agentes de IA, chatbots y automatización de procesos comerciales. Detectamos dónde pierdes horas y lo automatizamos.</p>
           </div>
@@ -472,7 +474,7 @@
     <div class="h-footer-bar">
       <div class="h-wrap h-footer-in">
         <div class="flex flex-col items-center md:items-start gap-2">
-          <img src="assets/logo-white.png" alt="LE STUDIO" class="h-6 w-auto opacity-80" />
+          <span class="logo-mask" style="--logo:url(/assets/logo-white.png)"><img src="assets/logo-white.png" alt="LE STUDIO" class="h-6 w-auto opacity-80" /></span>
           <p class="text-sm text-white/40">© 2026 LE STUDIO. Todos los derechos reservados.</p>
         </div>
         <div class="flex items-center gap-4">
@@ -623,7 +625,7 @@
         </div>
         <div id="sd-cta-success-panel" class="hidden text-center py-6">
           <div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-5">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <h3 class="font-display text-2xl mb-2">Recibimos tu proyecto.</h3>
           <p class="text-white/55 text-sm">Te responderemos en menos de 24 horas.</p>
@@ -739,7 +741,7 @@
 
     <div id="review-success-panel" class="hidden text-center py-10">
       <div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-5">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
       <h3 class="font-display text-2xl mb-2">¡Gracias por tu reseña!</h3>
       <p class="text-white/55 text-sm">La vamos a leer con mucha atención.</p>
@@ -825,7 +827,7 @@
 
     <div id="contact-success-panel" class="hidden text-center py-6">
       <div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-5">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
       <h3 class="font-display text-2xl mb-2">Recibimos tu proyecto.</h3>
       <p class="text-white/55 text-sm mb-8">Te responderemos en menos de 24 horas.</p>
@@ -844,8 +846,8 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=5" defer></script>
-<script src="assets/i18n.js?v=5" defer></script>
+<script src="assets/app.js?v=6" defer></script>
+<script src="assets/i18n.js?v=6" defer></script>
 <script src="assets/intro.js?v=4" defer></script>
 </body>
 </html>

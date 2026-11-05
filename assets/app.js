@@ -43,6 +43,18 @@
     }
   });
 
+  // ---------- Tema claro / oscuro (claro por defecto; se recuerda la elección) ----------
+  document.addEventListener('click', (e) => {
+    if(!e.target.closest('[data-theme-toggle]')) return;
+    const root = document.documentElement;
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch(err){}
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if(meta) meta.setAttribute('content', next === 'dark' ? '#021024' : '#ffffff');
+    trackEvent('theme_toggle', { theme: next });
+  });
+
   // ---------- Analytics (se activa solo si cargaste IDs reales arriba) ----------
   function trackEvent(name, params){
     if(window.gtag) window.gtag('event', name, params || {});
@@ -113,7 +125,7 @@
 
   // Sección "Han confiado en nosotros": dos carruseles grandes en sentidos opuestos, con el logo en blanco.
   function renderClientRows(){
-    const tile = (c) => `<div class="cl-tile"><img src="${marqueeLogos[c.logo]}" alt="${c.name}" /></div>`;
+    const tile = (c) => `<div class="cl-tile"><span class="logo-mask" style="--logo:url(/${marqueeLogos[c.logo]})"><img src="${marqueeLogos[c.logo]}" alt="${c.name}" /></span></div>`;
     const half = Math.ceil(clients.length / 2);
     const rows = [clients.slice(0, half), clients.slice(half).concat(clients.slice(0, 1))];
     rows.forEach((row, i) => {
@@ -1795,12 +1807,12 @@
 
   // ---------- Abstract hero visuals per service (no stock photography) ----------
   const serviceVisuals = {
-    'social-media': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><circle cx="100" cy="100" r="14" stroke="white" stroke-opacity=".8" stroke-width="1.4"/><circle cx="40" cy="55" r="9" stroke="white" stroke-opacity=".55" stroke-width="1.4"/><circle cx="160" cy="55" r="9" stroke="white" stroke-opacity=".55" stroke-width="1.4"/><circle cx="40" cy="150" r="9" stroke="white" stroke-opacity=".55" stroke-width="1.4"/><circle cx="160" cy="150" r="9" stroke="white" stroke-opacity=".55" stroke-width="1.4"/><path d="M88 90L48 62M112 90L152 62M88 110L48 143M112 110L152 143" stroke="white" stroke-opacity=".35" stroke-width="1.2"/></svg>`,
-    'content-production': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><rect x="35" y="55" width="130" height="90" rx="8" stroke="white" stroke-opacity=".7" stroke-width="1.4"/><path d="M85 82L120 100L85 118V82Z" stroke="white" stroke-opacity=".8" stroke-width="1.4" stroke-linejoin="round"/><path d="M35 75H165M35 125H165" stroke="white" stroke-opacity=".25" stroke-width="1.2"/></svg>`,
-    'brand-design': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><circle cx="85" cy="100" r="45" stroke="white" stroke-opacity=".55" stroke-width="1.4"/><path d="M118 60L150 100L118 140L100 100L118 60Z" stroke="white" stroke-opacity=".8" stroke-width="1.4" stroke-linejoin="round"/></svg>`,
-    'web-development': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><rect x="30" y="45" width="140" height="110" rx="8" stroke="white" stroke-opacity=".7" stroke-width="1.4"/><path d="M30 70H170" stroke="white" stroke-opacity=".7" stroke-width="1.4"/><circle cx="45" cy="57.5" r="3" fill="white" fill-opacity=".6"/><circle cx="57" cy="57.5" r="3" fill="white" fill-opacity=".6"/><path d="M55 100L75 120L55 140M100 140H145" stroke="white" stroke-opacity=".6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-    'growth-marketing': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><path d="M35 145L75 100L105 125L165 55" stroke="white" stroke-opacity=".8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M130 55H165V90" stroke="white" stroke-opacity=".8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M35 165H165" stroke="white" stroke-opacity=".25" stroke-width="1.2"/></svg>`,
-    'ai-automation': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><rect x="70" y="80" width="60" height="45" rx="10" stroke="white" stroke-opacity=".8" stroke-width="1.4"/><path d="M100 80V60" stroke="white" stroke-opacity=".8" stroke-width="1.4" stroke-linecap="round"/><circle cx="100" cy="54" r="6" stroke="white" stroke-opacity=".8" stroke-width="1.4"/><circle cx="85" cy="102" r="5" fill="white" fill-opacity=".7"/><circle cx="115" cy="102" r="5" fill="white" fill-opacity=".7"/><circle cx="40" cy="102" r="7" stroke="white" stroke-opacity=".4" stroke-width="1.2"/><circle cx="160" cy="102" r="7" stroke="white" stroke-opacity=".4" stroke-width="1.2"/><path d="M70 102H47M130 102H153" stroke="white" stroke-opacity=".3" stroke-width="1.2"/></svg>`
+    'social-media': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><circle cx="100" cy="100" r="14" stroke="currentColor" stroke-opacity=".8" stroke-width="1.4"/><circle cx="40" cy="55" r="9" stroke="currentColor" stroke-opacity=".55" stroke-width="1.4"/><circle cx="160" cy="55" r="9" stroke="currentColor" stroke-opacity=".55" stroke-width="1.4"/><circle cx="40" cy="150" r="9" stroke="currentColor" stroke-opacity=".55" stroke-width="1.4"/><circle cx="160" cy="150" r="9" stroke="currentColor" stroke-opacity=".55" stroke-width="1.4"/><path d="M88 90L48 62M112 90L152 62M88 110L48 143M112 110L152 143" stroke="currentColor" stroke-opacity=".35" stroke-width="1.2"/></svg>`,
+    'content-production': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><rect x="35" y="55" width="130" height="90" rx="8" stroke="currentColor" stroke-opacity=".7" stroke-width="1.4"/><path d="M85 82L120 100L85 118V82Z" stroke="currentColor" stroke-opacity=".8" stroke-width="1.4" stroke-linejoin="round"/><path d="M35 75H165M35 125H165" stroke="currentColor" stroke-opacity=".25" stroke-width="1.2"/></svg>`,
+    'brand-design': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><circle cx="85" cy="100" r="45" stroke="currentColor" stroke-opacity=".55" stroke-width="1.4"/><path d="M118 60L150 100L118 140L100 100L118 60Z" stroke="currentColor" stroke-opacity=".8" stroke-width="1.4" stroke-linejoin="round"/></svg>`,
+    'web-development': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><rect x="30" y="45" width="140" height="110" rx="8" stroke="currentColor" stroke-opacity=".7" stroke-width="1.4"/><path d="M30 70H170" stroke="currentColor" stroke-opacity=".7" stroke-width="1.4"/><circle cx="45" cy="57.5" r="3" fill="currentColor" fill-opacity=".6"/><circle cx="57" cy="57.5" r="3" fill="currentColor" fill-opacity=".6"/><path d="M55 100L75 120L55 140M100 140H145" stroke="currentColor" stroke-opacity=".6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    'growth-marketing': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><path d="M35 145L75 100L105 125L165 55" stroke="currentColor" stroke-opacity=".8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M130 55H165V90" stroke="currentColor" stroke-opacity=".8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M35 165H165" stroke="currentColor" stroke-opacity=".25" stroke-width="1.2"/></svg>`,
+    'ai-automation': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><rect x="70" y="80" width="60" height="45" rx="10" stroke="currentColor" stroke-opacity=".8" stroke-width="1.4"/><path d="M100 80V60" stroke="currentColor" stroke-opacity=".8" stroke-width="1.4" stroke-linecap="round"/><circle cx="100" cy="54" r="6" stroke="currentColor" stroke-opacity=".8" stroke-width="1.4"/><circle cx="85" cy="102" r="5" fill="currentColor" fill-opacity=".7"/><circle cx="115" cy="102" r="5" fill="currentColor" fill-opacity=".7"/><circle cx="40" cy="102" r="7" stroke="currentColor" stroke-opacity=".4" stroke-width="1.2"/><circle cx="160" cy="102" r="7" stroke="currentColor" stroke-opacity=".4" stroke-width="1.2"/><path d="M70 102H47M130 102H153" stroke="currentColor" stroke-opacity=".3" stroke-width="1.2"/></svg>`
   };
 
   // ---------- Featured project card (used inside each service page) ----------
@@ -2063,7 +2075,7 @@
     const embedEl = document.getElementById('pd-embed');
     if(p.embedType === 'youtube'){
       embedEl.innerHTML = `
-        <a href="${p.linkUrl}" target="_blank" rel="noopener" class="group relative block aspect-video rounded-2xl overflow-hidden glass">
+        <a href="${p.linkUrl}" target="_blank" rel="noopener" class="group relative block aspect-video rounded-2xl overflow-hidden glass keep-dark">
           <img src="${p.thumb || ('https://img.youtube.com/vi/' + p.videoId + '/hqdefault.jpg')}" alt="${p.name}" class="w-full h-full object-cover" />
           <div class="absolute inset-0 bg-black/25 group-hover:bg-black/15 transition-colors flex items-center justify-center">
             <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/95 group-hover:scale-105 transition-transform flex items-center justify-center shadow-xl">
@@ -2081,10 +2093,10 @@
         </a>`;
     } else if(p.embedType === 'behance'){
       embedEl.innerHTML = `
-        <a href="${p.linkUrl}" target="_blank" rel="noopener" class="group relative block aspect-video rounded-2xl overflow-hidden glass">
+        <a href="${p.linkUrl}" target="_blank" rel="noopener" class="group relative block aspect-video rounded-2xl overflow-hidden glass keep-dark">
           <img src="${portfolioBadges[p.badge]}" alt="${p.name}" class="w-full h-full object-cover" />
           <div class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors flex flex-col items-center justify-center gap-3 text-center px-6">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M7.8 6.3H2v1.4h5.8V6.3zM22 15.2c0 .4 0 .7-.1 1H15c.1 1.3 1.2 2 2.5 2 .9 0 1.6-.3 2.3-1l1.4 1.3c-1 1.1-2.3 1.7-3.8 1.7-2.8 0-4.7-1.9-4.7-4.6 0-2.6 1.9-4.6 4.5-4.6 2.7 0 4.2 2 4.2 4.2zM19.9 14.2c-.1-1.2-.9-1.9-2-1.9-1.1 0-1.9.7-2.1 1.9h4.1zM8.6 9.7c1.9 0 3 1.3 3 3 0 .4-.1.8-.2 1.1.9.5 1.4 1.4 1.4 2.5 0 1.9-1.5 3.1-3.7 3.1H2V9.7h6.6zm-.4 4.7c.9 0 1.5-.5 1.5-1.4 0-.8-.5-1.3-1.5-1.3H4.3v2.7h3.9zm.3 4.5c1 0 1.7-.5 1.7-1.5 0-.9-.6-1.4-1.7-1.4H4.3v2.9h4.2z"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 6.3H2v1.4h5.8V6.3zM22 15.2c0 .4 0 .7-.1 1H15c.1 1.3 1.2 2 2.5 2 .9 0 1.6-.3 2.3-1l1.4 1.3c-1 1.1-2.3 1.7-3.8 1.7-2.8 0-4.7-1.9-4.7-4.6 0-2.6 1.9-4.6 4.5-4.6 2.7 0 4.2 2 4.2 4.2zM19.9 14.2c-.1-1.2-.9-1.9-2-1.9-1.1 0-1.9.7-2.1 1.9h4.1zM8.6 9.7c1.9 0 3 1.3 3 3 0 .4-.1.8-.2 1.1.9.5 1.4 1.4 1.4 2.5 0 1.9-1.5 3.1-3.7 3.1H2V9.7h6.6zm-.4 4.7c.9 0 1.5-.5 1.5-1.4 0-.8-.5-1.3-1.5-1.3H4.3v2.7h3.9zm.3 4.5c1 0 1.7-.5 1.7-1.5 0-.9-.6-1.4-1.7-1.4H4.3v2.9h4.2z"/></svg>
             <p class="text-white font-medium text-sm">Ver el proyecto completo en Behance</p>
           </div>
         </a>`;
@@ -2093,7 +2105,7 @@
     } else if(p.embedType === 'instagram'){
       embedEl.innerHTML = `
         <div class="glass rounded-2xl p-10 text-center">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" class="mx-auto mb-4"><rect x="3" y="3" width="18" height="18" rx="5" stroke="white" stroke-opacity=".8" stroke-width="1.6"/><circle cx="12" cy="12" r="4.2" stroke="white" stroke-opacity=".8" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1.1" fill="white" fill-opacity=".8"/></svg>
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" class="mx-auto mb-4"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-opacity=".8" stroke-width="1.6"/><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-opacity=".8" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" fill-opacity=".8"/></svg>
           <p class="text-white/55 text-sm mb-6">Este proyecto vive directamente en redes sociales.</p>
           <a href="${p.linkUrl}" target="_blank" rel="noopener" class="btn-ghost inline-block font-semibold px-7 py-3 rounded-full text-sm">Ver perfil en Instagram →</a>
         </div>`;
@@ -2108,7 +2120,7 @@
       const reelsHtml = (p.reelLinks || []).map((url, i) => `
         <a href="${url}" target="_blank" rel="noopener" class="glass hover-lift rounded-2xl p-6 flex items-center justify-between gap-3">
           <span class="flex items-center gap-3">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7z" fill="white" fill-opacity=".85"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7z" fill="currentColor" fill-opacity=".85"/></svg>
             <span class="text-white/80 text-sm font-medium">Reel ${i + 1}</span>
           </span>
           <span class="text-white/40 text-xs">Ver en Instagram →</span>
@@ -2119,7 +2131,7 @@
     } else if(p.embedType === 'link'){
       embedEl.innerHTML = `
         <a href="${p.linkUrl}" target="_blank" rel="noopener" class="glass hover-lift rounded-2xl p-10 flex flex-col items-center text-center gap-4">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M14 3h7v7" stroke="white" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 14L21 3" stroke="white" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 14v5a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h5" stroke="white" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M14 3h7v7" stroke="currentColor" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 14L21 3" stroke="currentColor" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 14v5a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h5" stroke="currentColor" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <span class="text-white font-medium">${p.linkLabel || 'Ver sitio'}</span>
         </a>`;
     } else {
@@ -2238,7 +2250,7 @@
       btn.type = 'button';
       btn.setAttribute('aria-label', i + ' de 5 estrellas');
       btn.style.cssText = 'background:none;border:none;cursor:pointer;padding:2px;';
-      btn.innerHTML = '<svg width="26" height="26" viewBox="0 0 20 20" fill="' + (i <= selectedRating ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="1.3" style="color:' + (i <= selectedRating ? '#d9c79a' : 'rgba(255,255,255,.3)') + '"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>';
+      btn.innerHTML = '<svg width="26" height="26" viewBox="0 0 20 20" fill="' + (i <= selectedRating ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="1.3" style="color:' + (i <= selectedRating ? '#d9c79a' : 'rgb(var(--ink) / .25)') + '"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>';
       // Rating scale is 0-5: clicking the star that's already the current rating resets it to 0.
       btn.onclick = () => { selectedRating = (selectedRating === i) ? 0 : i; renderReviewStars(); };
       wrap.appendChild(btn);
