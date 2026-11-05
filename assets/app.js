@@ -1,26 +1,14 @@
-// ==========================================================================
-  // CONFIG — cambia estos valores en UN solo lugar. Todo el sitio los usa
-  // desde aquí (WhatsApp, correo, formulario y analítica).
-  // ==========================================================================
-  const CONFIG = {
-    WHATSAPP_NUMBER: '584241859724',          // sin "+", sin espacios
+// La configuración (WhatsApp, teléfono, email, IDs…) vive en assets/config.js
+  const CONFIG = Object.assign({
+    WHATSAPP_NUMBER: '584241859724',
+    PHONE_E164: '+34662490547',
+    PHONE_DISPLAY: '+34 662 490 547',
     EMAIL: 'creative.lestudio@gmail.com',
-
-    // Poné aquí tu endpoint real de Formspree o Web3Forms cuando lo tengas
-    // (ej: 'https://formspree.io/f/xxxxxxx'). Mientras esto sea 'PLACEHOLDER',
-    // el formulario sigue funcionando por correo (mailto) automáticamente.
-    FORM_ENDPOINT: 'https://formspree.io/f/xkjnvaae',
-
-    // Cuando conectes un asistente real por API (item pendiente), pega aquí su
-    // endpoint. Mientras sea 'PLACEHOLDER', el chat de "¿Qué está frenando tu
-    // negocio?" responde con una lógica simple local, por palabras clave.
+    FORM_ENDPOINT: 'PLACEHOLDER',
     CHAT_API_ENDPOINT: 'PLACEHOLDER',
-
-    // Pegá aquí tu ID de Google Analytics 4 (ej: 'G-XXXXXXXXXX') y tu ID de
-    // Meta Pixel cuando los tengas. Mientras estén vacíos, no se carga nada.
     GA_MEASUREMENT_ID: '',
     META_PIXEL_ID: ''
-  };
+  }, window.SITE_CONFIG || {});
 
   function waLink(number, text){
     return 'https://wa.me/' + number + (text ? ('?text=' + encodeURIComponent(text)) : '');
@@ -34,6 +22,10 @@
     });
     document.querySelectorAll('.js-email-text').forEach(el => {
       el.textContent = CONFIG.EMAIL;
+    });
+    document.querySelectorAll('.js-phone-link').forEach(el => {
+      el.href = 'tel:' + CONFIG.PHONE_E164;
+      el.textContent = CONFIG.PHONE_DISPLAY;
     });
   }
   applyConfig();
