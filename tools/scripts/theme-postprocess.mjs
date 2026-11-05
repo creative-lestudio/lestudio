@@ -2,7 +2,7 @@
 // (--ink = color de la letra, --paper = color del fondo), para que el mismo HTML sirva en claro y oscuro.
 import { readFileSync, writeFileSync } from 'node:fs';
 
-const file = new URL('../assets/tailwind.css', import.meta.url);
+const file = new URL('../../assets/tailwind.css', import.meta.url);
 let css = readFileSync(file, 'utf8');
 
 // Tailwind minifica el blanco a hsla(0,0%,100%,A) y el azul marino a rgba(2,16,36,A).

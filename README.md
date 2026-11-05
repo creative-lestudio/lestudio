@@ -1,6 +1,6 @@
 # LE STUDIO — web (lestudio-crea.com)
 
-Sitio estático (HTML + CSS + JS) publicado en GitHub Pages. No hay servidor ni framework: lo único que se "compila" es el CSS de Tailwind y las copias en inglés.
+Sitio estático (HTML + CSS + JS). No hay servidor ni framework: lo único que se "compila" es el CSS de Tailwind y las copias en inglés. Las herramientas de compilación viven en `tools/` (fuera de la raíz del sitio, para que el despliegue automático no intente instalarlas ni ejecutarlas).
 
 ## Estructura
 
@@ -13,12 +13,13 @@ Sitio estático (HTML + CSS + JS) publicado en GitHub Pages. No hay servidor ni 
 | `assets/i18n.js` | Diccionario ES → EN |
 | `assets/styles.css` | Estilos (tema claro/oscuro con variables `--ink` y `--paper`) |
 | `assets/tailwind.css` | CSS de Tailwind **compilado** (no editar) |
-| `scripts/` | Herramientas de compilación |
+| `tools/` | Herramientas de compilación (Tailwind, prerender, inglés). No forman parte del sitio |
 | `TODO-CONTENIDO.md` | Lo que falta por aportar |
 
 ## Preparar el entorno (una vez)
 
 ```bash
+cd tools
 npm install
 npx playwright install chromium
 ```
@@ -26,6 +27,7 @@ npx playwright install chromium
 ## Después de cambiar contenido
 
 ```bash
+cd tools
 npm run build
 ```
 
@@ -39,7 +41,7 @@ Luego haz commit de todo lo que cambie y súbelo. Si solo editas CSS/JS y no tex
 
 ## Publicar
 
-Se publica solo al hacer merge a `main` (GitHub Pages). No hace falta ningún paso extra, siempre que hayas ejecutado `npm run build` y subido los archivos generados.
+Se publica solo al hacer merge a `main`. No hace falta ningún paso extra, siempre que hayas ejecutado `npm run build` (dentro de `tools/`) y subido los archivos generados. Importante: **no pongas `package.json` ni `package-lock.json` en la raíz** del repositorio; si el despliegue automático los ve, intentará instalarlos y puede fallar.
 
 ## Datos que se cambian en un solo sitio
 
@@ -55,7 +57,7 @@ Se publica solo al hacer merge a `main` (GitHub Pages). No hace falta ningún pa
 
 ## Comprobar traducciones pendientes
 
-Tras `npm run build`, busca texto en español dentro de `en/` (por ejemplo con `grep -rE "¿|á|é|í|ó|ú" en/ --include=index.html` y filtrando nombres propios).
+Tras `npm run build` (en `tools/`), busca texto en español dentro de `en/` (por ejemplo con `grep -rE "¿|á|é|í|ó|ú" en/ --include=index.html` y filtrando nombres propios).
 
 ## Formularios
 

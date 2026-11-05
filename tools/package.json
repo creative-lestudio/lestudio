@@ -1,9 +1,9 @@
 {
   "name": "lestudio-web",
   "private": true,
-  "description": "Web de LE STUDIO. Solo se usa npm para compilar el CSS de Tailwind (no hay build de la web).",
+  "description": "Herramientas de compilaci\u00f3n de la web de LE STUDIO (CSS, prerender e ingl\u00e9s). No forma parte del sitio publicado.",
   "scripts": {
-    "build:css": "tailwindcss -c tailwind.config.js -i src/tailwind.input.css -o assets/tailwind.css --minify && node scripts/theme-postprocess.mjs",
+    "build:css": "tailwindcss -c tailwind.config.js -i src/tailwind.input.css -o ../assets/tailwind.css --minify && node scripts/theme-postprocess.mjs",
     "prerender": "node scripts/prerender.mjs",
     "build:en": "node scripts/build-en.mjs",
     "build": "npm run build:css && npm run prerender && npm run build:en"

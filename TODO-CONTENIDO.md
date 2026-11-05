@@ -29,7 +29,7 @@ La plantilla está documentada en `assets/app.js` (bloque `PLANTILLA DE CASO DE 
 
 - [ ] **Pedir reseñas al cerrar cada proyecto** con este enlace corto: `https://lestudio-crea.com/resena/`
   Mensaje sugerido para WhatsApp: *"Hola [nombre], gracias por confiar en LE STUDIO. ¿Nos dejas una reseña de 1 minuto? https://lestudio-crea.com/resena/"*
-- [ ] **Moderar**: cada reseña llega a tu email (Formspree) marcada como `PENDIENTE DE MODERACIÓN`. Para publicarla, añádela al array `reviews` de `assets/app.js` y ejecuta `npm run build`.
+- [ ] **Moderar**: cada reseña llega a tu email (Formspree) marcada como `PENDIENTE DE MODERACIÓN`. Para publicarla, añádela al array `reviews` de `assets/app.js` y ejecuta `npm run build` dentro de `tools/`.
 - [ ] Las reseñas actuales (4) se usan también en los datos estructurados de la home (`aggregateRating`). Si añades o quitas reseñas, actualiza ese bloque en `index.html`.
 
 ## 5. Textos y supuestos que conviene revisar
