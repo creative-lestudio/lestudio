@@ -10,12 +10,12 @@ import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
-const root = new URL('..', import.meta.url).pathname;
+const root = new URL('../..', import.meta.url).pathname;
 const SITE = 'https://lestudio-crea.com';
 const TODAY = new Date().toISOString().slice(0, 10);
 
 // ---------- páginas que tienen versión en inglés ----------
-const EXCLUDE = new Set(['resena', 'en', 'node_modules', 'scripts', 'assets', 'src', 'docs']);
+const EXCLUDE = new Set(['resena', 'en', 'node_modules', 'tools', 'assets', 'docs']);
 const pages = ['']; // '' = home
 for (const d of readdirSync(root)) {
   if (EXCLUDE.has(d) || !statSync(join(root, d)).isDirectory()) continue;
