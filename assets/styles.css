@@ -852,3 +852,26 @@ html[data-theme="dark"] .form-error{ color:#ff9b93; }
 .legal h2{ font-family:var(--font-display); font-weight:500; letter-spacing:-.02em; font-size:1.35rem; color:rgb(var(--ink)); margin-top:26px; }
 .legal ul{ display:grid; gap:10px; padding-left:1.1rem; list-style:disc; }
 .legal strong{ color:rgb(var(--ink)); font-weight:600; }
+
+/* ---------- Hero con oferta de entrada ---------- */
+.h-offer{ display:inline-flex; align-items:center; gap:10px; margin-bottom:clamp(20px,3vw,30px); padding:8px 16px 8px 14px; border-radius:999px; border:1px solid var(--line); background:rgb(var(--ink) / .05);
+  font-family:var(--font-mono); font-weight:500; font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:rgb(var(--ink)); transition:background .25s ease, border-color .25s ease, transform .25s ease; }
+.h-offer:hover{ background:rgb(var(--ink) / .1); border-color:rgb(var(--ink) / .35); transform:translateY(-1px); }
+.h-offer-dot{ width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 0 var(--accent); animation:offerPulse 2.4s ease-out infinite; }
+@keyframes offerPulse{ 0%{ box-shadow:0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); } 100%{ box-shadow:0 0 0 10px transparent; } }
+.h-hero-title .accent{ color:var(--accent); }
+.h-hero-note a{ color:rgb(var(--ink)); }
+
+/* ---------- Servicios: 2 destacados + "También hacemos" ---------- */
+.h-flag{ display:inline-block; margin-bottom:14px; padding:4px 10px; border-radius:999px; background:rgb(var(--ink)); color:rgb(var(--paper)); font-family:var(--font-mono); font-weight:500; font-size:.6875rem; letter-spacing:.1em; text-transform:uppercase; }
+.h-card--featured{ min-height:380px; }
+.h-proof{ margin-top:16px; font-family:var(--font-mono); font-size:.75rem; letter-spacing:.02em; color:var(--mist-3) !important; max-width:none !important; }
+.h-also-title{ margin:clamp(40px,5vw,64px) 0 18px; font-family:var(--font-mono); font-weight:500; font-size:.8125rem; letter-spacing:.12em; text-transform:uppercase; color:var(--mist-2); }
+.h-bento--also{ grid-template-columns:repeat(4,1fr); }
+.h-bento--also .h-card{ grid-column:auto; min-height:0; gap:22px; padding:clamp(22px,2.2vw,28px); }
+.h-bento--also .h-card h3{ font-size:1.3rem; }
+.h-bento--also .h-card p{ font-size:.9375rem; }
+.h-bento--also .h-ico{ margin-bottom:14px; }
+@media (max-width:980px){ .h-bento--also{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:640px){ .h-bento--also{ grid-template-columns:1fr; } .h-card--featured{ min-height:0; } }
+@media (prefers-reduced-motion:reduce){ .h-offer-dot{ animation:none; } }
