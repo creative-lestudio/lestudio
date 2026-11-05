@@ -31,20 +31,150 @@
 {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
+  "@id": "https://lestudio-crea.com/#organization",
   "name": "LE STUDIO",
   "description": "Estudio independiente de estrategia, creatividad y tecnología. Diseño de marca, producción de contenido, redes sociales, desarrollo web, marketing e inteligencia artificial.",
   "url": "https://lestudio-crea.com/",
+  "logo": "https://lestudio-crea.com/assets/logo-white.png",
+  "image": "https://lestudio-crea.com/og-image.png",
   "email": "creative.lestudio@gmail.com",
+  "telephone": "+34662490547",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Valencia",
+    "addressCountry": "ES"
+  },
+  "areaServed": [
+    {
+      "@type": "Country",
+      "name": "España"
+    },
+    {
+      "@type": "Country",
+      "name": "Venezuela"
+    }
+  ],
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+34662490547",
+      "contactType": "customer service",
+      "availableLanguage": [
+        "es",
+        "en"
+      ]
+    }
+  ],
   "sameAs": [
     "https://www.instagram.com/lestudio_crea/"
   ],
   "makesOffer": [
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Social Media" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Content Production" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand & Design" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web & Digital Development" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Growth & Marketing" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI & Automation" } }
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Social Media"
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Content Production"
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Brand & Design"
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Web & Digital Development"
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Growth & Marketing"
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "AI & Automation"
+      }
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "4",
+    "bestRating": "5"
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Diana Patiño"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "reviewBody": "Muy eficiente, capturó a la perfección la esencia de marca que buscábamos",
+      "name": "Fundadora, Suministros Daponte / Decoplant"
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Jhonny Civitillo"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "reviewBody": "Excelente trabajo, muy creativos y los recomendaria 100%",
+      "name": "Fundador, CEO, HPS"
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Andrés Roa"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "reviewBody": "Un servicio bastante profesional y responsable",
+      "name": "Gerente, Multiservicios RDR78"
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Miguel Sanchis"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "reviewBody": "Muy buena la experiencia",
+      "name": "Vice presidente, Winners League Unimet"
+    }
   ]
 }
 </script>
@@ -65,8 +195,8 @@
 </script>
 
 <link rel="preload" href="assets/fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/styles.css?v=17">
-<link rel="stylesheet" href="assets/tailwind.css?v=4">
+<link rel="stylesheet" href="assets/styles.css?v=18">
+<link rel="stylesheet" href="assets/tailwind.css?v=5">
 <script>try{if(!sessionStorage.getItem("intro_seen")&&!/[?&]nointro/.test(location.search)&&!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("intro-on");setTimeout(function(){document.documentElement.classList.remove("intro-on")},16000)}}catch(e){}</script>
 <script>document.documentElement.classList.add("js");setTimeout(function(){if(!window.__appReady)document.documentElement.classList.remove("js")},3500);</script>
 </head>
@@ -999,7 +1129,7 @@
 
 <script src="assets/config.js?v=1"></script>
 <script src="assets/app.js?v=12" defer></script>
-<script src="assets/i18n.js?v=12" defer></script>
+<script src="assets/i18n.js?v=13" defer></script>
 <script src="assets/intro.js?v=4" defer></script>
 </body>
 </html>
