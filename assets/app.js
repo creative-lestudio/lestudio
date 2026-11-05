@@ -1,26 +1,17 @@
-// ==========================================================================
-  // CONFIG — cambiá estos valores en UN solo lugar. Todo el sitio los usa
-  // desde acá (WhatsApp, correo, formulario y analítica).
-  // ==========================================================================
-  const CONFIG = {
-    WHATSAPP_NUMBER: '584241859724',          // sin "+", sin espacios
+// La configuración (WhatsApp, teléfono, email, IDs…) vive en assets/config.js
+  // Prefijo de las páginas del sitio según el idioma (/en/ para inglés)
+  const PAGE_BASE = location.pathname.indexOf('/en/') === 0 ? '/en/' : '/';
+  const t2 = (es, en) => (PAGE_BASE === '/en/' ? en : es);   // texto compuesto por JS según el idioma de la página
+  const CONFIG = Object.assign({
+    WHATSAPP_NUMBER: '584241859724',
+    PHONE_E164: '+34662490547',
+    PHONE_DISPLAY: '+34 662 490 547',
     EMAIL: 'creative.lestudio@gmail.com',
-
-    // Poné acá tu endpoint real de Formspree o Web3Forms cuando lo tengas
-    // (ej: 'https://formspree.io/f/xxxxxxx'). Mientras esto sea 'PLACEHOLDER',
-    // el formulario sigue funcionando por correo (mailto) automáticamente.
-    FORM_ENDPOINT: 'https://formspree.io/f/xkjnvaae',
-
-    // Cuando conectes un asistente real por API (item pendiente), pegá acá su
-    // endpoint. Mientras sea 'PLACEHOLDER', el chat de "¿Qué está frenando tu
-    // negocio?" responde con una lógica simple local, por palabras clave.
+    FORM_ENDPOINT: 'PLACEHOLDER',
     CHAT_API_ENDPOINT: 'PLACEHOLDER',
-
-    // Pegá acá tu ID de Google Analytics 4 (ej: 'G-XXXXXXXXXX') y tu ID de
-    // Meta Pixel cuando los tengas. Mientras estén vacíos, no se carga nada.
     GA_MEASUREMENT_ID: '',
     META_PIXEL_ID: ''
-  };
+  }, window.SITE_CONFIG || {});
 
   function waLink(number, text){
     return 'https://wa.me/' + number + (text ? ('?text=' + encodeURIComponent(text)) : '');
@@ -35,20 +26,43 @@
     document.querySelectorAll('.js-email-text').forEach(el => {
       el.textContent = CONFIG.EMAIL;
     });
+    document.querySelectorAll('.js-phone-link').forEach(el => {
+      el.href = 'tel:' + CONFIG.PHONE_E164;
+      el.textContent = CONFIG.PHONE_DISPLAY;
+    });
   }
   applyConfig();
   document.addEventListener('click', (e) => {
     if(e.target.closest('.js-whatsapp-link')){
-      trackEvent('whatsapp_click', { page: document.title });
+      trackEvent('whatsapp_click', { page: location.pathname, section: (e.target.closest('section, footer, header, [id]') || {}).id || '' });
     }
   });
 
-  // ---------- Analytics (se activa solo si cargaste IDs reales arriba) ----------
+  // ---------- Tema claro / oscuro (claro por defecto; se recuerda la elección) ----------
+  document.addEventListener('click', (e) => {
+    if(!e.target.closest('[data-theme-toggle]')) return;
+    const root = document.documentElement;
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch(err){}
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if(meta) meta.setAttribute('content', next === 'dark' ? '#021024' : '#ffffff');
+    trackEvent('theme_toggle', { theme: next });
+  });
+
+  // ---------- Analítica con consentimiento (Google Analytics 4 / Meta Pixel) ----------
+  // No se carga NADA hasta que el visitante acepta el aviso. Si no hay IDs en assets/config.js,
+  // tampoco se muestra el aviso (no hay nada que consentir).
   function trackEvent(name, params){
     if(window.gtag) window.gtag('event', name, params || {});
     if(window.fbq) window.fbq('trackCustom', name, params || {});
   }
-  (function initAnalytics(){
+  const hasAnalytics = !!(CONFIG.GA_MEASUREMENT_ID || CONFIG.META_PIXEL_ID);
+  function getConsent(){ try { return localStorage.getItem('consent'); } catch(e){ return null; } }
+  function setConsent(v){ try { localStorage.setItem('consent', v); } catch(e){} }
+  function loadAnalytics(){
+    if(window.__analyticsLoaded) return;
+    window.__analyticsLoaded = true;
     if(CONFIG.GA_MEASUREMENT_ID){
       const s = document.createElement('script');
       s.async = true;
@@ -57,7 +71,7 @@
       window.dataLayer = window.dataLayer || [];
       window.gtag = function(){ window.dataLayer.push(arguments); };
       window.gtag('js', new Date());
-      window.gtag('config', CONFIG.GA_MEASUREMENT_ID);
+      window.gtag('config', CONFIG.GA_MEASUREMENT_ID, { anonymize_ip: true });
     }
     if(CONFIG.META_PIXEL_ID){
       /* eslint-disable */
@@ -70,7 +84,48 @@
       window.fbq('track', 'PageView');
       /* eslint-enable */
     }
+  }
+  function showConsentBanner(){
+    if(document.getElementById('cookie-banner')) return;
+    const tr = (t) => (window.I18N ? I18N.tr(t) : t);
+    const el = document.createElement('div');
+    el.id = 'cookie-banner'; el.className = 'cc'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', tr('Aviso de cookies'));
+    el.innerHTML = `<p>Usamos analítica (Google Analytics) para saber qué canales nos traen clientes y mejorar la web. Solo se activa si la aceptas. <a href="/privacidad/">Más información</a></p>
+      <div class="cc-btns"><button type="button" class="btn-ghost" data-consent="denied">Rechazar</button><button type="button" class="btn-primary" data-consent="granted">Aceptar</button></div>`;
+    document.body.appendChild(el);
+    el.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-consent]'); if(!b) return;
+      setConsent(b.dataset.consent);
+      el.remove();
+      if(b.dataset.consent === 'granted') loadAnalytics();
+    });
+  }
+  window.openCookieSettings = function(){ const o = document.getElementById('cookie-banner'); if(o) o.remove(); showConsentBanner(); };
+  (function initAnalytics(){
+    if(!hasAnalytics) return;
+    const c = getConsent();
+    if(c === 'granted') loadAnalytics();
+    else if(c === null) showConsentBanner();
+    // enlace "Preferencias de cookies" en el pie
+    const bar = document.querySelector('.h-footer-bar .h-wrap, footer .max-w-7xl');
+    if(bar && !document.getElementById('cookie-prefs')){
+      const l = document.createElement('button');
+      l.type = 'button'; l.id = 'cookie-prefs'; l.className = 'cc-link'; l.textContent = 'Preferencias de cookies';
+      l.addEventListener('click', () => window.openCookieSettings());
+      bar.appendChild(l);
+    }
   })();
+
+  // Eventos de conversión: reserva de auditoría, WhatsApp (con la sección), teléfono y descargas
+  document.addEventListener('click', (e) => {
+    const cta = e.target.closest('[data-cta]');
+    if(cta){
+      const kind = cta.getAttribute('data-cta');
+      trackEvent(kind === 'audit' ? 'reserve_audit_click' : (kind === 'lead_magnet_download' ? 'lead_magnet_download' : 'cta_click'), { cta: kind, page: location.pathname });
+    }
+    const tel = e.target.closest('a[href^="tel:"]');
+    if(tel) trackEvent('phone_click', { page: location.pathname });
+  });
 
   // ---------- Marquee content (logos only, equal size & spacing) ----------
   const clients = [
@@ -93,27 +148,27 @@
   ];
 
   const marqueeLogos = {
-    mds: "assets/marquee-mds.png",
-    rdr: "assets/marquee-rdr.png",
-    tecnoclean: "assets/marquee-tecnoclean.png",
-    decoplant: "assets/marquee-decoplant.png",
-    legacy: "assets/marquee-legacy.png",
-    urbantex: "assets/marquee-urbantex.png",
-    hps: "assets/marquee-hps.png",
-    synergy: "assets/marquee-synergy.png",
-    winners: "assets/marquee-winners.png",
-    pizzi: "assets/marquee-pizzi.png",
-    urbanisima: "assets/marquee-urbanisima.png",
-    inprecasa: "assets/marquee-inprecasa.png",
-    repite: "assets/marquee-repite.png",
-    "925": "assets/marquee-925.png",
-    dfratelli: "assets/marquee-dfratelli.png",
-    wm: "assets/marquee-wm.png"
+    mds: "/assets/marquee-mds.png",
+    rdr: "/assets/marquee-rdr.png",
+    tecnoclean: "/assets/marquee-tecnoclean.png",
+    decoplant: "/assets/marquee-decoplant.png",
+    legacy: "/assets/marquee-legacy.png",
+    urbantex: "/assets/marquee-urbantex.png",
+    hps: "/assets/marquee-hps.png",
+    synergy: "/assets/marquee-synergy.png",
+    winners: "/assets/marquee-winners.png",
+    pizzi: "/assets/marquee-pizzi.png",
+    urbanisima: "/assets/marquee-urbanisima.png",
+    inprecasa: "/assets/marquee-inprecasa.png",
+    repite: "/assets/marquee-repite.png",
+    "925": "/assets/marquee-925.png",
+    dfratelli: "/assets/marquee-dfratelli.png",
+    wm: "/assets/marquee-wm.png"
   };
 
   // Sección "Han confiado en nosotros": dos carruseles grandes en sentidos opuestos, con el logo en blanco.
   function renderClientRows(){
-    const tile = (c) => `<div class="cl-tile"><img src="${marqueeLogos[c.logo]}" alt="${c.name}" /></div>`;
+    const tile = (c) => `<div class="cl-tile"><span class="logo-mask" style="--logo:url(${marqueeLogos[c.logo]})"><img src="${marqueeLogos[c.logo]}" alt="${c.name}" width="160" height="64" loading="lazy" decoding="async" /></span></div>`;
     const half = Math.ceil(clients.length / 2);
     const rows = [clients.slice(0, half), clients.slice(half).concat(clients.slice(0, 1))];
     rows.forEach((row, i) => {
@@ -221,13 +276,19 @@
       tags: ['Content Production'],
       service: 'content-production',
       embedType: 'youtube',
-      thumb: 'assets/video-podcast-1.jpg',
+      thumb: '/assets/video-podcast-1.jpg',
       videoId: 'i-frSRSTsq8',
       embedUrl: 'https://www.youtube.com/embed/i-frSRSTsq8',
       linkUrl: 'https://youtu.be/i-frSRSTsq8',
       challenge: 'Legacy World quería lanzar un podcast propio, pero necesitaba algo más que una cámara y un micrófono: necesitaba un concepto, una estructura y una dirección de arte que representaran a la marca desde el primer episodio.',
       solution: 'Dirigimos y producimos el podcast de punta a punta: definimos el concepto, el guion y la estructura de cada episodio, desarrollamos la dirección de arte, y nos encargamos de la producción y postproducción completa del contenido. Marcelo Leal condujo el programa como entrevistador, y hoy el podcast se distribuye y comercializa en YouTube, TikTok e Instagram.',
-      result: '35.000 reproducciones orgánicas en el primer episodio, sin pauta paga.',
+      result: '36.000 vistas orgánicas en el primer episodio, sin pauta paga.',
+      metrics: [
+        { value: '36K', label: 'vistas del episodio 1 en YouTube' },
+        { value: '2,4M', label: 'vistas de un clip del podcast en TikTok' },
+        { value: '2,3K', label: 'vistas del episodio 2 en YouTube' }
+      ],
+      metricsNote: 'Cifras públicas de YouTube y TikTok a noviembre de 2026.',
     },
     'legacy-world-web': {
       name: 'Legacy World — Sitio Web',
@@ -236,7 +297,7 @@
       tags: ['Web & Digital Development'],
       service: 'web-development',
       embedType: 'link',
-      webShot: 'assets/web-legacy.jpg',
+      webShot: '/assets/web-legacy.jpg',
       linkUrl: 'https://legacy-world.com',
       linkLabel: 'Ver legacy-world.com',
       challenge: 'Legacy World necesitaba una tienda online propia, capaz de vender a nivel nacional e internacional, con un checkout confiable y sin depender de intermediarios para procesar pagos.',
@@ -250,7 +311,7 @@
       tags: ['Brand & Design'],
       service: 'brand-design',
       embedType: 'behance',
-      cover: 'assets/brand-decoplant.jpg',
+      cover: '/assets/brand-decoplant.jpg',
       embedUrl: 'https://www.behance.net/embed/project/218332771?ilo0=1',
       linkUrl: 'https://www.behance.net/gallery/218332771/DECOPLANT-Branding',
       challenge: 'Decoplant necesitaba una identidad capaz de representar dos líneas de negocio a la vez —decoración y plantas artificiales— sin que la marca se sintiera dividida ni genérica en ninguna de las dos.',
@@ -264,11 +325,16 @@
       tags: ['Social Media'],
       service: 'social-media',
       embedType: 'instagram',
-      handle: 'inversiones.mds', shot: 'assets/profile-mds.jpg',
+      handle: 'inversiones.mds', shot: '/assets/profile-mds.jpg',
       linkUrl: 'https://www.instagram.com/inversiones.mds/',
       challenge: 'Inversiones MDS necesitaba algo más que seguidores: buscaba construir, a través de su Instagram, una audiencia real con potencial de convertirse en clientes.',
       solution: 'Gestionamos la presencia en redes sociales de Inversiones MDS: estrategia, calendario editorial y gestión diaria de su comunidad, con el objetivo puesto en la calidad de la audiencia, no solo en el volumen.',
       result: 'Hoy Inversiones MDS es una de las marcas más recordadas de su sector y con mejor presencia en redes, y su Instagram se convirtió en un generador constante de leads orgánicos.',
+      metrics: [
+        { value: '5.053', label: 'seguidores en @inversiones.mds' },
+        { value: '302', label: 'publicaciones' }
+      ],
+      metricsNote: 'Datos del perfil de Instagram a noviembre de 2026.',
     },
     'legacy-redes': {
       name: 'Legacy World — Redes',
@@ -277,10 +343,15 @@
       tags: ['Social Media'],
       service: 'social-media',
       embedType: 'instagram',
-      handle: 'legacyworld_', shot: 'assets/profile-legacy.jpg',
+      handle: 'legacyworld_', shot: '/assets/profile-legacy.jpg',
       linkUrl: 'https://www.instagram.com/legacyworld_/',
       challenge: 'Legacy World necesitaba que su Instagram transmitiera la misma identidad que su marca y su tienda, y funcionara como canal de comunidad y de venta.',
       solution: 'Gestionamos la presencia de Legacy World en Instagram: línea editorial, contenido y gestión de su comunidad, alineados con el resto del ecosistema de la marca.',
+      metrics: [
+        { value: '7.127', label: 'seguidores en @legacyworld_' },
+        { value: '151', label: 'publicaciones' }
+      ],
+      metricsNote: 'Datos del perfil de Instagram a noviembre de 2026.',
     },
     'pizzi-redes': {
       name: 'Pizzi — Redes',
@@ -289,10 +360,40 @@
       tags: ['Social Media'],
       service: 'social-media',
       embedType: 'instagram',
-      handle: 'pizzi.es', shot: 'assets/profile-pizzi.jpg',
+      handle: 'pizzi.es', shot: '/assets/profile-pizzi.jpg',
       linkUrl: 'https://www.instagram.com/pizzi.es/',
       challenge: 'Pizzi necesitaba una presencia en Instagram con identidad propia, constante y pensada para atraer a su audiencia.',
       solution: 'Nos encargamos del manejo de las redes sociales de Pizzi: estrategia, contenido y gestión diaria de su comunidad en Instagram.',
+      metrics: [
+        { value: '4.827', label: 'seguidores en @pizzi.es' },
+        { value: '87', label: 'publicaciones' }
+      ],
+      metricsNote: 'Datos del perfil de Instagram a noviembre de 2026.',
+    },
+    // ----------------------------------------------------------------------
+    // PLANTILLA DE CASO DE ESTUDIO. Copia este bloque, rellénalo solo con datos reales
+    // y quita `draft: true` para publicarlo. Todos los campos son opcionales:
+    // el caso solo muestra los bloques que tengan contenido.
+    //   context   -> quién es el cliente         challenge -> el problema
+    //   solution  -> qué hicimos                 result    -> resultado en una frase
+    //   metrics   -> [{ value, label }] cifras reales (+ metricsNote con fuente y fecha)
+    //   testimonial -> { quote, name, role, company, rating }
+    // ----------------------------------------------------------------------
+    'kia-contenido': {
+      draft: true,   // BORRADOR OCULTO: falta contexto, reto, solución y cita del cliente
+      name: 'Kia Centro Marca — Contenido viral',
+      client: 'Kia Centro Marca',
+      badge: 'kia',
+      tags: ['Content Production'],
+      service: 'content-production',
+      embedType: 'link',
+      linkUrl: 'https://www.tiktok.com/@kiacentromarca',
+      linkLabel: 'Ver @kiacentromarca en TikTok',
+      metrics: [
+        { value: '128,1K', label: 'vistas en el vídeo del Suzuki Jimny' },
+        { value: '111,6K', label: 'vistas en el vídeo del Kia Picanto' }
+      ],
+      metricsNote: 'Cifras públicas de TikTok a noviembre de 2026.',
     },
     'mds-contenido': {
       name: 'Inversiones MDS — Contenido',
@@ -306,7 +407,7 @@
         'https://www.instagram.com/reel/DcCOq3bMTae/',
         'https://www.instagram.com/reel/DYQbxXGIRS3/'
       ],
-      reelShots: ['assets/reel-mds-1.jpg', 'assets/reel-mds-2.jpg', 'assets/reel-mds-3.jpg'],
+      reelShots: ['/assets/reel-mds-1.jpg', '/assets/reel-mds-2.jpg', '/assets/reel-mds-3.jpg'],
       solution: 'Producimos y editamos contenido en video para Inversiones MDS, pensado específicamente para reforzar su presencia como marca de referencia en el sector de diagnóstico médico.',
     },
     'rdr-identidad': {
@@ -317,7 +418,7 @@
       tags: ['Brand & Design'],
       service: 'brand-design',
       embedType: 'behance',
-      cover: 'assets/brand-rdr.jpg',
+      cover: '/assets/brand-rdr.jpg',
       embedUrl: 'https://www.behance.net/embed/project/218334897?ilo0=1',
       linkUrl: 'https://www.behance.net/gallery/218334897/RDR-Identidad-Visual',
       solution: 'Desarrollamos la identidad visual completa de Multiservicios RDR, construyendo un sistema de marca claro y aplicable a todos sus puntos de contacto.',
@@ -329,7 +430,7 @@
       tags: ['Brand & Design'],
       service: 'brand-design',
       embedType: 'behance',
-      cover: 'assets/brand-tecnoclean.jpg',
+      cover: '/assets/brand-tecnoclean.jpg',
       embedUrl: 'https://www.behance.net/embed/project/218332217?ilo0=1',
       linkUrl: 'https://www.behance.net/gallery/218332217/Tecnoclean-Identidad-visual',
       solution: 'Desarrollamos la identidad visual completa de Corporación Tecnoclean: logotipo, paleta de colores, tipografías y sistema de marca aplicado a sus distintos materiales.',
@@ -357,7 +458,7 @@
         'https://www.instagram.com/reel/CqovtDTLwdJ/',
         'https://www.instagram.com/reel/CqtYf3SLfgM/'
       ],
-      reelShots: ['assets/reel-urbantex-1.jpg', 'assets/reel-urbantex-2.jpg', 'assets/reel-urbantex-3.jpg'],
+      reelShots: ['/assets/reel-urbantex-1.jpg', '/assets/reel-urbantex-2.jpg', '/assets/reel-urbantex-3.jpg'],
       solution: 'Producimos y editamos contenido en video para Urbantex, reforzando su identidad ya trabajada con piezas audiovisuales pensadas para redes.',
     },
     'synergy-fichas': {
@@ -397,16 +498,16 @@
 
 
   const portfolioBadges = {
-        mds: "assets/badge-mds.png",
-    rdr: "assets/badge-rdr.png",
-    tecnoclean: "assets/badge-tecnoclean.png",
-    decoplant: "assets/badge-decoplant.png",
-    legacy: "assets/badge-legacy.png",
-    urbantex: "assets/badge-urbantex.png",
-    hps: "assets/badge-hps.png",
-    synergy: "assets/badge-synergy.png",
-    winners: "assets/badge-winners.png",
-    pizzi: "assets/badge-pizzi.png"
+        mds: "/assets/badge-mds.png",
+    rdr: "/assets/badge-rdr.png",
+    tecnoclean: "/assets/badge-tecnoclean.png",
+    decoplant: "/assets/badge-decoplant.png",
+    legacy: "/assets/badge-legacy.png",
+    urbantex: "/assets/badge-urbantex.png",
+    hps: "/assets/badge-hps.png",
+    synergy: "/assets/badge-synergy.png",
+    winners: "/assets/badge-winners.png",
+    pizzi: "/assets/badge-pizzi.png"
   };
   // One tile per CLIENT, not per project — clients with multiple projects (like
   // Legacy World) still get grouped into a single portfolio entry, with all their
@@ -417,6 +518,7 @@
     const bySlug = {};
     Object.keys(projects).forEach(slug => {
       const p = projects[slug];
+      if(p.draft) return;   // los casos en borrador no se muestran hasta que se completen
       let entry = bySlug[p.client];
       if(!entry){
         entry = { slug, client: p.client, badge: p.badge, tags: [] };
@@ -444,7 +546,7 @@
 
   function portfolioCardHTML(entry){
     return `
-        <button onclick="showProject('${entry.slug}')" class="pf-card glass hover-lift text-left" aria-label="Ver ${entry.client}">
+        <button onclick="showProject('${entry.slug}')" class="pf-card glass hover-lift text-left">
           <div class="pf-media">
             <img src="${portfolioBadges[entry.badge]}" alt="${entry.client}" loading="lazy" />
           </div>
@@ -754,7 +856,7 @@
     const checked = Array.from(document.querySelectorAll('#custom-plan-checklist input:checked')).map(i => ({ v: i.value, g: i.dataset.group || '' }));
     const notes = document.getElementById('custom-plan-notes').value.trim();
     if(checked.length === 0){
-      alert(window.I18N ? I18N.tr('Elegí al menos un ítem para tu plan personalizado.') : 'Elegí al menos un ítem para tu plan personalizado.');
+      alert(window.I18N ? I18N.tr('Elige al menos un ítem para tu plan personalizado.') : 'Elige al menos un ítem para tu plan personalizado.');
       return;
     }
     const T = (x) => (window.I18N ? I18N.tr(x) : x);
@@ -771,11 +873,30 @@
   }
 
   // ---------- Unified contact form (mail icon, "Solicitar presupuesto", plan personalizado) ----------
+  // ---------- Origen del contacto (UTM, referrer, página de entrada) ----------
+  // Se guarda solo durante la sesión de la pestaña y se adjunta a cada formulario.
+  (function captureAttribution(){
+    try {
+      if(sessionStorage.getItem('attr')) return;
+      const q = new URLSearchParams(location.search);
+      const data = { landing: location.pathname, referrer: document.referrer || '' };
+      ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'].forEach(k => { if(q.get(k)) data[k] = q.get(k); });
+      sessionStorage.setItem('attr', JSON.stringify(data));
+    } catch(e){}
+  })();
+  function getAttribution(){
+    try { return JSON.parse(sessionStorage.getItem('attr') || '{}'); } catch(e){ return {}; }
+  }
+
   // ---------- Shared lead submission: real endpoint if configured, else mailto ----------
   async function submitLead(fields, kind){
+    // Antispam: si el campo señuelo viene relleno es un robot; fingimos éxito sin enviar nada.
+    if(fields._gotcha){ return { ok: true }; }
+    delete fields._gotcha;
+    fields = Object.assign({}, fields, { _page: location.pathname, _lang: document.documentElement.getAttribute('lang') || 'es' }, kind === 'review' ? { estado: 'PENDIENTE DE MODERACIÓN (no se publica sola)' } : {}, getAttribution());
     if(CONFIG.FORM_ENDPOINT && CONFIG.FORM_ENDPOINT !== 'PLACEHOLDER'){
       try {
-        const subjectLine = (kind === 'review' ? 'Nueva reseña de cliente — ' : 'Nueva solicitud — ') + (fields.company || fields.service || 'LE STUDIO');
+        const subjectLine = (kind === 'review' ? 'Nueva reseña de cliente — ' : (kind === 'lead-magnet' ? 'Descarga de la checklist — ' : 'Nueva solicitud — ')) + (fields.company || fields.service || fields.name || 'LE STUDIO');
         const payload = Object.assign(
           { _kind: kind || 'lead', _subject: subjectLine },
           fields.email ? { _replyto: fields.email } : {},
@@ -821,12 +942,21 @@
       const hasOpt = Array.from(svcSel.options).some(o => o.value === serviceValue);
       if(hasOpt) svcSel.value = serviceValue;
     }
-    document.getElementById('contact-message').value = prefillMessage || '';
+    document.getElementById('contact-message').value = prefillMessage || (mode === 'audit' ? 'Quiero reservar la auditoría gratuita de sistemas digitales de mi negocio.' : '');
     document.getElementById('contact-terms').checked = false;
+    const whenWrap = document.getElementById('contact-when-wrap');
+    if(whenWrap) whenWrap.classList.toggle('hidden', mode !== 'audit');
+    const whenInput = document.getElementById('contact-when'); if(whenInput) whenInput.value = '';
+    const gotchaInput = document.getElementById('contact-gotcha'); if(gotchaInput) gotchaInput.value = '';
+    const errBox = document.getElementById('contact-error-msg'); if(errBox){ errBox.classList.add('hidden'); errBox.textContent = ''; }
+    document.querySelectorAll('#contact-form-panel [aria-invalid]').forEach(el => el.removeAttribute('aria-invalid'));
     const titleEl = document.getElementById('contact-title');
     const subEl = document.getElementById('contact-sub');
     if(titleEl && subEl){
-      if(mode === 'quote'){
+      if(mode === 'audit'){
+        titleEl.textContent = 'Reserva tu auditoría gratuita';
+        subEl.textContent = 'Una llamada de 30 minutos para revisar los sistemas digitales de tu negocio. Dinos cuándo te viene bien y te llamamos.';
+      } else if(mode === 'quote'){
         titleEl.textContent = 'Solicita tu cotización';
         subEl.textContent = 'Cuéntanos qué necesitas y te enviamos una propuesta a medida en menos de 24 horas.';
       } else {
@@ -854,20 +984,26 @@
     const message = document.getElementById('contact-message').value.trim();
     const terms = document.getElementById('contact-terms').checked;
 
-    if(!name || !email || !message){
-      alert(window.I18N ? I18N.tr('Por favor completá nombre, email y mensaje.') : 'Por favor completá nombre, email y mensaje.');
-      return;
-    }
-    if(!terms){
-      alert(window.I18N ? I18N.tr('Necesitamos que aceptes ser contactado para poder responderte.') : 'Necesitamos que aceptes ser contactado para poder responderte.');
-      return;
-    }
+    const tr = (t) => (window.I18N ? I18N.tr(t) : t);
+    const fail = (msg, el) => {
+      const box = document.getElementById('contact-error-msg');
+      if(box){ box.textContent = tr(msg); box.classList.remove('hidden'); }
+      document.querySelectorAll('#contact-form-panel [aria-invalid]').forEach(x => x.removeAttribute('aria-invalid'));
+      if(el){ el.setAttribute('aria-invalid', 'true'); el.focus(); }
+    };
+    if(!name){ return fail('Por favor, dinos tu nombre.', document.getElementById('contact-name')); }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ return fail('Introduce un email válido para poder responderte.', document.getElementById('contact-email')); }
+    if(!message){ return fail('Cuéntanos brevemente qué necesitas.', document.getElementById('contact-message')); }
+    if(!terms){ return fail('Necesitamos que aceptes la política de privacidad para poder responderte.', document.getElementById('contact-terms')); }
+    const errBox = document.getElementById('contact-error-msg'); if(errBox) errBox.classList.add('hidden');
+    const when = (document.getElementById('contact-when') || {}).value || '';
+    const gotcha = (document.getElementById('contact-gotcha') || {}).value || '';
 
     const btn = document.getElementById('contact-submit-btn');
     btn.disabled = true;
     btn.textContent = 'Enviando...';
 
-    const result = await submitLead({ name, email, phone, company, service, message });
+    const result = await submitLead(Object.assign({ name, email, phone, company, service, message, _gotcha: gotcha }, when ? { preferred_time: when } : {}));
 
     btn.disabled = false;
     btn.textContent = 'Enviar';
@@ -891,8 +1027,8 @@
       description: 'Gestionamos tus redes sociales como un canal de negocio, no como un simple calendario de publicaciones. Definimos la estrategia, planificamos el contenido, gestionamos la comunidad y analizamos el rendimiento para construir una presencia digital coherente y orientada al crecimiento.',
       ctaLabel: 'Quiero hacer crecer mis redes',
       intro: [
-        'Cualquiera puede programar publicaciones. Lo que separa una red social que vende de una que solo existe es la estrategia detrás: saber para quién hablás, qué querés lograr con cada pieza y cómo se conecta un mes con el siguiente.',
-        'Trabajamos con marcas que ya entendieron que las redes no son gratis solo porque no se pagan en pauta — cuestan tiempo, consistencia y criterio. Nosotros ponemos las tres cosas, para que vos no tengas que estar pendiente de qué publicar hoy.'
+        'Cualquiera puede programar publicaciones. Lo que separa una red social que vende de una que solo existe es la estrategia detrás: saber para quién hablas, qué quieres lograr con cada pieza y cómo se conecta un mes con el siguiente.',
+        'Trabajamos con marcas que ya entendieron que las redes no son gratis solo porque no se pagan en pauta — cuestan tiempo, consistencia y criterio. Nosotros ponemos las tres cosas, para que no tengas que estar pendiente de qué publicar hoy.'
       ],
       whatWeDo: [
         { name: 'Estrategia de redes', desc: 'Definimos qué comunicar, a quién, cómo y con qué objetivo.' },
@@ -910,11 +1046,11 @@
       pricing: 'social',
       faq: [
         { q: '¿Qué redes sociales gestionáis?', a: 'Principalmente Instagram y TikTok, aunque nos adaptamos a la plataforma donde esté tu audiencia. Lo definimos juntos según tu marca y tu objetivo, no aplicamos la misma fórmula a todos los clientes.' },
-        { q: '¿También producís el contenido?', a: 'Sí. La estrategia y la producción van de la mano dentro de este servicio, y si necesitás piezas más elaboradas, se conecta directo con Content Production sin fricción entre equipos.' },
+        { q: '¿También produces el contenido?', a: 'Sí. La estrategia y la producción van de la mano dentro de este servicio, y si necesitas piezas más elaboradas, se conecta directo con Content Production sin fricción entre equipos.' },
         { q: '¿Podemos contratar únicamente estrategia?', a: 'Sí, es posible. Muchos clientes ya tienen equipo interno de community management y solo necesitan la definición estratégica y el calendario. Lo conversamos según tu caso.' },
         { q: '¿Gestionáis comentarios y mensajes?', a: 'Sí, el community management incluye responder comentarios y mensajes directos dentro del horario y el tono que definamos juntos para tu marca.' },
         { q: '¿Cuánto contenido se publica al mes?', a: 'Depende del plan que elijas. Los tres niveles —básico, intermedio y avanzado— tienen cantidades distintas de posts, reels e historias, detalladas en la sección de planes.' },
-        { q: '¿Cómo medís los resultados?', a: 'Con informes mensuales que muestran alcance, interacción y crecimiento real, explicados en lenguaje simple — no solo una captura de métricas sin contexto.' },
+        { q: '¿Cómo mides los resultados?', a: 'Con informes mensuales que muestran alcance, interacción y crecimiento real, explicados en lenguaje simple — no solo una captura de métricas sin contexto.' },
         { q: '¿Trabajáis con marcas que están empezando?', a: 'Sí. De hecho ahí es donde más valor aporta tener una estrategia clara desde el día uno, en vez de publicar sin un rumbo definido.' }
       ],
       related: ['content-production', 'brand-design', 'growth-marketing'],
@@ -946,7 +1082,7 @@
         { q: '¿Trabajáis con video y fotografía?', a: 'Sí, ambos formatos forman parte del servicio y normalmente se planifican juntos dentro de una misma producción para aprovechar cada sesión.' },
         { q: '¿Podéis producir contenido para redes?', a: 'Sí, es uno de los usos más frecuentes: contenido vertical, reels y piezas pensadas específicamente para el consumo en redes sociales.' },
         { q: '¿También os encargáis de la edición?', a: 'Sí, montaje, color, sonido y motion graphics están incluidos — no entregamos material crudo sin terminar.' },
-        { q: '¿Podemos contratar únicamente la producción?', a: 'Sí, si ya tenés un equipo de edición interno podemos encargarnos solo de la parte de grabación y dirección creativa.' },
+        { q: '¿Podemos contratar únicamente la producción?', a: 'Sí, si ya tienes un equipo de edición interno podemos encargarnos solo de la parte de grabación y dirección creativa.' },
         { q: '¿Trabajáis con campañas publicitarias?', a: 'Sí, producimos piezas pensadas para campañas pagas, coordinado con el equipo de Growth & Marketing cuando el proyecto lo requiere.' },
         { q: '¿Podéis crear diferentes formatos a partir de una producción?', a: 'Sí, de una misma sesión solemos adaptar múltiples piezas: reel, historia, corte horizontal y vertical, para aprovechar mejor cada producción.' },
         { q: '¿Trabajáis con contenido generado mediante IA?', a: 'Lo evaluamos caso por caso. Priorizamos producción real, pero hay procesos puntuales (como algunas adaptaciones o pruebas de concepto) donde la IA puede sumar sin reemplazar la producción original.' }
@@ -980,7 +1116,7 @@
       faq: [
         { q: '¿Creáis identidades de marca desde cero?', a: 'Sí, es uno de los proyectos más completos que hacemos: desde el naming y el concepto hasta el manual de marca final.' },
         { q: '¿También trabajáis sobre marcas existentes?', a: 'Sí, muchos proyectos son de evolución de marca: mantenemos lo que ya funciona y corregimos lo que genera inconsistencia.' },
-        { q: '¿Qué incluye un proyecto de branding?', a: 'Depende del nivel elegido — tenés el detalle exacto en la sección de planes de esta página, desde identidad básica hasta un sistema de marca completo.' },
+        { q: '¿Qué incluye un proyecto de branding?', a: 'Depende del nivel elegido — tienes el detalle exacto en la sección de planes de esta página, desde identidad básica hasta un sistema de marca completo.' },
         { q: '¿Diseñáis únicamente el logo?', a: 'Podemos, pero recomendamos pensarlo como parte de un sistema: tipografías, paleta y aplicaciones, para que el logo funcione bien en cualquier contexto.' },
         { q: '¿Trabajáis también diseño para redes sociales?', a: 'Sí. Diseñamos posts, historias, carruseles, portadas y plantillas editables usando el mismo sistema visual de tu marca, para que redes, web y papelería se vean como una sola cosa.' },
         { q: '¿Podéis diseñar la interfaz de una web o aplicación?', a: 'Sí, el diseño UI/UX forma parte de este servicio y se coordina directamente con el equipo de Web & Digital Development cuando hay que construirla.' },
@@ -1030,7 +1166,7 @@
       description: 'Construimos estrategias para que tu marca sea encontrada, considerada y elegida. Combinamos posicionamiento orgánico, publicidad digital, presencia en buscadores de IA y estrategias de captación para construir un sistema de adquisición conectado.',
       ctaLabel: 'Quiero encontrar oportunidades de crecimiento',
       intro: [
-        'Que te encuentren es el primer paso, no el objetivo. El objetivo es que te elijan a vos y no a la competencia que apareció al lado en la misma búsqueda.',
+        'Que te encuentren es el primer paso, no el objetivo. El objetivo es que te elijan a ti y no a la competencia que apareció al lado en la misma búsqueda.',
         'Por eso no separamos SEO, publicidad y contenido en compartimentos aislados: los conectamos en un mismo sistema, donde cada canal refuerza a los demás en vez de competir por el mismo presupuesto.'
       ],
       whatWeDo: [
@@ -1052,7 +1188,7 @@
         { q: '¿También gestionáis Meta Ads?', a: 'Sí, campañas en Instagram y Facebook, coordinadas con el resto de la estrategia de contenido y marca.' },
         { q: '¿Podéis combinar SEO y publicidad?', a: 'Sí, de hecho lo recomendamos: el orgánico construye una base sostenible mientras la pauta genera resultados más inmediatos.' },
         { q: '¿Qué significa aparecer en buscadores de IA?', a: 'Significa que cuando alguien le pregunta algo relacionado con tu rubro a ChatGPT, Gemini u otro sistema similar, tu marca tiene más probabilidad de ser mencionada o considerada dentro de esa respuesta. No es algo que se pueda garantizar puntualmente, pero sí se puede trabajar de forma consistente.' },
-        { q: '¿Cómo medís los resultados?', a: 'Con analítica y reporting periódico sobre tráfico, posiciones, conversión y rendimiento de cada campaña.' },
+        { q: '¿Cómo mides los resultados?', a: 'Con analítica y reporting periódico sobre tráfico, posiciones, conversión y rendimiento de cada campaña.' },
         { q: '¿Trabajáis con empresas que ya tienen equipo de marketing?', a: 'Sí, en varios proyectos trabajamos como un equipo especializado que complementa al equipo interno, no como reemplazo.' }
       ],
       related: ['social-media', 'content-production', 'web-development']
@@ -1068,7 +1204,7 @@
       ],
       intro: [
         'La mayoría de los procesos que le quitan tiempo a un equipo no requieren una persona pensando — requieren que alguien mueva información de un lado a otro. Ahí es exactamente donde entra la automatización.',
-        'No empezamos por la tecnología. Empezamos por entender cómo funciona tu operación hoy, y después decidimos si hace falta un agente de IA, un flujo automatizado, o simplemente conectar dos herramientas que ya usás.'
+        'No empezamos por la tecnología. Empezamos por entender cómo funciona tu operación hoy, y después decidimos si hace falta un agente de IA, un flujo automatizado, o simplemente conectar dos herramientas que ya usas.'
       ],
       whatWeDo: [
         { name: 'AI Agents', desc: 'Agentes capaces de ejecutar tareas y trabajar con información de la empresa.' },
@@ -1086,7 +1222,7 @@
       ],
       faq: [
         { q: '¿Qué procesos se pueden automatizar?', a: 'Cualquier tarea repetitiva basada en reglas claras: seguimiento de leads, respuestas frecuentes, envío de documentos, actualización de datos entre sistemas, entre muchas otras.' },
-        { q: '¿Podéis crear un agente de IA personalizado?', a: 'Sí, entrenado con información real de tu negocio para que responda y actúe de forma coherente con cómo trabajás.' },
+        { q: '¿Podéis crear un agente de IA personalizado?', a: 'Sí, entrenado con información real de tu negocio para que responda y actúe de forma coherente con cómo trabajas.' },
         { q: '¿Los chatbots pueden utilizar información de nuestra empresa?', a: 'Sí, ese es justamente el punto: que respondan con tus datos reales, no con respuestas genéricas desconectadas de tu negocio.' },
         { q: '¿Podéis conectar la IA con nuestro CRM?', a: 'Sí, las integraciones con CRM son una de las bases más comunes de estos proyectos, para que la información fluya sin cargarla dos veces.' },
         { q: '¿La IA puede atender clientes automáticamente?', a: 'Sí, con escalamiento a un humano cuando la consulta lo amerita — nunca dejamos a tu cliente sin respuesta ni atrapado en un bucle.' },
@@ -1515,38 +1651,38 @@
   //   { name, what, label, case: 'slug-del-proyecto' } -> abre el caso dentro del portafolio
   const serviceWork = {
     'social-media': [
-      { name: 'Legacy World', handle: 'legacyworld_', what: 'Redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/legacyworld_/', badge: 'legacy', shot: 'assets/profile-legacy.jpg' },
-      { name: 'Inversiones MDS', handle: 'inversiones.mds', what: 'Estrategia y gestión de su Instagram', label: 'Ver Instagram', url: 'https://www.instagram.com/inversiones.mds/', badge: 'mds', shot: 'assets/profile-mds.jpg' },
-      { name: 'Pizzi', handle: 'pizzi.es', what: 'Manejo de redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/pizzi.es/', badge: 'pizzi', shot: 'assets/profile-pizzi.jpg' }
+      { name: 'Legacy World', handle: 'legacyworld_', what: 'Redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/legacyworld_/', badge: 'legacy', shot: '/assets/profile-legacy.jpg' },
+      { name: 'Inversiones MDS', handle: 'inversiones.mds', what: 'Estrategia y gestión de su Instagram', label: 'Ver Instagram', url: 'https://www.instagram.com/inversiones.mds/', badge: 'mds', shot: '/assets/profile-mds.jpg' },
+      { name: 'Pizzi', handle: 'pizzi.es', what: 'Manejo de redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/pizzi.es/', badge: 'pizzi', shot: '/assets/profile-pizzi.jpg' }
     ],
     'content-production': [
-      { segment: 'Producción audiovisual', group: 'Podcast', title: 'Legacy Podcast EP.01', what: 'Cómo pasar de hacer TikToks a vivir de las redes, con Cesar Oliveira', views: '36K', url: 'https://youtu.be/i-frSRSTsq8', shot: 'assets/video-podcast-1.jpg', wide: true, source: 'YouTube' },
-      { segment: 'Producción audiovisual', group: 'Podcast', title: 'Legacy Podcast EP.02', what: 'NEOMAI: «Quiero representar a Venezuela y ganar un Grammy»', views: '2.3K', url: 'https://youtu.be/4IU4OL3d9WE', shot: 'assets/video-podcast-2.jpg', wide: true, source: 'YouTube' },
-      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Clip de Legacy Podcast', what: '@legacyworld_', views: '2.4M', url: 'https://www.tiktok.com/@legacyworld_/video/7602753224323501320', shot: 'assets/video-legacy-1.jpg', source: 'TikTok' },
-      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Neomai en Legacy Podcast', what: '@legacyworld_', views: '591.6K', url: 'https://www.tiktok.com/@legacyworld_/video/7642136557578636562', shot: 'assets/video-legacy-2.jpg', source: 'TikTok' },
-      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Clip de Legacy Podcast', what: '@legacyworld_', views: '478.1K', url: 'https://www.tiktok.com/@legacyworld_/video/7602391908966599944', shot: 'assets/video-legacy-3.jpg', source: 'TikTok' },
-      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Suzuki Jimny 4x4', what: '@kiacentromarca', views: '128.1K', url: 'https://www.tiktok.com/@kiacentromarca/video/7441352485589077304', shot: 'assets/video-kia-1.jpg', source: 'TikTok' },
-      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Kia Picanto 2025', what: '@kiacentromarca', views: '111.6K', url: 'https://www.tiktok.com/@kiacentromarca/video/7461770092091591941', shot: 'assets/video-kia-2.jpg', source: 'TikTok' },
-      { segment: 'AI Generated Content', title: 'AI Reel 1', what: 'Contenido generado con IA', url: 'https://www.instagram.com/reel/De2Rg-qRFKT/', shot: 'assets/reel-ai-1.jpg', source: 'Instagram' },
-      { segment: 'AI Generated Content', title: 'AI Reel 2', what: 'Contenido generado con IA', url: 'https://www.instagram.com/reel/DezkDceRO77/', shot: 'assets/reel-ai-2.jpg', source: 'Instagram' },
-      { segment: 'AI Generated Content', title: 'AI Reel 3', what: 'Contenido generado con IA', url: 'https://www.instagram.com/reel/DepzmWrok84/', shot: 'assets/reel-ai-3.jpg', source: 'Instagram' }
+      { segment: 'Producción audiovisual', group: 'Podcast', title: 'Legacy Podcast EP.01', what: 'Cómo pasar de hacer TikToks a vivir de las redes, con Cesar Oliveira', views: '36K', url: 'https://youtu.be/i-frSRSTsq8', shot: '/assets/video-podcast-1.jpg', wide: true, source: 'YouTube' },
+      { segment: 'Producción audiovisual', group: 'Podcast', title: 'Legacy Podcast EP.02', what: 'NEOMAI: «Quiero representar a Venezuela y ganar un Grammy»', views: '2.3K', url: 'https://youtu.be/4IU4OL3d9WE', shot: '/assets/video-podcast-2.jpg', wide: true, source: 'YouTube' },
+      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Clip de Legacy Podcast', what: '@legacyworld_', views: '2.4M', url: 'https://www.tiktok.com/@legacyworld_/video/7602753224323501320', shot: '/assets/video-legacy-1.jpg', source: 'TikTok' },
+      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Neomai en Legacy Podcast', what: '@legacyworld_', views: '591.6K', url: 'https://www.tiktok.com/@legacyworld_/video/7642136557578636562', shot: '/assets/video-legacy-2.jpg', source: 'TikTok' },
+      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Clip de Legacy Podcast', what: '@legacyworld_', views: '478.1K', url: 'https://www.tiktok.com/@legacyworld_/video/7602391908966599944', shot: '/assets/video-legacy-3.jpg', source: 'TikTok' },
+      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Suzuki Jimny 4x4', what: '@kiacentromarca', views: '128.1K', url: 'https://www.tiktok.com/@kiacentromarca/video/7441352485589077304', shot: '/assets/video-kia-1.jpg', source: 'TikTok' },
+      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Kia Picanto 2025', what: '@kiacentromarca', views: '111.6K', url: 'https://www.tiktok.com/@kiacentromarca/video/7461770092091591941', shot: '/assets/video-kia-2.jpg', source: 'TikTok' },
+      { segment: 'AI Generated Content', title: 'AI Reel 1', what: 'Contenido generado con IA', url: 'https://www.instagram.com/reel/De2Rg-qRFKT/', shot: '/assets/reel-ai-1.jpg', source: 'Instagram' },
+      { segment: 'AI Generated Content', title: 'AI Reel 2', what: 'Contenido generado con IA', url: 'https://www.instagram.com/reel/DezkDceRO77/', shot: '/assets/reel-ai-2.jpg', source: 'Instagram' },
+      { segment: 'AI Generated Content', title: 'AI Reel 3', what: 'Contenido generado con IA', url: 'https://www.instagram.com/reel/DepzmWrok84/', shot: '/assets/reel-ai-3.jpg', source: 'Instagram' }
     ],
     'brand-design': [
-      { name: 'Legacy World', what: 'Brand building y dirección creativa', url: 'https://www.behance.net/gallery/255634519/LEGACY-WORLD-Brand-Building-Creative-Direction', shot: 'assets/brand-legacy.jpg' },
-      { name: 'Deportivo Agustinos', what: 'Identidad visual', url: 'https://www.behance.net/gallery/218333875/Deportivo-Agustinos-Visual-Identity', shot: 'assets/brand-agustinos.jpg' },
-      { name: 'LCF', what: 'Identidad visual y diseño para redes', url: 'https://www.behance.net/gallery/218336477/LCF-VisualIdentity-Social-media-design', shot: 'assets/brand-lcf.jpg' },
-      { name: 'Zenska', what: 'Naming e identidad visual', url: 'https://www.behance.net/gallery/218333371/Zenska-Naming-Visual-Identity', shot: 'assets/brand-zenska.jpg' },
-      { name: 'Tecnoclean', what: 'Identidad visual', url: 'https://www.behance.net/gallery/218332217/Tecnoclean-Visual-Identity', shot: 'assets/brand-tecnoclean.jpg' },
-      { name: 'Decoplant', what: 'Naming e identidad visual', url: 'https://www.behance.net/gallery/218332771/DECOPLANT-Naming-Visual-Identity', shot: 'assets/brand-decoplant.jpg' },
-      { name: 'RDR', what: 'Identidad visual', url: 'https://www.behance.net/gallery/218334897/RDR-Visual-Identity', shot: 'assets/brand-rdr.jpg' }
+      { name: 'Legacy World', what: 'Brand building y dirección creativa', url: 'https://www.behance.net/gallery/255634519/LEGACY-WORLD-Brand-Building-Creative-Direction', shot: '/assets/brand-legacy.jpg' },
+      { name: 'Deportivo Agustinos', what: 'Identidad visual', url: 'https://www.behance.net/gallery/218333875/Deportivo-Agustinos-Visual-Identity', shot: '/assets/brand-agustinos.jpg' },
+      { name: 'LCF', what: 'Identidad visual y diseño para redes', url: 'https://www.behance.net/gallery/218336477/LCF-VisualIdentity-Social-media-design', shot: '/assets/brand-lcf.jpg' },
+      { name: 'Zenska', what: 'Naming e identidad visual', url: 'https://www.behance.net/gallery/218333371/Zenska-Naming-Visual-Identity', shot: '/assets/brand-zenska.jpg' },
+      { name: 'Tecnoclean', what: 'Identidad visual', url: 'https://www.behance.net/gallery/218332217/Tecnoclean-Visual-Identity', shot: '/assets/brand-tecnoclean.jpg' },
+      { name: 'Decoplant', what: 'Naming e identidad visual', url: 'https://www.behance.net/gallery/218332771/DECOPLANT-Naming-Visual-Identity', shot: '/assets/brand-decoplant.jpg' },
+      { name: 'RDR', what: 'Identidad visual', url: 'https://www.behance.net/gallery/218334897/RDR-Visual-Identity', shot: '/assets/brand-rdr.jpg' }
     ],
     'web-development': [
-      { name: 'Legacy World', what: 'Tienda online propia, nacional e internacional', url: 'https://legacy-world.com', shot: 'assets/web-legacy.jpg' },
-      { name: 'Pizzi', what: 'Pedidos online para recoger', url: 'https://creative-lestudio.github.io/pizzi/', shot: 'assets/web-pizzi.jpg' },
-      { name: 'Repite', what: 'Tarjeta de sellos digital para fidelizar clientes', url: 'https://repite-silk.vercel.app/', shot: 'assets/web-repite.jpg' },
-      { name: 'Finanzas', what: 'App de finanzas personales', url: 'https://creative-lestudio.github.io/finanzas/', shot: 'assets/web-finanzas.jpg' },
-      { name: 'Karoli Sushi', what: 'Pedidos online para un sushi en Aravaca, Madrid', url: 'https://creative-lestudio.github.io/KaroliSushi/', shot: 'assets/web-karoli.jpg' },
-      { name: 'Venezuela Food', what: 'Web de tapas y picoteo venezolano en Madrid', url: 'https://creative-lestudio.github.io/venezuela-food/', shot: 'assets/web-venezuelafood.jpg' }
+      { name: 'Legacy World', what: 'Tienda online propia, nacional e internacional', url: 'https://legacy-world.com', shot: '/assets/web-legacy.jpg' },
+      { name: 'Pizzi', what: 'Pedidos online para recoger', url: 'https://creative-lestudio.github.io/pizzi/', shot: '/assets/web-pizzi.jpg' },
+      { name: 'Repite', what: 'Tarjeta de sellos digital para fidelizar clientes', url: 'https://repite-silk.vercel.app/', shot: '/assets/web-repite.jpg' },
+      { name: 'Finanzas', what: 'App de finanzas personales', url: 'https://creative-lestudio.github.io/finanzas/', shot: '/assets/web-finanzas.jpg' },
+      { name: 'Karoli Sushi', what: 'Pedidos online para un sushi en Aravaca, Madrid', url: 'https://creative-lestudio.github.io/KaroliSushi/', shot: '/assets/web-karoli.jpg' },
+      { name: 'Venezuela Food', what: 'Web de tapas y picoteo venezolano en Madrid', url: 'https://creative-lestudio.github.io/venezuela-food/', shot: '/assets/web-venezuelafood.jpg' }
     ],
     'growth-marketing': [],
     'ai-automation': []
@@ -1555,12 +1691,12 @@
   // Maquetas reutilizables (iPhone con perfil, ventana de Safari)
   function phoneHTML(c, src){
     return `
-      <a href="${c.url}" target="_blank" rel="noopener" class="ph-link" aria-label="${c.name}: ver @${c.handle} en Instagram">
+      <a href="${c.url}" target="_blank" rel="noopener" class="ph-link">
         <div class="ph">
           <span class="ph-btn ph-btn--a"></span><span class="ph-btn ph-btn--b"></span><span class="ph-btn ph-btn--c"></span><span class="ph-btn ph-btn--p"></span>
           <div class="ph-screen">
             <span class="ph-island"></span>
-            <img class="ph-shot" src="${src}" alt="Perfil de Instagram de @${c.handle}" loading="lazy" />
+            <img class="ph-shot" src="${src}" alt="${t2('Perfil de Instagram de', 'Instagram profile of')} @${c.handle}" loading="lazy" />
             <span class="ph-home"></span>
           </div>
         </div>
@@ -1574,7 +1710,7 @@
         <div class="sf-bar"><span class="sf-dots"><i></i><i></i><i></i></span><div class="sf-tabs"><span class="sf-tab is-active">${c.name}</span></div></div>
         <div class="sf-url"><span>${host}</span></div>
         <a class="sf-view is-in" href="${c.url}" target="_blank" rel="noopener" aria-label="Visitar ${host}">
-          <img src="${src}" alt="Sitio web de ${c.name}" />
+          <img src="${src}" alt="${t2('Sitio web de', 'Website of')} ${c.name}" />
           <span class="sf-open">Visitar sitio <svg width="13" height="13" viewBox="0 0 20 20" fill="none"><path d="M6 14L14 6M7 6h7v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </a>
       </div>`;
@@ -1597,14 +1733,14 @@
         </div>
         <div class="vc-track" id="vc-track" tabindex="0">
           ${list.map(c => `
-            <a class="vc-card${c.wide ? ' vc-wide' : ''}" data-s="${c.segment}" data-g="${c.group || ''}" href="${c.url}" target="_blank" rel="noopener" aria-label="${c.title}: ver en ${c.source}">
-              <img src="${base}${c.shot}" alt="${c.title}" loading="lazy" />
+            <a class="vc-card${c.wide ? ' vc-wide' : ''}" data-s="${c.segment}" data-g="${c.group || ''}" href="${c.url}" target="_blank" rel="noopener">
+              <img src="${c.shot}" alt="${c.title}" loading="lazy" />
               ${c.views ? `<span class="vc-views">${c.views} vistas</span>` : ''}
               <span class="vc-play">${play}</span>
               <span class="vc-cap"><b>${c.title}</b><em>${c.what}</em><i>${c.source}</i></span>
             </a>`).join('')}
         </div>
-        <p class="bb-more"><span>También: <a href="${base}#proyecto-mds-contenido">Inversiones MDS</a> · <a href="${base}#proyecto-urbantex-contenido">Urbantex</a></span></p>
+        <p class="bb-more"><span>También: <a href="${PAGE_BASE}#proyecto-mds-contenido">Inversiones MDS</a> · <a href="${PAGE_BASE}#proyecto-urbantex-contenido">Urbantex</a></span></p>
       </div>`;
     const track = box.querySelector('#vc-track'), prev = box.querySelector('#vc-prev'), next = box.querySelector('#vc-next'), filtersEl = box.querySelector('#vc-filters');
     const cards = Array.from(track.querySelectorAll('.vc-card'));
@@ -1655,14 +1791,14 @@
           <div class="bb-list" role="tablist" aria-label="Proyectos">
             ${list.map((c, i) => `
               <button type="button" role="tab" class="bb-item${i === 0 ? ' is-active' : ''}" data-i="${i}" aria-selected="${i === 0}">
-                <img src="${base}${c.shot}" alt="" loading="lazy" />
+                <img src="${c.shot}" alt="" loading="lazy" />
                 <span><b>${c.name}</b><em>${c.what}</em></span>
               </button>`).join('')}
           </div>
         </div>
         <p class="bb-more">
           <a href="https://www.behance.net/marcelolealv" target="_blank" rel="noopener">Ver todo en Behance ${arrow}</a>
-          <span>También: ${more.map(m => m.url ? `<a href="${m.url}" target="_blank" rel="noopener">${m.name}</a>` : `<a href="${base}#proyecto-${m.case}">${m.name}</a>`).join(' · ')}</span>
+          <span>También: ${more.map(m => m.url ? `<a href="${m.url}" target="_blank" rel="noopener">${m.name}</a>` : `<a href="${PAGE_BASE}#proyecto-${m.case}">${m.name}</a>`).join(' · ')}</span>
         </p>
       </div>`;
     const stage = box.querySelector('#bb-stage');
@@ -1671,9 +1807,9 @@
       const c = list[i];
       items.forEach((t, n) => { t.classList.toggle('is-active', n === i); t.setAttribute('aria-selected', n === i); });
       stage.href = c.url;
-      stage.setAttribute('aria-label', c.name + ': ver el proyecto en Behance');
+      stage.setAttribute('aria-label', c.name + ': ' + t2('ver el proyecto en Behance', 'view the project on Behance'));
       stage.classList.remove('is-in');
-      stage.innerHTML = `<img src="${base}${c.shot}" alt="Proyecto de identidad visual: ${c.name}" /><span class="bb-cap"><b>${c.name}</b><em>${c.what}</em></span><span class="bb-open">Ver en Behance ${arrow}</span>`;
+      stage.innerHTML = `<img src="${c.shot}" alt="${t2('Proyecto de identidad visual', 'Visual identity project')}: ${c.name}" /><span class="bb-cap"><b>${c.name}</b><em>${c.what}</em></span><span class="bb-open">Ver en Behance ${arrow}</span>`;
       requestAnimationFrame(() => stage.classList.add('is-in'));
     };
     items.forEach((t, n) => t.addEventListener('click', () => show(n)));
@@ -1686,7 +1822,7 @@
     const arrow = '<svg width="13" height="13" viewBox="0 0 20 20" fill="none"><path d="M6 14L14 6M7 6h7v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     box.innerHTML = `
       <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 border-t border-white/10">
-        <h2 class="font-display text-3xl md:text-4xl mb-3">Webs de este servicio</h2>
+        <h2 class="font-display text-3xl md:text-4xl mb-3">${box.dataset.title || 'Webs de este servicio'}</h2>
         <p class="text-white/55 mb-12 max-w-xl">Elige una pestaña y toca la pantalla para visitar el sitio.</p>
         <div class="sf" id="sf">
           <div class="sf-bar">
@@ -1707,9 +1843,8 @@
       tabs.forEach((t, n) => { t.classList.toggle('is-active', n === i); t.setAttribute('aria-selected', n === i); });
       hostEl.textContent = host(c.url);
       view.href = c.url;
-      view.setAttribute('aria-label', 'Visitar ' + host(c.url));
       view.classList.remove('is-in');
-      view.innerHTML = `<img src="${base}${c.shot}" alt="Sitio web de ${c.name}" onerror="this.remove()" /><span class="sf-fallback"><b>${c.name}</b><em>${host(c.url)}</em></span><span class="sf-open">Visitar sitio ${arrow}</span>`;
+      view.innerHTML = `<img src="${c.shot}" alt="${t2('Sitio web de', 'Website of')} ${c.name}" onerror="this.remove()" /><span class="sf-fallback"><b>${c.name}</b><em>${host(c.url)}</em></span><span class="sf-open">Visitar sitio ${arrow}</span>`;
       requestAnimationFrame(() => view.classList.add('is-in'));
       cap.innerHTML = `<b>${c.name}</b> · ${c.what}`;
     };
@@ -1724,10 +1859,13 @@
         <h2 class="font-display text-3xl md:text-4xl mb-3">Clientes de este servicio</h2>
         <p class="text-white/55 mb-12 max-w-xl">Toca un perfil para verlo en Instagram.</p>
         <div class="ph-row">
-          ${list.map(c => phoneHTML(c, base + c.shot)).join('')}
+          ${list.map(c => phoneHTML(c, c.shot)).join('')}
         </div>
       </div>`;
   }
+
+  // La página de hostelería muestra solo las webs de restauración
+  serviceWork['hosteleria'] = serviceWork['web-development'].filter(c => ['Pizzi', 'Karoli Sushi', 'Venezuela Food', 'Repite'].includes(c.name));
 
   function renderServiceWork(){
     const box = document.getElementById('service-work');
@@ -1746,7 +1884,7 @@
         <p class="text-white/55 mb-9 max-w-xl">Mira lo que hemos hecho para otros clientes.</p>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           ${list.map(c => {
-            const href = c.url ? c.url : base + '#proyecto-' + c.case;
+            const href = c.url ? c.url : PAGE_BASE + '#proyecto-' + c.case;
             const ext = c.url ? ' target="_blank" rel="noopener"' : '';
             return `<a href="${href}"${ext} class="glass hover-lift rounded-2xl p-6 flex flex-col justify-between gap-6">
               <div><h3 class="font-display text-xl mb-1">${c.name}</h3><p class="text-white/60 text-[14px] leading-relaxed">${c.what}</p></div>
@@ -1795,12 +1933,12 @@
 
   // ---------- Abstract hero visuals per service (no stock photography) ----------
   const serviceVisuals = {
-    'social-media': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><circle cx="100" cy="100" r="14" stroke="white" stroke-opacity=".8" stroke-width="1.4"/><circle cx="40" cy="55" r="9" stroke="white" stroke-opacity=".55" stroke-width="1.4"/><circle cx="160" cy="55" r="9" stroke="white" stroke-opacity=".55" stroke-width="1.4"/><circle cx="40" cy="150" r="9" stroke="white" stroke-opacity=".55" stroke-width="1.4"/><circle cx="160" cy="150" r="9" stroke="white" stroke-opacity=".55" stroke-width="1.4"/><path d="M88 90L48 62M112 90L152 62M88 110L48 143M112 110L152 143" stroke="white" stroke-opacity=".35" stroke-width="1.2"/></svg>`,
-    'content-production': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><rect x="35" y="55" width="130" height="90" rx="8" stroke="white" stroke-opacity=".7" stroke-width="1.4"/><path d="M85 82L120 100L85 118V82Z" stroke="white" stroke-opacity=".8" stroke-width="1.4" stroke-linejoin="round"/><path d="M35 75H165M35 125H165" stroke="white" stroke-opacity=".25" stroke-width="1.2"/></svg>`,
-    'brand-design': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><circle cx="85" cy="100" r="45" stroke="white" stroke-opacity=".55" stroke-width="1.4"/><path d="M118 60L150 100L118 140L100 100L118 60Z" stroke="white" stroke-opacity=".8" stroke-width="1.4" stroke-linejoin="round"/></svg>`,
-    'web-development': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><rect x="30" y="45" width="140" height="110" rx="8" stroke="white" stroke-opacity=".7" stroke-width="1.4"/><path d="M30 70H170" stroke="white" stroke-opacity=".7" stroke-width="1.4"/><circle cx="45" cy="57.5" r="3" fill="white" fill-opacity=".6"/><circle cx="57" cy="57.5" r="3" fill="white" fill-opacity=".6"/><path d="M55 100L75 120L55 140M100 140H145" stroke="white" stroke-opacity=".6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-    'growth-marketing': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><path d="M35 145L75 100L105 125L165 55" stroke="white" stroke-opacity=".8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M130 55H165V90" stroke="white" stroke-opacity=".8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M35 165H165" stroke="white" stroke-opacity=".25" stroke-width="1.2"/></svg>`,
-    'ai-automation': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><rect x="70" y="80" width="60" height="45" rx="10" stroke="white" stroke-opacity=".8" stroke-width="1.4"/><path d="M100 80V60" stroke="white" stroke-opacity=".8" stroke-width="1.4" stroke-linecap="round"/><circle cx="100" cy="54" r="6" stroke="white" stroke-opacity=".8" stroke-width="1.4"/><circle cx="85" cy="102" r="5" fill="white" fill-opacity=".7"/><circle cx="115" cy="102" r="5" fill="white" fill-opacity=".7"/><circle cx="40" cy="102" r="7" stroke="white" stroke-opacity=".4" stroke-width="1.2"/><circle cx="160" cy="102" r="7" stroke="white" stroke-opacity=".4" stroke-width="1.2"/><path d="M70 102H47M130 102H153" stroke="white" stroke-opacity=".3" stroke-width="1.2"/></svg>`
+    'social-media': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><circle cx="100" cy="100" r="14" stroke="currentColor" stroke-opacity=".8" stroke-width="1.4"/><circle cx="40" cy="55" r="9" stroke="currentColor" stroke-opacity=".55" stroke-width="1.4"/><circle cx="160" cy="55" r="9" stroke="currentColor" stroke-opacity=".55" stroke-width="1.4"/><circle cx="40" cy="150" r="9" stroke="currentColor" stroke-opacity=".55" stroke-width="1.4"/><circle cx="160" cy="150" r="9" stroke="currentColor" stroke-opacity=".55" stroke-width="1.4"/><path d="M88 90L48 62M112 90L152 62M88 110L48 143M112 110L152 143" stroke="currentColor" stroke-opacity=".35" stroke-width="1.2"/></svg>`,
+    'content-production': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><rect x="35" y="55" width="130" height="90" rx="8" stroke="currentColor" stroke-opacity=".7" stroke-width="1.4"/><path d="M85 82L120 100L85 118V82Z" stroke="currentColor" stroke-opacity=".8" stroke-width="1.4" stroke-linejoin="round"/><path d="M35 75H165M35 125H165" stroke="currentColor" stroke-opacity=".25" stroke-width="1.2"/></svg>`,
+    'brand-design': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><circle cx="85" cy="100" r="45" stroke="currentColor" stroke-opacity=".55" stroke-width="1.4"/><path d="M118 60L150 100L118 140L100 100L118 60Z" stroke="currentColor" stroke-opacity=".8" stroke-width="1.4" stroke-linejoin="round"/></svg>`,
+    'web-development': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><rect x="30" y="45" width="140" height="110" rx="8" stroke="currentColor" stroke-opacity=".7" stroke-width="1.4"/><path d="M30 70H170" stroke="currentColor" stroke-opacity=".7" stroke-width="1.4"/><circle cx="45" cy="57.5" r="3" fill="currentColor" fill-opacity=".6"/><circle cx="57" cy="57.5" r="3" fill="currentColor" fill-opacity=".6"/><path d="M55 100L75 120L55 140M100 140H145" stroke="currentColor" stroke-opacity=".6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    'growth-marketing': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><path d="M35 145L75 100L105 125L165 55" stroke="currentColor" stroke-opacity=".8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M130 55H165V90" stroke="currentColor" stroke-opacity=".8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M35 165H165" stroke="currentColor" stroke-opacity=".25" stroke-width="1.2"/></svg>`,
+    'ai-automation': `<svg viewBox="0 0 200 200" fill="none" class="w-full h-full"><rect x="70" y="80" width="60" height="45" rx="10" stroke="currentColor" stroke-opacity=".8" stroke-width="1.4"/><path d="M100 80V60" stroke="currentColor" stroke-opacity=".8" stroke-width="1.4" stroke-linecap="round"/><circle cx="100" cy="54" r="6" stroke="currentColor" stroke-opacity=".8" stroke-width="1.4"/><circle cx="85" cy="102" r="5" fill="currentColor" fill-opacity=".7"/><circle cx="115" cy="102" r="5" fill="currentColor" fill-opacity=".7"/><circle cx="40" cy="102" r="7" stroke="currentColor" stroke-opacity=".4" stroke-width="1.2"/><circle cx="160" cy="102" r="7" stroke="currentColor" stroke-opacity=".4" stroke-width="1.2"/><path d="M70 102H47M130 102H153" stroke="currentColor" stroke-opacity=".3" stroke-width="1.2"/></svg>`
   };
 
   // ---------- Featured project card (used inside each service page) ----------
@@ -1892,12 +2030,12 @@
           </div>
           <p class="text-white/75 leading-relaxed mb-7 text-lg">"${t.quote}"</p>
           <p class="font-medium text-white text-sm">${t.name}</p>
-          <p class="text-white/45 text-xs mt-0.5">${t.company}</p>
+          <p class="text-white/45 text-xs mt-0.5">${[t.role, t.company].filter(Boolean).join(' · ')}</p>
         </div>`;
     } else {
       testimonialWrap.innerHTML = `
         <div class="glass rounded-3xl p-8 md:p-10 text-center border-dashed">
-          <p class="text-white/40 text-sm italic">Todavía no sumamos un testimonio específico de este servicio — pronto vas a poder leerlo acá.</p>
+          <p class="text-white/40 text-sm italic">Todavía no sumamos un testimonio específico de este servicio — pronto vas a poder leerlo aquí.</p>
         </div>`;
     }
 
@@ -1959,7 +2097,7 @@
     const message = document.getElementById('sd-cta-message').value.trim();
 
     if(!name || !email || !message){
-      alert(window.I18N ? I18N.tr('Por favor completá al menos nombre, email y contanos sobre el proyecto.') : 'Por favor completá al menos nombre, email y contanos sobre el proyecto.');
+      alert(window.I18N ? I18N.tr('Por favor completa al menos nombre, email y cuéntanos sobre el proyecto.') : 'Por favor completa al menos nombre, email y cuéntanos sobre el proyecto.');
       return;
     }
 
@@ -2029,12 +2167,12 @@
   function getSiblingProjectSlugs(slug){
     const p = projects[slug];
     if(!p) return [slug];
-    return Object.keys(projects).filter(k => projects[k].client === p.client);
+    return Object.keys(projects).filter(k => projects[k].client === p.client && !projects[k].draft);
   }
 
   function showProject(slug){
     const p = projects[slug];
-    if(!p) return;
+    if(!p || p.draft) return;
     trackEvent('portfolio_click', { project: slug });
 
     document.getElementById('pd-client').textContent = p.client;
@@ -2063,7 +2201,7 @@
     const embedEl = document.getElementById('pd-embed');
     if(p.embedType === 'youtube'){
       embedEl.innerHTML = `
-        <a href="${p.linkUrl}" target="_blank" rel="noopener" class="group relative block aspect-video rounded-2xl overflow-hidden glass">
+        <a href="${p.linkUrl}" target="_blank" rel="noopener" class="group relative block aspect-video rounded-2xl overflow-hidden glass keep-dark">
           <img src="${p.thumb || ('https://img.youtube.com/vi/' + p.videoId + '/hqdefault.jpg')}" alt="${p.name}" class="w-full h-full object-cover" />
           <div class="absolute inset-0 bg-black/25 group-hover:bg-black/15 transition-colors flex items-center justify-center">
             <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/95 group-hover:scale-105 transition-transform flex items-center justify-center shadow-xl">
@@ -2081,10 +2219,10 @@
         </a>`;
     } else if(p.embedType === 'behance'){
       embedEl.innerHTML = `
-        <a href="${p.linkUrl}" target="_blank" rel="noopener" class="group relative block aspect-video rounded-2xl overflow-hidden glass">
+        <a href="${p.linkUrl}" target="_blank" rel="noopener" class="group relative block aspect-video rounded-2xl overflow-hidden glass keep-dark">
           <img src="${portfolioBadges[p.badge]}" alt="${p.name}" class="w-full h-full object-cover" />
           <div class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors flex flex-col items-center justify-center gap-3 text-center px-6">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M7.8 6.3H2v1.4h5.8V6.3zM22 15.2c0 .4 0 .7-.1 1H15c.1 1.3 1.2 2 2.5 2 .9 0 1.6-.3 2.3-1l1.4 1.3c-1 1.1-2.3 1.7-3.8 1.7-2.8 0-4.7-1.9-4.7-4.6 0-2.6 1.9-4.6 4.5-4.6 2.7 0 4.2 2 4.2 4.2zM19.9 14.2c-.1-1.2-.9-1.9-2-1.9-1.1 0-1.9.7-2.1 1.9h4.1zM8.6 9.7c1.9 0 3 1.3 3 3 0 .4-.1.8-.2 1.1.9.5 1.4 1.4 1.4 2.5 0 1.9-1.5 3.1-3.7 3.1H2V9.7h6.6zm-.4 4.7c.9 0 1.5-.5 1.5-1.4 0-.8-.5-1.3-1.5-1.3H4.3v2.7h3.9zm.3 4.5c1 0 1.7-.5 1.7-1.5 0-.9-.6-1.4-1.7-1.4H4.3v2.9h4.2z"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 6.3H2v1.4h5.8V6.3zM22 15.2c0 .4 0 .7-.1 1H15c.1 1.3 1.2 2 2.5 2 .9 0 1.6-.3 2.3-1l1.4 1.3c-1 1.1-2.3 1.7-3.8 1.7-2.8 0-4.7-1.9-4.7-4.6 0-2.6 1.9-4.6 4.5-4.6 2.7 0 4.2 2 4.2 4.2zM19.9 14.2c-.1-1.2-.9-1.9-2-1.9-1.1 0-1.9.7-2.1 1.9h4.1zM8.6 9.7c1.9 0 3 1.3 3 3 0 .4-.1.8-.2 1.1.9.5 1.4 1.4 1.4 2.5 0 1.9-1.5 3.1-3.7 3.1H2V9.7h6.6zm-.4 4.7c.9 0 1.5-.5 1.5-1.4 0-.8-.5-1.3-1.5-1.3H4.3v2.7h3.9zm.3 4.5c1 0 1.7-.5 1.7-1.5 0-.9-.6-1.4-1.7-1.4H4.3v2.9h4.2z"/></svg>
             <p class="text-white font-medium text-sm">Ver el proyecto completo en Behance</p>
           </div>
         </a>`;
@@ -2093,13 +2231,13 @@
     } else if(p.embedType === 'instagram'){
       embedEl.innerHTML = `
         <div class="glass rounded-2xl p-10 text-center">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" class="mx-auto mb-4"><rect x="3" y="3" width="18" height="18" rx="5" stroke="white" stroke-opacity=".8" stroke-width="1.6"/><circle cx="12" cy="12" r="4.2" stroke="white" stroke-opacity=".8" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1.1" fill="white" fill-opacity=".8"/></svg>
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" class="mx-auto mb-4"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-opacity=".8" stroke-width="1.6"/><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-opacity=".8" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" fill-opacity=".8"/></svg>
           <p class="text-white/55 text-sm mb-6">Este proyecto vive directamente en redes sociales.</p>
           <a href="${p.linkUrl}" target="_blank" rel="noopener" class="btn-ghost inline-block font-semibold px-7 py-3 rounded-full text-sm">Ver perfil en Instagram →</a>
         </div>`;
     } else if(p.embedType === 'reels' && p.reelShots){
       embedEl.innerHTML = `<div class="vc-track">${(p.reelLinks || []).map((url, i) => `
-        <a class="vc-card" href="${url}" target="_blank" rel="noopener" aria-label="Reel ${i + 1}: ver en Instagram">
+        <a class="vc-card" href="${url}" target="_blank" rel="noopener">
           <img src="${p.reelShots[i]}" alt="Reel ${i + 1} de ${p.client}" loading="lazy" />
           <span class="vc-play"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           <span class="vc-cap"><b>Reel ${i + 1}</b><i>Instagram</i></span>
@@ -2108,7 +2246,7 @@
       const reelsHtml = (p.reelLinks || []).map((url, i) => `
         <a href="${url}" target="_blank" rel="noopener" class="glass hover-lift rounded-2xl p-6 flex items-center justify-between gap-3">
           <span class="flex items-center gap-3">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7z" fill="white" fill-opacity=".85"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7z" fill="currentColor" fill-opacity=".85"/></svg>
             <span class="text-white/80 text-sm font-medium">Reel ${i + 1}</span>
           </span>
           <span class="text-white/40 text-xs">Ver en Instagram →</span>
@@ -2119,7 +2257,7 @@
     } else if(p.embedType === 'link'){
       embedEl.innerHTML = `
         <a href="${p.linkUrl}" target="_blank" rel="noopener" class="glass hover-lift rounded-2xl p-10 flex flex-col items-center text-center gap-4">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M14 3h7v7" stroke="white" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 14L21 3" stroke="white" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 14v5a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h5" stroke="white" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M14 3h7v7" stroke="currentColor" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 14L21 3" stroke="currentColor" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 14v5a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h5" stroke="currentColor" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <span class="text-white font-medium">${p.linkLabel || 'Ver sitio'}</span>
         </a>`;
     } else {
@@ -2132,11 +2270,19 @@
     // Story: reto / solución / resultado — only show blocks that actually have content
     const storyEl = document.getElementById('pd-story');
     const blocks = [];
+    if(p.context) blocks.push({ label: 'El cliente', text: p.context });
     if(p.challenge) blocks.push({ label: 'El reto', text: p.challenge });
-    if(p.solution) blocks.push({ label: 'La solución', text: p.solution });
+    if(p.solution) blocks.push({ label: 'Qué hicimos', text: p.solution });
     if(p.result) blocks.push({ label: 'El resultado', text: p.result });
+    // Cifras reales del caso (solo si hay datos; no se inventa nada)
+    const metricsEl = document.getElementById('pd-metrics');
+    if(metricsEl){
+      metricsEl.innerHTML = (p.metrics && p.metrics.length) ? `
+        <div class="case-metrics">${p.metrics.map(m => `<div class="case-metric"><b>${m.value}</b><span>${m.label}</span></div>`).join('')}</div>
+        ${p.metricsNote ? `<p class="case-metrics-note">${p.metricsNote}</p>` : ''}` : '';
+    }
     if(blocks.length){
-      const colsClass = blocks.length === 1 ? 'grid-cols-1' : (blocks.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3');
+      const colsClass = blocks.length === 1 ? 'grid-cols-1' : (blocks.length === 2 ? 'md:grid-cols-2' : (blocks.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-4'));
       storyEl.className = 'grid ' + colsClass + ' gap-5 mb-14';
       storyEl.innerHTML = blocks.map(b => `
         <div class="glass rounded-2xl p-7">
@@ -2147,7 +2293,7 @@
       storyEl.className = 'grid grid-cols-1 gap-5 mb-14';
       storyEl.innerHTML = `
         <div class="glass rounded-2xl p-7 text-center">
-          <p class="text-white/40 text-sm italic">Estamos documentando el detalle de este proyecto — pronto vas a poder leerlo acá.</p>
+          <p class="text-white/40 text-sm italic">Estamos documentando el detalle de este proyecto — pronto vas a poder leerlo aquí.</p>
         </div>`;
     }
 
@@ -2157,7 +2303,7 @@
       const t = p.testimonial;
       testEl.innerHTML = `
         <div class="glass rounded-3xl p-8 md:p-10">
-          <div class="flex gap-1 mb-5" aria-label="${t.rating || 5} de 5 estrellas">
+          <div class="flex gap-1 mb-5" role="img" aria-label="${t.rating || 5} de 5 estrellas">
             ${'<svg class="star" width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>'.repeat(t.rating || 5)}
           </div>
           <p class="text-white/75 leading-relaxed mb-7 text-lg">"${t.quote}"</p>
@@ -2228,7 +2374,7 @@
   }
   window.addEventListener('popstate', routeFromHash);
 
-  // ---------- Review request page (compartí #resena con tus clientes) ----------
+  // ---------- Review request page (comparte #resena con tus clientes) ----------
   let selectedRating = 0;
   function renderReviewStars(){
     const wrap = document.getElementById('review-stars');
@@ -2238,7 +2384,7 @@
       btn.type = 'button';
       btn.setAttribute('aria-label', i + ' de 5 estrellas');
       btn.style.cssText = 'background:none;border:none;cursor:pointer;padding:2px;';
-      btn.innerHTML = '<svg width="26" height="26" viewBox="0 0 20 20" fill="' + (i <= selectedRating ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="1.3" style="color:' + (i <= selectedRating ? '#d9c79a' : 'rgba(255,255,255,.3)') + '"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>';
+      btn.innerHTML = '<svg width="26" height="26" viewBox="0 0 20 20" fill="' + (i <= selectedRating ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="1.3" style="color:' + (i <= selectedRating ? '#d9c79a' : 'rgb(var(--ink) / .25)') + '"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>';
       // Rating scale is 0-5: clicking the star that's already the current rating resets it to 0.
       btn.onclick = () => { selectedRating = (selectedRating === i) ? 0 : i; renderReviewStars(); };
       wrap.appendChild(btn);
@@ -2267,7 +2413,7 @@
     document.getElementById('review-success-panel').classList.add('hidden');
     document.getElementById('review-error-panel').classList.add('hidden');
 
-    document.title = 'Dejanos tu reseña — LE STUDIO';
+    document.title = 'Déjanos tu reseña — LE STUDIO';
     window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
     if(location.hash.slice(1) !== 'resena'){
       history.pushState({review: true}, '', '#resena');
@@ -2282,15 +2428,19 @@
     const message = document.getElementById('review-text').value.trim();
 
     if(!name || !company || !role || !message){
-      alert(window.I18N ? I18N.tr('Por favor completá tu nombre, tu empresa, tu cargo y la descripción.') : 'Por favor completá tu nombre, tu empresa, tu cargo y la descripción.');
+      const box = document.getElementById('review-error-msg');
+      const msg = window.I18N ? I18N.tr('Por favor completa tu nombre, tu empresa, tu cargo y la descripción.') : 'Por favor completa tu nombre, tu empresa, tu cargo y la descripción.';
+      if(box){ box.textContent = msg; box.classList.remove('hidden'); } else { alert(msg); }
       return;
     }
+    const rbox = document.getElementById('review-error-msg'); if(rbox) rbox.classList.add('hidden');
+    const rgot = (document.getElementById('review-gotcha') || {}).value || '';
 
     const btn = document.getElementById('review-submit-btn');
     btn.disabled = true;
     btn.textContent = 'Enviando...';
 
-    const result = await submitLead({ name, company, role, service, rating: selectedRating, message }, 'review');
+    const result = await submitLead({ name, company, role, service, rating: selectedRating, message, _gotcha: rgot }, 'review');
 
     btn.disabled = false;
     btn.textContent = 'Enviar reseña';
@@ -2302,6 +2452,35 @@
     } else {
       document.getElementById('review-form-panel').classList.add('hidden');
       document.getElementById('review-error-panel').classList.remove('hidden');
+    }
+  }
+
+  // ---------- Lead magnet: checklist de automatización con IA ----------
+  async function submitLeadMagnet(){
+    const name = document.getElementById('lm-name').value.trim();
+    const email = document.getElementById('lm-email').value.trim();
+    const terms = document.getElementById('lm-terms').checked;
+    const gotcha = (document.getElementById('lm-gotcha') || {}).value || '';
+    const box = document.getElementById('lm-error');
+    const tr = (t) => (window.I18N ? I18N.tr(t) : t);
+    const fail = (msg, el) => {
+      box.textContent = tr(msg); box.classList.remove('hidden');
+      document.querySelectorAll('#lm-form [aria-invalid]').forEach(x => x.removeAttribute('aria-invalid'));
+      if(el){ el.setAttribute('aria-invalid', 'true'); el.focus(); }
+    };
+    if(!name){ return fail('Por favor, dinos tu nombre.', document.getElementById('lm-name')); }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ return fail('Introduce un email válido para poder responderte.', document.getElementById('lm-email')); }
+    if(!terms){ return fail('Necesitamos que aceptes la política de privacidad para poder responderte.', document.getElementById('lm-terms')); }
+    box.classList.add('hidden');
+    const btn = document.getElementById('lm-submit');
+    btn.disabled = true;
+    const result = await submitLead({ name, email, message: 'Descarga de la checklist: 10 tareas que puedes automatizar con IA', _gotcha: gotcha }, 'lead-magnet');
+    btn.disabled = false;
+    if(result.ok){
+      trackEvent('lead_magnet_submit', { page: location.pathname });
+      location.href = 'gracias/';
+    } else {
+      fail('No hemos podido enviarlo. Escríbenos por WhatsApp y te la mandamos.');
     }
   }
 

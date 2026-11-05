@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script>try{var t=localStorage.getItem("theme");document.documentElement.setAttribute("data-theme",t==="dark"?"dark":"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
+<meta name="theme-color" content="#ffffff">
 <title>Inversiones MDS — Contenido · Caso de estudio | LE STUDIO</title>
 <meta name="description" content="Inversiones MDS — Contenido">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://lestudio-crea.com/proyectos/mds-contenido/">
+<link rel="alternate" hreflang="es" href="https://lestudio-crea.com/proyectos/mds-contenido/">
+<link rel="alternate" hreflang="en" href="https://lestudio-crea.com/en/proyectos/mds-contenido/">
+<link rel="alternate" hreflang="x-default" href="https://lestudio-crea.com/proyectos/mds-contenido/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lestudio-crea.com/proyectos/mds-contenido/">
 <meta property="og:title" content="Inversiones MDS — Contenido · Caso de estudio | LE STUDIO">
@@ -16,10 +22,9 @@
 <meta name="twitter:title" content="Inversiones MDS — Contenido · Caso de estudio | LE STUDIO">
 <meta name="twitter:description" content="Inversiones MDS — Contenido">
 <meta name="twitter:image" content="https://lestudio-crea.com/og-image.png">
-<link rel="preconnect" href="https://api.fontshare.com">
-<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@500,600,700&display=swap">
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="../../assets/styles.css?v=11">
+<link rel="preload" href="../../assets/fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/styles.css?v=21">
+<link rel="stylesheet" href="../../assets/tailwind.css?v=5">
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "CreativeWork", "name": "Inversiones MDS — Contenido", "description": "Inversiones MDS — Contenido", "url": "https://lestudio-crea.com/proyectos/mds-contenido/", "creator": {"@type": "Organization", "name": "LE STUDIO", "url": "https://lestudio-crea.com/"}, "about": ["Content Production"]}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://lestudio-crea.com/"}, {"@type": "ListItem", "position": 2, "name": "Proyectos", "item": "https://lestudio-crea.com/proyectos/"}, {"@type": "ListItem", "position": 3, "name": "Inversiones MDS — Contenido", "item": "https://lestudio-crea.com/proyectos/mds-contenido/"}]}]</script>
 </head>
 <body class="antialiased">
@@ -27,7 +32,7 @@
 <header id="site-header" class="sticky top-0 z-50 backdrop-blur-xl bg-[#021024]/70 border-b border-white/10">
   <div class="max-w-7xl mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
     <a href="../../index.html" class="shrink-0">
-      <img src="../../assets/logo-white.png" alt="LE STUDIO" class="h-8 md:h-9 w-auto" />
+      <span class="logo-mask" style="--logo:url(/assets/logo-white.png)"><img src="../../assets/logo-white.png" alt="LE STUDIO" class="h-8 md:h-9 w-auto" /></span>
     </a>
 
     <nav class="hidden lg:flex items-center gap-10 text-[15px] text-white/80">
@@ -70,17 +75,17 @@
     </nav>
 
     <div class="flex items-center gap-4">
-      <div class="lang-switch" role="group" aria-label="Idioma"><button type="button" data-lang="es" class="is-active" aria-pressed="true">ES</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+      <div class="lang-switch" role="group" aria-label="Idioma"><button type="button" data-lang="es" class="is-active" aria-pressed="true">ES</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div><button type="button" class="theme-toggle" data-theme-toggle aria-label="Cambiar entre tema claro y oscuro"><svg class="ico-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.2A8 8 0 0 1 9.8 4 8.2 8.2 0 1 0 20 14.2z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><svg class="ico-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
       <a href="#contacto" class="hidden md:inline-block btn-primary text-sm font-semibold px-5 py-2.5 rounded-full">Hablar sobre mi proyecto</a>
       <button id="mobile-toggle" class="lg:hidden p-2 -mr-2" aria-label="Abrir menú">
-        <svg width="22" height="16" viewBox="0 0 22 16" fill="none"><path d="M0 1H22M0 8H22M0 15H22" stroke="white" stroke-width="1.6"/></svg>
+        <svg width="22" height="16" viewBox="0 0 22 16" fill="none"><path d="M0 1H22M0 8H22M0 15H22" stroke="currentColor" stroke-width="1.6"/></svg>
       </button>
     </div>
   </div>
 
   <!-- mobile menu -->
   <div id="mobile-menu" class="hidden lg:hidden border-t border-white/10 bg-[#021024]/95 px-6 py-6 space-y-5 text-white/85">
-    <div class="lang-switch lang-switch--menu" role="group" aria-label="Idioma"><button type="button" data-lang="es" class="is-active" aria-pressed="true">ES</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+    <div class="lang-switch lang-switch--menu" role="group" aria-label="Idioma"><button type="button" data-lang="es" class="is-active" aria-pressed="true">ES</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div><button type="button" class="theme-toggle theme-toggle--menu" data-theme-toggle aria-label="Cambiar entre tema claro y oscuro"><svg class="ico-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.2A8 8 0 0 1 9.8 4 8.2 8.2 0 1 0 20 14.2z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><svg class="ico-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
     <p class="text-xs uppercase tracking-wider text-white/40">Servicios</p>
     <a href="../../social-media/" class="block">Social Media</a>
     <a href="../../content-production/" class="block">Content Production</a>
@@ -139,23 +144,24 @@
       <h2 class="font-display text-4xl md:text-5xl mb-6">¿Qué quieres construir?</h2>
       <p class="text-white/60 max-w-xl mx-auto mb-10 leading-relaxed">Cuéntanos qué quieres conseguir, qué quieres mejorar o qué está bloqueando el crecimiento de tu negocio. Analizamos el proyecto y te proponemos el siguiente paso.</p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <button onclick="openContactForm('Hola, quiero contarles sobre mi proyecto.')" class="btn-primary w-full sm:w-auto text-center font-semibold px-8 py-3.5 rounded-full">Enviar proyecto →</button>
-        <a href="#" data-msg="Hola, quiero contarles sobre mi proyecto." class="js-whatsapp-link btn-ghost w-full sm:w-auto text-center font-semibold px-8 py-3.5 rounded-full inline-flex items-center justify-center gap-2" target="_blank" rel="noopener">
+        <button onclick="openContactForm('', null, 'audit')" class="btn-primary w-full sm:w-auto text-center font-semibold px-8 py-3.5 rounded-full" data-cta="audit">Reservar auditoría gratuita →</button>
+        <a href="https://wa.me/584241859724?text=Hola%2C%20quiero%20contarles%20sobre%20mi%20proyecto." data-msg="Hola, quiero contarles sobre mi proyecto." class="js-whatsapp-link btn-ghost w-full sm:w-auto text-center font-semibold px-8 py-3.5 rounded-full inline-flex items-center justify-center gap-2" target="_blank" rel="noopener">
           Hablar por WhatsApp →
         </a>
       </div>
+      <p class="h-hero-note" style="margin-top:20px">¿Prefieres hablar? Llámanos al <a class="js-phone-link underline underline-offset-4" href="tel:+34662490547">+34 662 490 547</a></p>
     </div>
     <div class="border-t border-white/10">
       <div class="max-w-7xl mx-auto px-6 md:px-10 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="flex flex-col items-center md:items-start gap-2">
-          <img src="../../assets/logo-white.png" alt="LE STUDIO" class="h-6 w-auto opacity-80" />
+          <span class="logo-mask" style="--logo:url(/assets/logo-white.png)"><img src="../../assets/logo-white.png" alt="LE STUDIO" class="h-6 w-auto opacity-80" /></span>
           <p class="text-sm text-white/40">© 2026 LE STUDIO. Todos los derechos reservados.</p>
         </div>
         <div class="flex items-center gap-4">
           <button onclick="openContactForm('Hola, quiero más información sobre LE STUDIO.')" class="icon-btn" data-app="mail" aria-label="Correo">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M4 6.5l8 6.2 8-6.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
-          <a href="#" class="js-whatsapp-link icon-btn" data-app="wa" data-app="wa" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <a data-msg="Hola, quiero contarles sobre mi proyecto." href="https://wa.me/584241859724?text=Hola%2C%20quiero%20contarles%20sobre%20mi%20proyecto." class="js-whatsapp-link icon-btn" data-app="wa" target="_blank" rel="noopener" aria-label="WhatsApp">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.05 21.785h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741 1.032 1.001-3.647-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.83 9.83 0 016.988 2.902 9.82 9.82 0 012.898 6.99c-.002 5.45-4.437 9.884-9.893 9.884zm8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           </a>
           <a href="https://www.instagram.com/lestudio_crea/" target="_blank" rel="noopener" class="icon-btn" data-app="ig" aria-label="Instagram">
@@ -173,8 +179,8 @@
     <p class="text-white/55 text-sm mb-6">Marca lo que necesitas. En el siguiente paso nos dejas tus datos de contacto.</p>
     <input type="hidden" id="custom-plan-category" value="" />
     <div id="custom-plan-checklist" class="space-y-3 mb-6"></div>
-    <label class="block text-white/55 text-sm mb-2">Notas adicionales (opcional)</label>
-    <textarea id="custom-plan-notes" rows="3" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30 mb-6" placeholder="Cuéntanos algo más sobre tu proyecto..."></textarea>
+    <label for="custom-plan-notes" class="block text-white/55 text-sm mb-2">Notas adicionales (opcional)</label>
+          <textarea id="custom-plan-notes" rows="3" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30 mb-6" placeholder="Cuéntanos algo más sobre tu proyecto..."></textarea>
     <div class="flex flex-col sm:flex-row gap-3">
       <button onclick="submitCustomPlan()" class="btn-primary flex-1 font-semibold px-6 py-3 rounded-full text-sm">Continuar</button>
       <button onclick="closeCustomPlan()" class="btn-ghost flex-1 font-semibold px-6 py-3 rounded-full text-sm">Cancelar</button>
@@ -188,29 +194,29 @@
 <div id="contact-modal" class="modal-overlay">
   <div class="glass rounded-3xl p-8 max-w-lg w-full max-h-[85vh] overflow-y-auto">
 
-    <div id="contact-form-panel">
+    <form id="contact-form-panel" novalidate onsubmit="submitContactForm(); return false;">
       <h3 id="contact-title" class="font-display text-2xl mb-2">¿Hablamos de tu proyecto?</h3>
       <p id="contact-sub" class="text-white/55 text-sm mb-6">Completa tus datos y te respondemos en menos de 24 horas.</p>
 
       <div class="space-y-4 mb-2">
         <div>
-          <label class="block text-white/55 text-xs mb-1.5">Nombre <span class="text-white/35">*</span></label>
-          <input type="text" id="contact-name" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Tu nombre" />
+          <label for="contact-name" class="block text-white/55 text-xs mb-1.5">Nombre <span class="text-white/35">*</span></label>
+          <input type="text" id="contact-name" autocomplete="name" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Tu nombre" />
         </div>
         <div>
-          <label class="block text-white/55 text-xs mb-1.5">Email <span class="text-white/35">*</span></label>
-          <input type="email" id="contact-email" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="tu@correo.com" />
+          <label for="contact-email" class="block text-white/55 text-xs mb-1.5">Email <span class="text-white/35">*</span></label>
+          <input type="email" id="contact-email" autocomplete="email" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="tu@correo.com" />
         </div>
         <div>
-          <label class="block text-white/55 text-xs mb-1.5">Teléfono <span class="text-white/35">(opcional)</span></label>
-          <input type="tel" id="contact-phone" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="+58 424 1859724" />
+          <label for="contact-phone" class="block text-white/55 text-xs mb-1.5">Teléfono <span class="text-white/35">(opcional)</span></label>
+          <input type="tel" id="contact-phone" autocomplete="tel" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="+58 424 1859724" />
         </div>
         <div>
-          <label class="block text-white/55 text-xs mb-1.5">Empresa</label>
-          <input type="text" id="contact-company" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Tu empresa (opcional)" />
+          <label for="contact-company" class="block text-white/55 text-xs mb-1.5">Empresa</label>
+          <input type="text" id="contact-company" autocomplete="organization" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Tu empresa (opcional)" />
         </div>
         <div>
-          <label class="block text-white/55 text-xs mb-1.5">Servicio</label>
+          <label for="contact-service" class="block text-white/55 text-xs mb-1.5">Servicio</label>
           <select id="contact-service" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white/80">
             <option value="Social Media" class="bg-[#052659]">Social Media</option>
             <option value="Content Production" class="bg-[#052659]">Content Production</option>
@@ -221,25 +227,31 @@
             <option value="No estoy seguro" class="bg-[#052659]" selected>No estoy seguro</option>
           </select>
         </div>
+        <div id="contact-when-wrap" class="hidden">
+          <label for="contact-when" class="block text-white/55 text-xs mb-1.5">¿Cuándo te viene bien la llamada? <span class="text-white/35">(opcional)</span></label>
+          <input type="text" id="contact-when" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Ej.: mañanas entre semana, a partir de las 17:00" />
+        </div>
         <div>
-          <label class="block text-white/55 text-xs mb-1.5">Mensaje <span class="text-white/35">*</span></label>
+          <label for="contact-message" class="block text-white/55 text-xs mb-1.5">Mensaje <span class="text-white/35">*</span></label>
           <textarea id="contact-message" rows="4" class="w-full rounded-xl bg-white/5 border border-white/15 p-3 text-sm text-white placeholder-white/30" placeholder="Hola, escríbenos..."></textarea>
         </div>
+        <input type="text" name="_gotcha" id="contact-gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp-field" />
         <label class="checkbox-row">
           <input type="checkbox" id="contact-terms" />
-          <span class="text-white/60 text-xs">Acepto que LE STUDIO me contacte para responder mi solicitud.</span>
+          <span class="text-white/60 text-xs">He leído y acepto la <a href="../../privacidad/" class="underline underline-offset-4" target="_blank" rel="noopener">política de privacidad</a> y que LE STUDIO me contacte para responder mi solicitud.</span>
         </label>
+        <p id="contact-error-msg" class="form-error hidden" role="alert" aria-live="assertive"></p>
       </div>
 
       <div class="flex flex-col sm:flex-row gap-3 mt-6">
-        <button id="contact-submit-btn" onclick="submitContactForm()" class="btn-primary flex-1 font-semibold px-6 py-3 rounded-full text-sm">Enviar</button>
-        <button onclick="closeContactForm()" class="btn-ghost flex-1 font-semibold px-6 py-3 rounded-full text-sm">Cancelar</button>
+        <button id="contact-submit-btn" type="submit" class="btn-primary flex-1 font-semibold px-6 py-3 rounded-full text-sm">Enviar</button>
+        <button type="button" onclick="closeContactForm()" class="btn-ghost flex-1 font-semibold px-6 py-3 rounded-full text-sm">Cancelar</button>
       </div>
-    </div>
+    </form>
 
     <div id="contact-success-panel" class="hidden text-center py-6">
       <div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-5">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
       <h3 class="font-display text-2xl mb-2">Recibimos tu proyecto.</h3>
       <p class="text-white/55 text-sm mb-8">Te responderemos en menos de 24 horas.</p>
@@ -250,7 +262,7 @@
       <h3 class="font-display text-2xl mb-2">No pudimos enviarlo.</h3>
       <p class="text-white/55 text-sm mb-8">Escríbenos directo por WhatsApp o a nuestro correo y lo resolvemos enseguida.</p>
       <div class="flex flex-col sm:flex-row gap-3 justify-center">
-        <a href="#" data-msg="Hola, quiero contarles sobre mi proyecto." class="js-whatsapp-link btn-primary font-semibold px-6 py-3 rounded-full text-sm" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://wa.me/584241859724?text=Hola%2C%20quiero%20contarles%20sobre%20mi%20proyecto." data-msg="Hola, quiero contarles sobre mi proyecto." class="js-whatsapp-link btn-primary font-semibold px-6 py-3 rounded-full text-sm" target="_blank" rel="noopener">WhatsApp</a>
         <button onclick="document.getElementById('contact-error-panel').classList.add('hidden'); document.getElementById('contact-form-panel').classList.remove('hidden');" class="btn-ghost font-semibold px-6 py-3 rounded-full text-sm">Volver al formulario</button>
       </div>
     </div>
@@ -260,7 +272,8 @@
 
 
 
-<script src="../../assets/app.js?v=3" defer></script>
-<script src="../../assets/i18n.js?v=3" defer></script>
+<script src="../../assets/config.js?v=1"></script>
+<script src="../../assets/app.js?v=16" defer></script>
+<script src="../../assets/i18n.js?v=15" defer></script>
 </body>
 </html>
