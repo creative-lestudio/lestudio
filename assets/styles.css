@@ -882,3 +882,13 @@ html[data-theme="dark"] .form-error{ color:#ff9b93; }
 .case-metric b{ font-family:var(--font-display); font-weight:300; font-size:clamp(2.2rem,4.4vw,3.2rem); line-height:1; letter-spacing:-.045em; color:var(--accent); }
 .case-metric span{ color:var(--mist-2); font-size:.9375rem; line-height:1.45; }
 .case-metrics-note{ margin-top:10px; font-family:var(--font-mono); font-size:.6875rem; letter-spacing:.04em; color:var(--mist-3); }
+
+/* ---------- Aviso de cookies (solo si hay analítica configurada) ---------- */
+.cc{ position:fixed; left:50%; bottom:18px; transform:translateX(-50%); z-index:90; width:min(720px, calc(100% - 24px)); display:flex; flex-wrap:wrap; align-items:center; gap:14px 20px; padding:16px 20px; border-radius:22px;
+  background:var(--modal-bg); border:1px solid var(--line); box-shadow:0 24px 60px -24px rgb(var(--sh) / calc(.7 * var(--shk))); color:rgb(var(--ink)); font-size:.875rem; line-height:1.5; }
+.cc p{ flex:1 1 320px; color:var(--mist-1); }
+.cc a{ text-decoration:underline; text-underline-offset:3px; color:rgb(var(--ink)); }
+.cc-btns{ display:flex; gap:10px; }
+.cc-btns button{ padding:10px 20px; border-radius:999px; font-weight:600; font-size:.875rem; }
+.cc-link{ color:var(--mist-3); font-size:.8125rem; text-decoration:underline; text-underline-offset:3px; background:none; border:0; cursor:pointer; font-family:inherit; }
+.cc-link:hover{ color:rgb(var(--ink)); }

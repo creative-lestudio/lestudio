@@ -31,7 +31,7 @@
   applyConfig();
   document.addEventListener('click', (e) => {
     if(e.target.closest('.js-whatsapp-link')){
-      trackEvent('whatsapp_click', { page: document.title });
+      trackEvent('whatsapp_click', { page: location.pathname, section: (e.target.closest('section, footer, header, [id]') || {}).id || '' });
     }
   });
 
@@ -47,12 +47,19 @@
     trackEvent('theme_toggle', { theme: next });
   });
 
-  // ---------- Analytics (se activa solo si cargaste IDs reales arriba) ----------
+  // ---------- Analítica con consentimiento (Google Analytics 4 / Meta Pixel) ----------
+  // No se carga NADA hasta que el visitante acepta el aviso. Si no hay IDs en assets/config.js,
+  // tampoco se muestra el aviso (no hay nada que consentir).
   function trackEvent(name, params){
     if(window.gtag) window.gtag('event', name, params || {});
     if(window.fbq) window.fbq('trackCustom', name, params || {});
   }
-  (function initAnalytics(){
+  const hasAnalytics = !!(CONFIG.GA_MEASUREMENT_ID || CONFIG.META_PIXEL_ID);
+  function getConsent(){ try { return localStorage.getItem('consent'); } catch(e){ return null; } }
+  function setConsent(v){ try { localStorage.setItem('consent', v); } catch(e){} }
+  function loadAnalytics(){
+    if(window.__analyticsLoaded) return;
+    window.__analyticsLoaded = true;
     if(CONFIG.GA_MEASUREMENT_ID){
       const s = document.createElement('script');
       s.async = true;
@@ -61,7 +68,7 @@
       window.dataLayer = window.dataLayer || [];
       window.gtag = function(){ window.dataLayer.push(arguments); };
       window.gtag('js', new Date());
-      window.gtag('config', CONFIG.GA_MEASUREMENT_ID);
+      window.gtag('config', CONFIG.GA_MEASUREMENT_ID, { anonymize_ip: true });
     }
     if(CONFIG.META_PIXEL_ID){
       /* eslint-disable */
@@ -74,7 +81,48 @@
       window.fbq('track', 'PageView');
       /* eslint-enable */
     }
+  }
+  function showConsentBanner(){
+    if(document.getElementById('cookie-banner')) return;
+    const tr = (t) => (window.I18N ? I18N.tr(t) : t);
+    const el = document.createElement('div');
+    el.id = 'cookie-banner'; el.className = 'cc'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', tr('Aviso de cookies'));
+    el.innerHTML = `<p>Usamos analítica (Google Analytics) para saber qué canales nos traen clientes y mejorar la web. Solo se activa si la aceptas. <a href="/privacidad/">Más información</a></p>
+      <div class="cc-btns"><button type="button" class="btn-ghost" data-consent="denied">Rechazar</button><button type="button" class="btn-primary" data-consent="granted">Aceptar</button></div>`;
+    document.body.appendChild(el);
+    el.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-consent]'); if(!b) return;
+      setConsent(b.dataset.consent);
+      el.remove();
+      if(b.dataset.consent === 'granted') loadAnalytics();
+    });
+  }
+  window.openCookieSettings = function(){ const o = document.getElementById('cookie-banner'); if(o) o.remove(); showConsentBanner(); };
+  (function initAnalytics(){
+    if(!hasAnalytics) return;
+    const c = getConsent();
+    if(c === 'granted') loadAnalytics();
+    else if(c === null) showConsentBanner();
+    // enlace "Preferencias de cookies" en el pie
+    const bar = document.querySelector('.h-footer-bar .h-wrap, footer .max-w-7xl');
+    if(bar && !document.getElementById('cookie-prefs')){
+      const l = document.createElement('button');
+      l.type = 'button'; l.id = 'cookie-prefs'; l.className = 'cc-link'; l.textContent = 'Preferencias de cookies';
+      l.addEventListener('click', () => window.openCookieSettings());
+      bar.appendChild(l);
+    }
   })();
+
+  // Eventos de conversión: reserva de auditoría, WhatsApp (con la sección), teléfono y descargas
+  document.addEventListener('click', (e) => {
+    const cta = e.target.closest('[data-cta]');
+    if(cta){
+      const kind = cta.getAttribute('data-cta');
+      trackEvent(kind === 'audit' ? 'reserve_audit_click' : (kind === 'lead_magnet_download' ? 'lead_magnet_download' : 'cta_click'), { cta: kind, page: location.pathname });
+    }
+    const tel = e.target.closest('a[href^="tel:"]');
+    if(tel) trackEvent('phone_click', { page: location.pathname });
+  });
 
   // ---------- Marquee content (logos only, equal size & spacing) ----------
   const clients = [
