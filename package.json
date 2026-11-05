@@ -1,0 +1,11 @@
+{
+  "name": "lestudio-web",
+  "private": true,
+  "description": "Web de LE STUDIO. Solo se usa npm para compilar el CSS de Tailwind (no hay build de la web).",
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.js -i src/tailwind.input.css -o assets/tailwind.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}

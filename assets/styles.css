@@ -1,3 +1,6 @@
+/* Tipografía (alojada en el propio sitio): Plus Jakarta Sans para títulos y texto, JetBrains Mono para etiquetas */
+@font-face{ font-family:'Plus Jakarta Sans'; font-style:normal; font-weight:200 800; font-display:swap; src:url(fonts/plus-jakarta-sans.woff2) format('woff2'); }
+@font-face{ font-family:'JetBrains Mono'; font-style:normal; font-weight:100 800; font-display:swap; src:url(fonts/jetbrains-mono.woff2) format('woff2'); }
 :root{
     --navy-deep:#021024;
     --navy-mid:#052659;
@@ -8,11 +11,14 @@
     --mist-3: rgba(255,255,255,.30);
     --line: rgba(255,255,255,.12);
     --gold: #d9c79a;
+    --font-display: 'Plus Jakarta Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-body: 'Plus Jakarta Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
   }
   html{scroll-behavior:smooth;}
   body{
-    font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-weight:300;
+    font-family:var(--font-body);
+    font-weight:400;
     background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy-mid) 55%, var(--navy-low) 100%);
     background-attachment:fixed;
     color:var(--ivory);
@@ -28,7 +34,7 @@
       radial-gradient(60% 50% at 88% 6%, rgba(40,110,230,.22), transparent 70%),
       radial-gradient(50% 45% at 6% 92%, rgba(40,110,230,.12), transparent 70%);
   }
-  .font-display{font-family:'Clash Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight:500; letter-spacing:-0.01em;}
+  .font-display{font-family:var(--font-display); font-weight:500; letter-spacing:-0.01em;}
   .glass{
     background: rgba(255,255,255,.045);
     border:1px solid var(--line);
@@ -213,7 +219,7 @@
 
   /* =====================================================================
      HOME 2.0 — diseño tipo Apple sobre la línea gráfica de LE STUDIO
-     (mismos colores, misma tipografía: Clash Grotesk + Helvetica Neue)
+     (mismos colores; tipografía: Plus Jakarta Sans + JetBrains Mono)
      ===================================================================== */
   :root{
     --ease: cubic-bezier(.2,.8,.2,1);
@@ -227,7 +233,7 @@
   .h-sec--line{ border-top:1px solid var(--line); }
 
   .h-title{
-    font-family:'Clash Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-family:var(--font-display);
     font-weight:500; letter-spacing:-.035em; line-height:1.04;
     font-size:clamp(2.1rem,5vw,3.9rem); color:#fff; text-wrap:balance;
   }
@@ -235,7 +241,7 @@
   .h-lead{ color:var(--mist-2); font-size:clamp(1.02rem,1.4vw,1.25rem); line-height:1.6; max-width:58ch; margin-top:20px; }
   .h-copy{ color:var(--mist-2); font-size:1.0625rem; line-height:1.75; display:grid; gap:18px; }
   .h-copy strong{ color:#fff; font-weight:400; }
-  .h-sign{ text-wrap:balance; color:#fff; font-family:'Clash Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif; font-size:1.35rem; font-weight:500; letter-spacing:-.01em; }
+  .h-sign{ text-wrap:balance; color:#fff; font-family:var(--font-display); font-size:1.35rem; font-weight:500; letter-spacing:-.01em; }
   .h-head{ margin-bottom:clamp(40px,6vw,72px); }
   .h-row-head{ display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:28px; margin-bottom:clamp(36px,5vw,60px); }
 
@@ -326,7 +332,7 @@
   .sys .node-in{ transform-box:fill-box; transform-origin:center; transition:transform .3s var(--ease); }
   .sys .node circle{ fill:rgba(255,255,255,.07); stroke:rgba(255,255,255,.34); stroke-width:1.2; transition: fill .25s ease, stroke .25s ease; }
   .sys .node .ico{ stroke:#fff; fill:none; stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; transition: stroke .25s ease; }
-  .sys .node text{ fill:rgba(255,255,255,.92); font-family:'Clash Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif; font-weight:500; font-size:21px; text-anchor:middle; }
+  .sys .node text{ fill:rgba(255,255,255,.92); font-family:var(--font-display); font-weight:500; font-size:21px; text-anchor:middle; }
   .sys .node:hover .node-in, .sys .node:focus-visible .node-in{ transform:scale(1.1); }
   .sys .node:hover circle, .sys .node:focus-visible circle{ fill:#fff; stroke:#fff; }
   .sys .node:hover .ico, .sys .node:focus-visible .ico{ stroke:var(--navy-deep); }
@@ -335,7 +341,7 @@
   .sys.go .core{ animation: pop .7s .35s cubic-bezier(.2,.9,.3,1.25) forwards; }
   .sys .core circle.fill{ fill:#fff; }
   .sys .core .halo{ fill:none; stroke:rgba(255,255,255,.3); stroke-width:1.2; }
-  .sys .core text{ fill:var(--navy-deep); font-family:'Clash Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif; font-weight:600; font-size:19px; text-anchor:middle; }
+  .sys .core text{ fill:var(--navy-deep); font-family:var(--font-display); font-weight:600; font-size:19px; text-anchor:middle; }
   .sys .pulse{ fill:#fff; filter:drop-shadow(0 0 6px rgba(255,255,255,.9)); }
   .sys-cap{ min-height:3.1em; text-align:center; margin:10px auto 0; max-width:36ch; font-size:.95rem; color:var(--mist-2); line-height:1.5; }
   .sys-cap b{ color:#fff; font-weight:500; }
@@ -502,7 +508,7 @@
   .island{ position:absolute; top:2.2%; left:50%; transform:translateX(-50%); width:30%; height:3.6%; background:#000; border-radius:99px; z-index:3; }
   .lock{ position:absolute; top:7.5%; left:0; right:0; text-align:center; color:#fff; z-index:1; }
   .lock-date{ display:block; font-size:calc(var(--ph)*.022); opacity:.85; }
-  .lock-time{ display:block; font-family:'Clash Grotesk','Helvetica Neue',Arial,sans-serif; font-weight:500; font-size:calc(var(--ph)*.105); letter-spacing:-.03em; line-height:1.05; }
+  .lock-time{ display:block; font-family:var(--font-display); font-weight:500; font-size:calc(var(--ph)*.105); letter-spacing:-.03em; line-height:1.05; }
   .notifs{ position:absolute; left:4.5%; right:4.5%; top:24%; bottom:3%; display:flex; flex-direction:column; overflow:hidden; font-size:calc(var(--ph)*.0215); }
   .notif{ display:flex; align-items:center; gap:3.5%; padding:0 4%; margin-bottom:0; max-height:0; opacity:0; transform:translateY(-14px) scale(.96); overflow:hidden; border-radius:calc(var(--ph)*.03);
     background:rgba(255,255,255,.17); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.14); color:#fff;
@@ -614,7 +620,7 @@
 .sf-view img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top; z-index:1; transition:transform .8s var(--ease,ease); }
 .sf-view:hover img{ transform:scale(1.025); }
 .sf-fallback{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; background:linear-gradient(135deg,#052659,#021024); }
-.sf-fallback b{ font-family:'Clash Grotesk',system-ui,sans-serif; font-size:clamp(1.6rem,4vw,2.6rem); }
+.sf-fallback b{ font-family:var(--font-display); font-size:clamp(1.6rem,4vw,2.6rem); }
 .sf-fallback em{ font-style:normal; color:var(--mist-2); font-size:.95rem; }
 .sf-open{ position:absolute; right:16px; bottom:16px; z-index:2; display:inline-flex; align-items:center; gap:6px; padding:9px 16px; border-radius:999px; background:#fff; color:var(--navy-deep); font-size:.85rem; font-weight:600;
   opacity:0; transform:translateY(8px); transition:opacity .3s ease, transform .3s ease; }
@@ -635,7 +641,7 @@
 .sv-trust svg{ color:var(--gold); flex-shrink:0; }
 
 .sv-quote{ max-width:60rem; margin:0 auto; padding:clamp(28px,5vw,56px) 24px; border-top:1px solid var(--line); text-align:center; }
-.sv-quote p{ font-family:'Clash Grotesk',system-ui,sans-serif; font-weight:500; font-size:clamp(1.35rem,2.8vw,2.1rem); line-height:1.3; letter-spacing:-.02em; color:#fff; text-wrap:balance; }
+.sv-quote p{ font-family:var(--font-display); font-weight:500; font-size:clamp(1.35rem,2.8vw,2.1rem); line-height:1.3; letter-spacing:-.02em; color:#fff; text-wrap:balance; }
 
 #que-incluye .grid{ counter-reset:sv; }
 .sv-card{ counter-increment:sv; position:relative; padding:26px 24px 24px; border-radius:20px; border:1px solid var(--line); background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02)); transition:transform .35s var(--ease,ease), border-color .35s ease; }
@@ -669,7 +675,7 @@ ul.sv-collapsed > li.sv-more{ display:none; }
 .bb-stage:hover img{ transform:scale(1.03); }
 .bb-stage::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg,transparent 55%,rgba(2,16,36,.82)); pointer-events:none; }
 .bb-cap{ position:absolute; left:22px; bottom:20px; z-index:2; display:flex; flex-direction:column; gap:2px; }
-.bb-cap b{ font-family:'Clash Grotesk',system-ui,sans-serif; font-size:1.5rem; line-height:1.15; }
+.bb-cap b{ font-family:var(--font-display); font-size:1.5rem; line-height:1.15; }
 .bb-cap em{ font-style:normal; font-size:.9rem; color:rgba(255,255,255,.75); }
 .bb-open{ position:absolute; right:18px; bottom:18px; z-index:2; display:inline-flex; align-items:center; gap:6px; padding:9px 16px; border-radius:999px; background:#fff; color:var(--navy-deep); font-size:.85rem; font-weight:600; opacity:0; transform:translateY(8px); transition:opacity .3s ease, transform .3s ease; }
 .bb-stage:hover .bb-open, .bb-stage:focus-visible .bb-open{ opacity:1; transform:none; }
@@ -711,7 +717,7 @@ ul.sv-collapsed > li.sv-more{ display:none; }
 .vc-play svg{ margin-left:2px; }
 .vc-card:hover .vc-play{ transform:scale(1.1); opacity:1; }
 .vc-cap{ position:absolute; left:16px; right:16px; bottom:14px; z-index:2; display:flex; flex-direction:column; gap:2px; }
-.vc-cap b{ font-family:'Clash Grotesk',system-ui,sans-serif; font-size:1.02rem; line-height:1.2; }
+.vc-cap b{ font-family:var(--font-display); font-size:1.02rem; line-height:1.2; }
 .vc-cap em{ font-style:normal; font-size:.78rem; color:rgba(255,255,255,.75); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
 .vc-cap i{ font-style:normal; margin-top:4px; font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); }
 @media (max-width:639px){ .vc-arrows{ display:none; } .vc-card{ width:200px; } }
@@ -731,3 +737,13 @@ ul.sv-collapsed > li.sv-more{ display:none; }
   background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02)); box-shadow:0 20px 40px -28px rgba(0,0,0,.6); transition:border-color .35s ease, background .35s ease; }
 .cl-tile img{ max-width:82%; max-height:clamp(38px,4.4vw,64px); width:auto; height:auto; object-fit:contain; opacity:.92; pointer-events:none; }
 .cl-tile:hover{ border-color:rgba(255,255,255,.3); background:rgba(255,255,255,.1); }
+
+
+/* ---------- Tipografía y jerarquía (estilo editorial: titulares ligeros y compactos + etiquetas en mono) ---------- */
+h1.font-display, h2.font-display, .h-title, .h-hero-title{ font-weight:300; letter-spacing:-.045em; line-height:1.04; }
+h3.font-display, .font-display{ letter-spacing:-.025em; }
+.h-title--xl{ letter-spacing:-.05em; }
+.uppercase, .sv-eyebrow, .cl-eyebrow, .h-logos-label, .sv-card::before, .vc-cap i, .eyebrow{ font-family:var(--font-mono); font-weight:500; }
+.sv-eyebrow, .cl-eyebrow{ text-transform:uppercase; letter-spacing:.1em; font-size:.75rem; }
+.accent{ color:var(--gold); }
+.btn-lg, .btn-primary, .btn-ghost{ font-weight:600; letter-spacing:-.005em; }
