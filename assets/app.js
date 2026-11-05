@@ -168,7 +168,7 @@
 
   // Sección "Han confiado en nosotros": dos carruseles grandes en sentidos opuestos, con el logo en blanco.
   function renderClientRows(){
-    const tile = (c) => `<div class="cl-tile"><span class="logo-mask" style="--logo:url(${marqueeLogos[c.logo]})"><img src="${marqueeLogos[c.logo]}" alt="${c.name}" /></span></div>`;
+    const tile = (c) => `<div class="cl-tile"><span class="logo-mask" style="--logo:url(${marqueeLogos[c.logo]})"><img src="${marqueeLogos[c.logo]}" alt="${c.name}" width="160" height="64" loading="lazy" decoding="async" /></span></div>`;
     const half = Math.ceil(clients.length / 2);
     const rows = [clients.slice(0, half), clients.slice(half).concat(clients.slice(0, 1))];
     rows.forEach((row, i) => {
@@ -546,7 +546,7 @@
 
   function portfolioCardHTML(entry){
     return `
-        <button onclick="showProject('${entry.slug}')" class="pf-card glass hover-lift text-left" aria-label="Ver ${entry.client}">
+        <button onclick="showProject('${entry.slug}')" class="pf-card glass hover-lift text-left">
           <div class="pf-media">
             <img src="${portfolioBadges[entry.badge]}" alt="${entry.client}" loading="lazy" />
           </div>
@@ -1843,7 +1843,6 @@
       tabs.forEach((t, n) => { t.classList.toggle('is-active', n === i); t.setAttribute('aria-selected', n === i); });
       hostEl.textContent = host(c.url);
       view.href = c.url;
-      view.setAttribute('aria-label', t2('Visitar ', 'Visit ') + host(c.url));
       view.classList.remove('is-in');
       view.innerHTML = `<img src="${c.shot}" alt="${t2('Sitio web de', 'Website of')} ${c.name}" onerror="this.remove()" /><span class="sf-fallback"><b>${c.name}</b><em>${host(c.url)}</em></span><span class="sf-open">Visitar sitio ${arrow}</span>`;
       requestAnimationFrame(() => view.classList.add('is-in'));
@@ -2304,7 +2303,7 @@
       const t = p.testimonial;
       testEl.innerHTML = `
         <div class="glass rounded-3xl p-8 md:p-10">
-          <div class="flex gap-1 mb-5" aria-label="${t.rating || 5} de 5 estrellas">
+          <div class="flex gap-1 mb-5" role="img" aria-label="${t.rating || 5} de 5 estrellas">
             ${'<svg class="star" width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>'.repeat(t.rating || 5)}
           </div>
           <p class="text-white/75 leading-relaxed mb-7 text-lg">"${t.quote}"</p>
