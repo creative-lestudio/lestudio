@@ -1,4 +1,7 @@
 // La configuración (WhatsApp, teléfono, email, IDs…) vive en assets/config.js
+  // Prefijo de las páginas del sitio según el idioma (/en/ para inglés)
+  const PAGE_BASE = location.pathname.indexOf('/en/') === 0 ? '/en/' : '/';
+  const t2 = (es, en) => (PAGE_BASE === '/en/' ? en : es);   // texto compuesto por JS según el idioma de la página
   const CONFIG = Object.assign({
     WHATSAPP_NUMBER: '584241859724',
     PHONE_E164: '+34662490547',
@@ -145,27 +148,27 @@
   ];
 
   const marqueeLogos = {
-    mds: "assets/marquee-mds.png",
-    rdr: "assets/marquee-rdr.png",
-    tecnoclean: "assets/marquee-tecnoclean.png",
-    decoplant: "assets/marquee-decoplant.png",
-    legacy: "assets/marquee-legacy.png",
-    urbantex: "assets/marquee-urbantex.png",
-    hps: "assets/marquee-hps.png",
-    synergy: "assets/marquee-synergy.png",
-    winners: "assets/marquee-winners.png",
-    pizzi: "assets/marquee-pizzi.png",
-    urbanisima: "assets/marquee-urbanisima.png",
-    inprecasa: "assets/marquee-inprecasa.png",
-    repite: "assets/marquee-repite.png",
-    "925": "assets/marquee-925.png",
-    dfratelli: "assets/marquee-dfratelli.png",
-    wm: "assets/marquee-wm.png"
+    mds: "/assets/marquee-mds.png",
+    rdr: "/assets/marquee-rdr.png",
+    tecnoclean: "/assets/marquee-tecnoclean.png",
+    decoplant: "/assets/marquee-decoplant.png",
+    legacy: "/assets/marquee-legacy.png",
+    urbantex: "/assets/marquee-urbantex.png",
+    hps: "/assets/marquee-hps.png",
+    synergy: "/assets/marquee-synergy.png",
+    winners: "/assets/marquee-winners.png",
+    pizzi: "/assets/marquee-pizzi.png",
+    urbanisima: "/assets/marquee-urbanisima.png",
+    inprecasa: "/assets/marquee-inprecasa.png",
+    repite: "/assets/marquee-repite.png",
+    "925": "/assets/marquee-925.png",
+    dfratelli: "/assets/marquee-dfratelli.png",
+    wm: "/assets/marquee-wm.png"
   };
 
   // Sección "Han confiado en nosotros": dos carruseles grandes en sentidos opuestos, con el logo en blanco.
   function renderClientRows(){
-    const tile = (c) => `<div class="cl-tile"><span class="logo-mask" style="--logo:url(/${marqueeLogos[c.logo]})"><img src="${marqueeLogos[c.logo]}" alt="${c.name}" /></span></div>`;
+    const tile = (c) => `<div class="cl-tile"><span class="logo-mask" style="--logo:url(${marqueeLogos[c.logo]})"><img src="${marqueeLogos[c.logo]}" alt="${c.name}" /></span></div>`;
     const half = Math.ceil(clients.length / 2);
     const rows = [clients.slice(0, half), clients.slice(half).concat(clients.slice(0, 1))];
     rows.forEach((row, i) => {
@@ -273,7 +276,7 @@
       tags: ['Content Production'],
       service: 'content-production',
       embedType: 'youtube',
-      thumb: 'assets/video-podcast-1.jpg',
+      thumb: '/assets/video-podcast-1.jpg',
       videoId: 'i-frSRSTsq8',
       embedUrl: 'https://www.youtube.com/embed/i-frSRSTsq8',
       linkUrl: 'https://youtu.be/i-frSRSTsq8',
@@ -294,7 +297,7 @@
       tags: ['Web & Digital Development'],
       service: 'web-development',
       embedType: 'link',
-      webShot: 'assets/web-legacy.jpg',
+      webShot: '/assets/web-legacy.jpg',
       linkUrl: 'https://legacy-world.com',
       linkLabel: 'Ver legacy-world.com',
       challenge: 'Legacy World necesitaba una tienda online propia, capaz de vender a nivel nacional e internacional, con un checkout confiable y sin depender de intermediarios para procesar pagos.',
@@ -308,7 +311,7 @@
       tags: ['Brand & Design'],
       service: 'brand-design',
       embedType: 'behance',
-      cover: 'assets/brand-decoplant.jpg',
+      cover: '/assets/brand-decoplant.jpg',
       embedUrl: 'https://www.behance.net/embed/project/218332771?ilo0=1',
       linkUrl: 'https://www.behance.net/gallery/218332771/DECOPLANT-Branding',
       challenge: 'Decoplant necesitaba una identidad capaz de representar dos líneas de negocio a la vez —decoración y plantas artificiales— sin que la marca se sintiera dividida ni genérica en ninguna de las dos.',
@@ -322,7 +325,7 @@
       tags: ['Social Media'],
       service: 'social-media',
       embedType: 'instagram',
-      handle: 'inversiones.mds', shot: 'assets/profile-mds.jpg',
+      handle: 'inversiones.mds', shot: '/assets/profile-mds.jpg',
       linkUrl: 'https://www.instagram.com/inversiones.mds/',
       challenge: 'Inversiones MDS necesitaba algo más que seguidores: buscaba construir, a través de su Instagram, una audiencia real con potencial de convertirse en clientes.',
       solution: 'Gestionamos la presencia en redes sociales de Inversiones MDS: estrategia, calendario editorial y gestión diaria de su comunidad, con el objetivo puesto en la calidad de la audiencia, no solo en el volumen.',
@@ -340,7 +343,7 @@
       tags: ['Social Media'],
       service: 'social-media',
       embedType: 'instagram',
-      handle: 'legacyworld_', shot: 'assets/profile-legacy.jpg',
+      handle: 'legacyworld_', shot: '/assets/profile-legacy.jpg',
       linkUrl: 'https://www.instagram.com/legacyworld_/',
       challenge: 'Legacy World necesitaba que su Instagram transmitiera la misma identidad que su marca y su tienda, y funcionara como canal de comunidad y de venta.',
       solution: 'Gestionamos la presencia de Legacy World en Instagram: línea editorial, contenido y gestión de su comunidad, alineados con el resto del ecosistema de la marca.',
@@ -357,7 +360,7 @@
       tags: ['Social Media'],
       service: 'social-media',
       embedType: 'instagram',
-      handle: 'pizzi.es', shot: 'assets/profile-pizzi.jpg',
+      handle: 'pizzi.es', shot: '/assets/profile-pizzi.jpg',
       linkUrl: 'https://www.instagram.com/pizzi.es/',
       challenge: 'Pizzi necesitaba una presencia en Instagram con identidad propia, constante y pensada para atraer a su audiencia.',
       solution: 'Nos encargamos del manejo de las redes sociales de Pizzi: estrategia, contenido y gestión diaria de su comunidad en Instagram.',
@@ -404,7 +407,7 @@
         'https://www.instagram.com/reel/DcCOq3bMTae/',
         'https://www.instagram.com/reel/DYQbxXGIRS3/'
       ],
-      reelShots: ['assets/reel-mds-1.jpg', 'assets/reel-mds-2.jpg', 'assets/reel-mds-3.jpg'],
+      reelShots: ['/assets/reel-mds-1.jpg', '/assets/reel-mds-2.jpg', '/assets/reel-mds-3.jpg'],
       solution: 'Producimos y editamos contenido en video para Inversiones MDS, pensado específicamente para reforzar su presencia como marca de referencia en el sector de diagnóstico médico.',
     },
     'rdr-identidad': {
@@ -415,7 +418,7 @@
       tags: ['Brand & Design'],
       service: 'brand-design',
       embedType: 'behance',
-      cover: 'assets/brand-rdr.jpg',
+      cover: '/assets/brand-rdr.jpg',
       embedUrl: 'https://www.behance.net/embed/project/218334897?ilo0=1',
       linkUrl: 'https://www.behance.net/gallery/218334897/RDR-Identidad-Visual',
       solution: 'Desarrollamos la identidad visual completa de Multiservicios RDR, construyendo un sistema de marca claro y aplicable a todos sus puntos de contacto.',
@@ -427,7 +430,7 @@
       tags: ['Brand & Design'],
       service: 'brand-design',
       embedType: 'behance',
-      cover: 'assets/brand-tecnoclean.jpg',
+      cover: '/assets/brand-tecnoclean.jpg',
       embedUrl: 'https://www.behance.net/embed/project/218332217?ilo0=1',
       linkUrl: 'https://www.behance.net/gallery/218332217/Tecnoclean-Identidad-visual',
       solution: 'Desarrollamos la identidad visual completa de Corporación Tecnoclean: logotipo, paleta de colores, tipografías y sistema de marca aplicado a sus distintos materiales.',
@@ -455,7 +458,7 @@
         'https://www.instagram.com/reel/CqovtDTLwdJ/',
         'https://www.instagram.com/reel/CqtYf3SLfgM/'
       ],
-      reelShots: ['assets/reel-urbantex-1.jpg', 'assets/reel-urbantex-2.jpg', 'assets/reel-urbantex-3.jpg'],
+      reelShots: ['/assets/reel-urbantex-1.jpg', '/assets/reel-urbantex-2.jpg', '/assets/reel-urbantex-3.jpg'],
       solution: 'Producimos y editamos contenido en video para Urbantex, reforzando su identidad ya trabajada con piezas audiovisuales pensadas para redes.',
     },
     'synergy-fichas': {
@@ -495,16 +498,16 @@
 
 
   const portfolioBadges = {
-        mds: "assets/badge-mds.png",
-    rdr: "assets/badge-rdr.png",
-    tecnoclean: "assets/badge-tecnoclean.png",
-    decoplant: "assets/badge-decoplant.png",
-    legacy: "assets/badge-legacy.png",
-    urbantex: "assets/badge-urbantex.png",
-    hps: "assets/badge-hps.png",
-    synergy: "assets/badge-synergy.png",
-    winners: "assets/badge-winners.png",
-    pizzi: "assets/badge-pizzi.png"
+        mds: "/assets/badge-mds.png",
+    rdr: "/assets/badge-rdr.png",
+    tecnoclean: "/assets/badge-tecnoclean.png",
+    decoplant: "/assets/badge-decoplant.png",
+    legacy: "/assets/badge-legacy.png",
+    urbantex: "/assets/badge-urbantex.png",
+    hps: "/assets/badge-hps.png",
+    synergy: "/assets/badge-synergy.png",
+    winners: "/assets/badge-winners.png",
+    pizzi: "/assets/badge-pizzi.png"
   };
   // One tile per CLIENT, not per project — clients with multiple projects (like
   // Legacy World) still get grouped into a single portfolio entry, with all their
@@ -1648,38 +1651,38 @@
   //   { name, what, label, case: 'slug-del-proyecto' } -> abre el caso dentro del portafolio
   const serviceWork = {
     'social-media': [
-      { name: 'Legacy World', handle: 'legacyworld_', what: 'Redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/legacyworld_/', badge: 'legacy', shot: 'assets/profile-legacy.jpg' },
-      { name: 'Inversiones MDS', handle: 'inversiones.mds', what: 'Estrategia y gestión de su Instagram', label: 'Ver Instagram', url: 'https://www.instagram.com/inversiones.mds/', badge: 'mds', shot: 'assets/profile-mds.jpg' },
-      { name: 'Pizzi', handle: 'pizzi.es', what: 'Manejo de redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/pizzi.es/', badge: 'pizzi', shot: 'assets/profile-pizzi.jpg' }
+      { name: 'Legacy World', handle: 'legacyworld_', what: 'Redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/legacyworld_/', badge: 'legacy', shot: '/assets/profile-legacy.jpg' },
+      { name: 'Inversiones MDS', handle: 'inversiones.mds', what: 'Estrategia y gestión de su Instagram', label: 'Ver Instagram', url: 'https://www.instagram.com/inversiones.mds/', badge: 'mds', shot: '/assets/profile-mds.jpg' },
+      { name: 'Pizzi', handle: 'pizzi.es', what: 'Manejo de redes sociales', label: 'Ver Instagram', url: 'https://www.instagram.com/pizzi.es/', badge: 'pizzi', shot: '/assets/profile-pizzi.jpg' }
     ],
     'content-production': [
-      { segment: 'Producción audiovisual', group: 'Podcast', title: 'Legacy Podcast EP.01', what: 'Cómo pasar de hacer TikToks a vivir de las redes, con Cesar Oliveira', views: '36K', url: 'https://youtu.be/i-frSRSTsq8', shot: 'assets/video-podcast-1.jpg', wide: true, source: 'YouTube' },
-      { segment: 'Producción audiovisual', group: 'Podcast', title: 'Legacy Podcast EP.02', what: 'NEOMAI: «Quiero representar a Venezuela y ganar un Grammy»', views: '2.3K', url: 'https://youtu.be/4IU4OL3d9WE', shot: 'assets/video-podcast-2.jpg', wide: true, source: 'YouTube' },
-      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Clip de Legacy Podcast', what: '@legacyworld_', views: '2.4M', url: 'https://www.tiktok.com/@legacyworld_/video/7602753224323501320', shot: 'assets/video-legacy-1.jpg', source: 'TikTok' },
-      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Neomai en Legacy Podcast', what: '@legacyworld_', views: '591.6K', url: 'https://www.tiktok.com/@legacyworld_/video/7642136557578636562', shot: 'assets/video-legacy-2.jpg', source: 'TikTok' },
-      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Clip de Legacy Podcast', what: '@legacyworld_', views: '478.1K', url: 'https://www.tiktok.com/@legacyworld_/video/7602391908966599944', shot: 'assets/video-legacy-3.jpg', source: 'TikTok' },
-      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Suzuki Jimny 4x4', what: '@kiacentromarca', views: '128.1K', url: 'https://www.tiktok.com/@kiacentromarca/video/7441352485589077304', shot: 'assets/video-kia-1.jpg', source: 'TikTok' },
-      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Kia Picanto 2025', what: '@kiacentromarca', views: '111.6K', url: 'https://www.tiktok.com/@kiacentromarca/video/7461770092091591941', shot: 'assets/video-kia-2.jpg', source: 'TikTok' },
-      { segment: 'AI Generated Content', title: 'AI Reel 1', what: 'Contenido generado con IA', url: 'https://www.instagram.com/reel/De2Rg-qRFKT/', shot: 'assets/reel-ai-1.jpg', source: 'Instagram' },
-      { segment: 'AI Generated Content', title: 'AI Reel 2', what: 'Contenido generado con IA', url: 'https://www.instagram.com/reel/DezkDceRO77/', shot: 'assets/reel-ai-2.jpg', source: 'Instagram' },
-      { segment: 'AI Generated Content', title: 'AI Reel 3', what: 'Contenido generado con IA', url: 'https://www.instagram.com/reel/DepzmWrok84/', shot: 'assets/reel-ai-3.jpg', source: 'Instagram' }
+      { segment: 'Producción audiovisual', group: 'Podcast', title: 'Legacy Podcast EP.01', what: 'Cómo pasar de hacer TikToks a vivir de las redes, con Cesar Oliveira', views: '36K', url: 'https://youtu.be/i-frSRSTsq8', shot: '/assets/video-podcast-1.jpg', wide: true, source: 'YouTube' },
+      { segment: 'Producción audiovisual', group: 'Podcast', title: 'Legacy Podcast EP.02', what: 'NEOMAI: «Quiero representar a Venezuela y ganar un Grammy»', views: '2.3K', url: 'https://youtu.be/4IU4OL3d9WE', shot: '/assets/video-podcast-2.jpg', wide: true, source: 'YouTube' },
+      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Clip de Legacy Podcast', what: '@legacyworld_', views: '2.4M', url: 'https://www.tiktok.com/@legacyworld_/video/7602753224323501320', shot: '/assets/video-legacy-1.jpg', source: 'TikTok' },
+      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Neomai en Legacy Podcast', what: '@legacyworld_', views: '591.6K', url: 'https://www.tiktok.com/@legacyworld_/video/7642136557578636562', shot: '/assets/video-legacy-2.jpg', source: 'TikTok' },
+      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Clip de Legacy Podcast', what: '@legacyworld_', views: '478.1K', url: 'https://www.tiktok.com/@legacyworld_/video/7602391908966599944', shot: '/assets/video-legacy-3.jpg', source: 'TikTok' },
+      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Suzuki Jimny 4x4', what: '@kiacentromarca', views: '128.1K', url: 'https://www.tiktok.com/@kiacentromarca/video/7441352485589077304', shot: '/assets/video-kia-1.jpg', source: 'TikTok' },
+      { segment: 'Producción audiovisual', group: 'Contenido viral', title: 'Kia Picanto 2025', what: '@kiacentromarca', views: '111.6K', url: 'https://www.tiktok.com/@kiacentromarca/video/7461770092091591941', shot: '/assets/video-kia-2.jpg', source: 'TikTok' },
+      { segment: 'AI Generated Content', title: 'AI Reel 1', what: 'Contenido generado con IA', url: 'https://www.instagram.com/reel/De2Rg-qRFKT/', shot: '/assets/reel-ai-1.jpg', source: 'Instagram' },
+      { segment: 'AI Generated Content', title: 'AI Reel 2', what: 'Contenido generado con IA', url: 'https://www.instagram.com/reel/DezkDceRO77/', shot: '/assets/reel-ai-2.jpg', source: 'Instagram' },
+      { segment: 'AI Generated Content', title: 'AI Reel 3', what: 'Contenido generado con IA', url: 'https://www.instagram.com/reel/DepzmWrok84/', shot: '/assets/reel-ai-3.jpg', source: 'Instagram' }
     ],
     'brand-design': [
-      { name: 'Legacy World', what: 'Brand building y dirección creativa', url: 'https://www.behance.net/gallery/255634519/LEGACY-WORLD-Brand-Building-Creative-Direction', shot: 'assets/brand-legacy.jpg' },
-      { name: 'Deportivo Agustinos', what: 'Identidad visual', url: 'https://www.behance.net/gallery/218333875/Deportivo-Agustinos-Visual-Identity', shot: 'assets/brand-agustinos.jpg' },
-      { name: 'LCF', what: 'Identidad visual y diseño para redes', url: 'https://www.behance.net/gallery/218336477/LCF-VisualIdentity-Social-media-design', shot: 'assets/brand-lcf.jpg' },
-      { name: 'Zenska', what: 'Naming e identidad visual', url: 'https://www.behance.net/gallery/218333371/Zenska-Naming-Visual-Identity', shot: 'assets/brand-zenska.jpg' },
-      { name: 'Tecnoclean', what: 'Identidad visual', url: 'https://www.behance.net/gallery/218332217/Tecnoclean-Visual-Identity', shot: 'assets/brand-tecnoclean.jpg' },
-      { name: 'Decoplant', what: 'Naming e identidad visual', url: 'https://www.behance.net/gallery/218332771/DECOPLANT-Naming-Visual-Identity', shot: 'assets/brand-decoplant.jpg' },
-      { name: 'RDR', what: 'Identidad visual', url: 'https://www.behance.net/gallery/218334897/RDR-Visual-Identity', shot: 'assets/brand-rdr.jpg' }
+      { name: 'Legacy World', what: 'Brand building y dirección creativa', url: 'https://www.behance.net/gallery/255634519/LEGACY-WORLD-Brand-Building-Creative-Direction', shot: '/assets/brand-legacy.jpg' },
+      { name: 'Deportivo Agustinos', what: 'Identidad visual', url: 'https://www.behance.net/gallery/218333875/Deportivo-Agustinos-Visual-Identity', shot: '/assets/brand-agustinos.jpg' },
+      { name: 'LCF', what: 'Identidad visual y diseño para redes', url: 'https://www.behance.net/gallery/218336477/LCF-VisualIdentity-Social-media-design', shot: '/assets/brand-lcf.jpg' },
+      { name: 'Zenska', what: 'Naming e identidad visual', url: 'https://www.behance.net/gallery/218333371/Zenska-Naming-Visual-Identity', shot: '/assets/brand-zenska.jpg' },
+      { name: 'Tecnoclean', what: 'Identidad visual', url: 'https://www.behance.net/gallery/218332217/Tecnoclean-Visual-Identity', shot: '/assets/brand-tecnoclean.jpg' },
+      { name: 'Decoplant', what: 'Naming e identidad visual', url: 'https://www.behance.net/gallery/218332771/DECOPLANT-Naming-Visual-Identity', shot: '/assets/brand-decoplant.jpg' },
+      { name: 'RDR', what: 'Identidad visual', url: 'https://www.behance.net/gallery/218334897/RDR-Visual-Identity', shot: '/assets/brand-rdr.jpg' }
     ],
     'web-development': [
-      { name: 'Legacy World', what: 'Tienda online propia, nacional e internacional', url: 'https://legacy-world.com', shot: 'assets/web-legacy.jpg' },
-      { name: 'Pizzi', what: 'Pedidos online para recoger', url: 'https://creative-lestudio.github.io/pizzi/', shot: 'assets/web-pizzi.jpg' },
-      { name: 'Repite', what: 'Tarjeta de sellos digital para fidelizar clientes', url: 'https://repite-silk.vercel.app/', shot: 'assets/web-repite.jpg' },
-      { name: 'Finanzas', what: 'App de finanzas personales', url: 'https://creative-lestudio.github.io/finanzas/', shot: 'assets/web-finanzas.jpg' },
-      { name: 'Karoli Sushi', what: 'Pedidos online para un sushi en Aravaca, Madrid', url: 'https://creative-lestudio.github.io/KaroliSushi/', shot: 'assets/web-karoli.jpg' },
-      { name: 'Venezuela Food', what: 'Web de tapas y picoteo venezolano en Madrid', url: 'https://creative-lestudio.github.io/venezuela-food/', shot: 'assets/web-venezuelafood.jpg' }
+      { name: 'Legacy World', what: 'Tienda online propia, nacional e internacional', url: 'https://legacy-world.com', shot: '/assets/web-legacy.jpg' },
+      { name: 'Pizzi', what: 'Pedidos online para recoger', url: 'https://creative-lestudio.github.io/pizzi/', shot: '/assets/web-pizzi.jpg' },
+      { name: 'Repite', what: 'Tarjeta de sellos digital para fidelizar clientes', url: 'https://repite-silk.vercel.app/', shot: '/assets/web-repite.jpg' },
+      { name: 'Finanzas', what: 'App de finanzas personales', url: 'https://creative-lestudio.github.io/finanzas/', shot: '/assets/web-finanzas.jpg' },
+      { name: 'Karoli Sushi', what: 'Pedidos online para un sushi en Aravaca, Madrid', url: 'https://creative-lestudio.github.io/KaroliSushi/', shot: '/assets/web-karoli.jpg' },
+      { name: 'Venezuela Food', what: 'Web de tapas y picoteo venezolano en Madrid', url: 'https://creative-lestudio.github.io/venezuela-food/', shot: '/assets/web-venezuelafood.jpg' }
     ],
     'growth-marketing': [],
     'ai-automation': []
@@ -1688,12 +1691,12 @@
   // Maquetas reutilizables (iPhone con perfil, ventana de Safari)
   function phoneHTML(c, src){
     return `
-      <a href="${c.url}" target="_blank" rel="noopener" class="ph-link" aria-label="${c.name}: ver @${c.handle} en Instagram">
+      <a href="${c.url}" target="_blank" rel="noopener" class="ph-link">
         <div class="ph">
           <span class="ph-btn ph-btn--a"></span><span class="ph-btn ph-btn--b"></span><span class="ph-btn ph-btn--c"></span><span class="ph-btn ph-btn--p"></span>
           <div class="ph-screen">
             <span class="ph-island"></span>
-            <img class="ph-shot" src="${src}" alt="Perfil de Instagram de @${c.handle}" loading="lazy" />
+            <img class="ph-shot" src="${src}" alt="${t2('Perfil de Instagram de', 'Instagram profile of')} @${c.handle}" loading="lazy" />
             <span class="ph-home"></span>
           </div>
         </div>
@@ -1707,7 +1710,7 @@
         <div class="sf-bar"><span class="sf-dots"><i></i><i></i><i></i></span><div class="sf-tabs"><span class="sf-tab is-active">${c.name}</span></div></div>
         <div class="sf-url"><span>${host}</span></div>
         <a class="sf-view is-in" href="${c.url}" target="_blank" rel="noopener" aria-label="Visitar ${host}">
-          <img src="${src}" alt="Sitio web de ${c.name}" />
+          <img src="${src}" alt="${t2('Sitio web de', 'Website of')} ${c.name}" />
           <span class="sf-open">Visitar sitio <svg width="13" height="13" viewBox="0 0 20 20" fill="none"><path d="M6 14L14 6M7 6h7v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </a>
       </div>`;
@@ -1730,14 +1733,14 @@
         </div>
         <div class="vc-track" id="vc-track" tabindex="0">
           ${list.map(c => `
-            <a class="vc-card${c.wide ? ' vc-wide' : ''}" data-s="${c.segment}" data-g="${c.group || ''}" href="${c.url}" target="_blank" rel="noopener" aria-label="${c.title}: ver en ${c.source}">
-              <img src="${base}${c.shot}" alt="${c.title}" loading="lazy" />
+            <a class="vc-card${c.wide ? ' vc-wide' : ''}" data-s="${c.segment}" data-g="${c.group || ''}" href="${c.url}" target="_blank" rel="noopener">
+              <img src="${c.shot}" alt="${c.title}" loading="lazy" />
               ${c.views ? `<span class="vc-views">${c.views} vistas</span>` : ''}
               <span class="vc-play">${play}</span>
               <span class="vc-cap"><b>${c.title}</b><em>${c.what}</em><i>${c.source}</i></span>
             </a>`).join('')}
         </div>
-        <p class="bb-more"><span>También: <a href="${base}#proyecto-mds-contenido">Inversiones MDS</a> · <a href="${base}#proyecto-urbantex-contenido">Urbantex</a></span></p>
+        <p class="bb-more"><span>También: <a href="${PAGE_BASE}#proyecto-mds-contenido">Inversiones MDS</a> · <a href="${PAGE_BASE}#proyecto-urbantex-contenido">Urbantex</a></span></p>
       </div>`;
     const track = box.querySelector('#vc-track'), prev = box.querySelector('#vc-prev'), next = box.querySelector('#vc-next'), filtersEl = box.querySelector('#vc-filters');
     const cards = Array.from(track.querySelectorAll('.vc-card'));
@@ -1788,14 +1791,14 @@
           <div class="bb-list" role="tablist" aria-label="Proyectos">
             ${list.map((c, i) => `
               <button type="button" role="tab" class="bb-item${i === 0 ? ' is-active' : ''}" data-i="${i}" aria-selected="${i === 0}">
-                <img src="${base}${c.shot}" alt="" loading="lazy" />
+                <img src="${c.shot}" alt="" loading="lazy" />
                 <span><b>${c.name}</b><em>${c.what}</em></span>
               </button>`).join('')}
           </div>
         </div>
         <p class="bb-more">
           <a href="https://www.behance.net/marcelolealv" target="_blank" rel="noopener">Ver todo en Behance ${arrow}</a>
-          <span>También: ${more.map(m => m.url ? `<a href="${m.url}" target="_blank" rel="noopener">${m.name}</a>` : `<a href="${base}#proyecto-${m.case}">${m.name}</a>`).join(' · ')}</span>
+          <span>También: ${more.map(m => m.url ? `<a href="${m.url}" target="_blank" rel="noopener">${m.name}</a>` : `<a href="${PAGE_BASE}#proyecto-${m.case}">${m.name}</a>`).join(' · ')}</span>
         </p>
       </div>`;
     const stage = box.querySelector('#bb-stage');
@@ -1804,9 +1807,9 @@
       const c = list[i];
       items.forEach((t, n) => { t.classList.toggle('is-active', n === i); t.setAttribute('aria-selected', n === i); });
       stage.href = c.url;
-      stage.setAttribute('aria-label', c.name + ': ver el proyecto en Behance');
+      stage.setAttribute('aria-label', c.name + ': ' + t2('ver el proyecto en Behance', 'view the project on Behance'));
       stage.classList.remove('is-in');
-      stage.innerHTML = `<img src="${base}${c.shot}" alt="Proyecto de identidad visual: ${c.name}" /><span class="bb-cap"><b>${c.name}</b><em>${c.what}</em></span><span class="bb-open">Ver en Behance ${arrow}</span>`;
+      stage.innerHTML = `<img src="${c.shot}" alt="${t2('Proyecto de identidad visual', 'Visual identity project')}: ${c.name}" /><span class="bb-cap"><b>${c.name}</b><em>${c.what}</em></span><span class="bb-open">Ver en Behance ${arrow}</span>`;
       requestAnimationFrame(() => stage.classList.add('is-in'));
     };
     items.forEach((t, n) => t.addEventListener('click', () => show(n)));
@@ -1840,9 +1843,9 @@
       tabs.forEach((t, n) => { t.classList.toggle('is-active', n === i); t.setAttribute('aria-selected', n === i); });
       hostEl.textContent = host(c.url);
       view.href = c.url;
-      view.setAttribute('aria-label', 'Visitar ' + host(c.url));
+      view.setAttribute('aria-label', t2('Visitar ', 'Visit ') + host(c.url));
       view.classList.remove('is-in');
-      view.innerHTML = `<img src="${base}${c.shot}" alt="Sitio web de ${c.name}" onerror="this.remove()" /><span class="sf-fallback"><b>${c.name}</b><em>${host(c.url)}</em></span><span class="sf-open">Visitar sitio ${arrow}</span>`;
+      view.innerHTML = `<img src="${c.shot}" alt="${t2('Sitio web de', 'Website of')} ${c.name}" onerror="this.remove()" /><span class="sf-fallback"><b>${c.name}</b><em>${host(c.url)}</em></span><span class="sf-open">Visitar sitio ${arrow}</span>`;
       requestAnimationFrame(() => view.classList.add('is-in'));
       cap.innerHTML = `<b>${c.name}</b> · ${c.what}`;
     };
@@ -1857,7 +1860,7 @@
         <h2 class="font-display text-3xl md:text-4xl mb-3">Clientes de este servicio</h2>
         <p class="text-white/55 mb-12 max-w-xl">Toca un perfil para verlo en Instagram.</p>
         <div class="ph-row">
-          ${list.map(c => phoneHTML(c, base + c.shot)).join('')}
+          ${list.map(c => phoneHTML(c, c.shot)).join('')}
         </div>
       </div>`;
   }
@@ -1882,7 +1885,7 @@
         <p class="text-white/55 mb-9 max-w-xl">Mira lo que hemos hecho para otros clientes.</p>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           ${list.map(c => {
-            const href = c.url ? c.url : base + '#proyecto-' + c.case;
+            const href = c.url ? c.url : PAGE_BASE + '#proyecto-' + c.case;
             const ext = c.url ? ' target="_blank" rel="noopener"' : '';
             return `<a href="${href}"${ext} class="glass hover-lift rounded-2xl p-6 flex flex-col justify-between gap-6">
               <div><h3 class="font-display text-xl mb-1">${c.name}</h3><p class="text-white/60 text-[14px] leading-relaxed">${c.what}</p></div>
@@ -2235,7 +2238,7 @@
         </div>`;
     } else if(p.embedType === 'reels' && p.reelShots){
       embedEl.innerHTML = `<div class="vc-track">${(p.reelLinks || []).map((url, i) => `
-        <a class="vc-card" href="${url}" target="_blank" rel="noopener" aria-label="Reel ${i + 1}: ver en Instagram">
+        <a class="vc-card" href="${url}" target="_blank" rel="noopener">
           <img src="${p.reelShots[i]}" alt="Reel ${i + 1} de ${p.client}" loading="lazy" />
           <span class="vc-play"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           <span class="vc-cap"><b>Reel ${i + 1}</b><i>Instagram</i></span>
