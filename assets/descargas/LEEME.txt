@@ -1,0 +1,9 @@
+CHECKLIST DE AUTOMATIZACIÓN CON IA — hueco preparado
+
+Sube aquí el PDF con este nombre exacto:
+
+    checklist-automatizacion-ia.pdf
+
+En cuanto el archivo exista, la página de gracias (/checklist-ia/gracias/) mostrará
+automáticamente el botón "Descargar la checklist (PDF)". Mientras no exista, esa página
+dice que la enviarás por email.

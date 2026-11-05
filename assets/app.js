@@ -845,7 +845,7 @@
     fields = Object.assign({}, fields, { _page: location.pathname, _lang: document.documentElement.getAttribute('lang') || 'es' }, kind === 'review' ? { estado: 'PENDIENTE DE MODERACIÓN (no se publica sola)' } : {}, getAttribution());
     if(CONFIG.FORM_ENDPOINT && CONFIG.FORM_ENDPOINT !== 'PLACEHOLDER'){
       try {
-        const subjectLine = (kind === 'review' ? 'Nueva reseña de cliente — ' : 'Nueva solicitud — ') + (fields.company || fields.service || 'LE STUDIO');
+        const subjectLine = (kind === 'review' ? 'Nueva reseña de cliente — ' : (kind === 'lead-magnet' ? 'Descarga de la checklist — ' : 'Nueva solicitud — ')) + (fields.company || fields.service || fields.name || 'LE STUDIO');
         const payload = Object.assign(
           { _kind: kind || 'lead', _subject: subjectLine },
           fields.email ? { _replyto: fields.email } : {},
@@ -2402,6 +2402,35 @@
     } else {
       document.getElementById('review-form-panel').classList.add('hidden');
       document.getElementById('review-error-panel').classList.remove('hidden');
+    }
+  }
+
+  // ---------- Lead magnet: checklist de automatización con IA ----------
+  async function submitLeadMagnet(){
+    const name = document.getElementById('lm-name').value.trim();
+    const email = document.getElementById('lm-email').value.trim();
+    const terms = document.getElementById('lm-terms').checked;
+    const gotcha = (document.getElementById('lm-gotcha') || {}).value || '';
+    const box = document.getElementById('lm-error');
+    const tr = (t) => (window.I18N ? I18N.tr(t) : t);
+    const fail = (msg, el) => {
+      box.textContent = tr(msg); box.classList.remove('hidden');
+      document.querySelectorAll('#lm-form [aria-invalid]').forEach(x => x.removeAttribute('aria-invalid'));
+      if(el){ el.setAttribute('aria-invalid', 'true'); el.focus(); }
+    };
+    if(!name){ return fail('Por favor, dinos tu nombre.', document.getElementById('lm-name')); }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ return fail('Introduce un email válido para poder responderte.', document.getElementById('lm-email')); }
+    if(!terms){ return fail('Necesitamos que aceptes la política de privacidad para poder responderte.', document.getElementById('lm-terms')); }
+    box.classList.add('hidden');
+    const btn = document.getElementById('lm-submit');
+    btn.disabled = true;
+    const result = await submitLead({ name, email, message: 'Descarga de la checklist: 10 tareas que puedes automatizar con IA', _gotcha: gotcha }, 'lead-magnet');
+    btn.disabled = false;
+    if(result.ok){
+      trackEvent('lead_magnet_submit', { page: location.pathname });
+      location.href = 'gracias/';
+    } else {
+      fail('No hemos podido enviarlo. Escríbenos por WhatsApp y te la mandamos.');
     }
   }
 
