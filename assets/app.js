@@ -231,7 +231,13 @@
       linkUrl: 'https://youtu.be/i-frSRSTsq8',
       challenge: 'Legacy World quería lanzar un podcast propio, pero necesitaba algo más que una cámara y un micrófono: necesitaba un concepto, una estructura y una dirección de arte que representaran a la marca desde el primer episodio.',
       solution: 'Dirigimos y producimos el podcast de punta a punta: definimos el concepto, el guion y la estructura de cada episodio, desarrollamos la dirección de arte, y nos encargamos de la producción y postproducción completa del contenido. Marcelo Leal condujo el programa como entrevistador, y hoy el podcast se distribuye y comercializa en YouTube, TikTok e Instagram.',
-      result: '35.000 reproducciones orgánicas en el primer episodio, sin pauta paga.',
+      result: '36.000 vistas orgánicas en el primer episodio, sin pauta paga.',
+      metrics: [
+        { value: '36K', label: 'vistas del episodio 1 en YouTube' },
+        { value: '2,4M', label: 'vistas de un clip del podcast en TikTok' },
+        { value: '2,3K', label: 'vistas del episodio 2 en YouTube' }
+      ],
+      metricsNote: 'Cifras públicas de YouTube y TikTok a noviembre de 2026.',
     },
     'legacy-world-web': {
       name: 'Legacy World — Sitio Web',
@@ -273,6 +279,11 @@
       challenge: 'Inversiones MDS necesitaba algo más que seguidores: buscaba construir, a través de su Instagram, una audiencia real con potencial de convertirse en clientes.',
       solution: 'Gestionamos la presencia en redes sociales de Inversiones MDS: estrategia, calendario editorial y gestión diaria de su comunidad, con el objetivo puesto en la calidad de la audiencia, no solo en el volumen.',
       result: 'Hoy Inversiones MDS es una de las marcas más recordadas de su sector y con mejor presencia en redes, y su Instagram se convirtió en un generador constante de leads orgánicos.',
+      metrics: [
+        { value: '5.053', label: 'seguidores en @inversiones.mds' },
+        { value: '302', label: 'publicaciones' }
+      ],
+      metricsNote: 'Datos del perfil de Instagram a noviembre de 2026.',
     },
     'legacy-redes': {
       name: 'Legacy World — Redes',
@@ -285,6 +296,11 @@
       linkUrl: 'https://www.instagram.com/legacyworld_/',
       challenge: 'Legacy World necesitaba que su Instagram transmitiera la misma identidad que su marca y su tienda, y funcionara como canal de comunidad y de venta.',
       solution: 'Gestionamos la presencia de Legacy World en Instagram: línea editorial, contenido y gestión de su comunidad, alineados con el resto del ecosistema de la marca.',
+      metrics: [
+        { value: '7.127', label: 'seguidores en @legacyworld_' },
+        { value: '151', label: 'publicaciones' }
+      ],
+      metricsNote: 'Datos del perfil de Instagram a noviembre de 2026.',
     },
     'pizzi-redes': {
       name: 'Pizzi — Redes',
@@ -297,6 +313,36 @@
       linkUrl: 'https://www.instagram.com/pizzi.es/',
       challenge: 'Pizzi necesitaba una presencia en Instagram con identidad propia, constante y pensada para atraer a su audiencia.',
       solution: 'Nos encargamos del manejo de las redes sociales de Pizzi: estrategia, contenido y gestión diaria de su comunidad en Instagram.',
+      metrics: [
+        { value: '4.827', label: 'seguidores en @pizzi.es' },
+        { value: '87', label: 'publicaciones' }
+      ],
+      metricsNote: 'Datos del perfil de Instagram a noviembre de 2026.',
+    },
+    // ----------------------------------------------------------------------
+    // PLANTILLA DE CASO DE ESTUDIO. Copia este bloque, rellénalo solo con datos reales
+    // y quita `draft: true` para publicarlo. Todos los campos son opcionales:
+    // el caso solo muestra los bloques que tengan contenido.
+    //   context   -> quién es el cliente         challenge -> el problema
+    //   solution  -> qué hicimos                 result    -> resultado en una frase
+    //   metrics   -> [{ value, label }] cifras reales (+ metricsNote con fuente y fecha)
+    //   testimonial -> { quote, name, role, company, rating }
+    // ----------------------------------------------------------------------
+    'kia-contenido': {
+      draft: true,   // BORRADOR OCULTO: falta contexto, reto, solución y cita del cliente
+      name: 'Kia Centro Marca — Contenido viral',
+      client: 'Kia Centro Marca',
+      badge: 'kia',
+      tags: ['Content Production'],
+      service: 'content-production',
+      embedType: 'link',
+      linkUrl: 'https://www.tiktok.com/@kiacentromarca',
+      linkLabel: 'Ver @kiacentromarca en TikTok',
+      metrics: [
+        { value: '128,1K', label: 'vistas en el vídeo del Suzuki Jimny' },
+        { value: '111,6K', label: 'vistas en el vídeo del Kia Picanto' }
+      ],
+      metricsNote: 'Cifras públicas de TikTok a noviembre de 2026.',
     },
     'mds-contenido': {
       name: 'Inversiones MDS — Contenido',
@@ -421,6 +467,7 @@
     const bySlug = {};
     Object.keys(projects).forEach(slug => {
       const p = projects[slug];
+      if(p.draft) return;   // los casos en borrador no se muestran hasta que se completen
       let entry = bySlug[p.client];
       if(!entry){
         entry = { slug, client: p.client, badge: p.badge, tags: [] };
@@ -795,7 +842,7 @@
     // Antispam: si el campo señuelo viene relleno es un robot; fingimos éxito sin enviar nada.
     if(fields._gotcha){ return { ok: true }; }
     delete fields._gotcha;
-    fields = Object.assign({}, fields, { _page: location.pathname, _lang: document.documentElement.getAttribute('lang') || 'es' }, getAttribution());
+    fields = Object.assign({}, fields, { _page: location.pathname, _lang: document.documentElement.getAttribute('lang') || 'es' }, kind === 'review' ? { estado: 'PENDIENTE DE MODERACIÓN (no se publica sola)' } : {}, getAttribution());
     if(CONFIG.FORM_ENDPOINT && CONFIG.FORM_ENDPOINT !== 'PLACEHOLDER'){
       try {
         const subjectLine = (kind === 'review' ? 'Nueva reseña de cliente — ' : 'Nueva solicitud — ') + (fields.company || fields.service || 'LE STUDIO');
@@ -1933,7 +1980,7 @@
           </div>
           <p class="text-white/75 leading-relaxed mb-7 text-lg">"${t.quote}"</p>
           <p class="font-medium text-white text-sm">${t.name}</p>
-          <p class="text-white/45 text-xs mt-0.5">${t.company}</p>
+          <p class="text-white/45 text-xs mt-0.5">${[t.role, t.company].filter(Boolean).join(' · ')}</p>
         </div>`;
     } else {
       testimonialWrap.innerHTML = `
@@ -2070,12 +2117,12 @@
   function getSiblingProjectSlugs(slug){
     const p = projects[slug];
     if(!p) return [slug];
-    return Object.keys(projects).filter(k => projects[k].client === p.client);
+    return Object.keys(projects).filter(k => projects[k].client === p.client && !projects[k].draft);
   }
 
   function showProject(slug){
     const p = projects[slug];
-    if(!p) return;
+    if(!p || p.draft) return;
     trackEvent('portfolio_click', { project: slug });
 
     document.getElementById('pd-client').textContent = p.client;
@@ -2173,11 +2220,19 @@
     // Story: reto / solución / resultado — only show blocks that actually have content
     const storyEl = document.getElementById('pd-story');
     const blocks = [];
+    if(p.context) blocks.push({ label: 'El cliente', text: p.context });
     if(p.challenge) blocks.push({ label: 'El reto', text: p.challenge });
-    if(p.solution) blocks.push({ label: 'La solución', text: p.solution });
+    if(p.solution) blocks.push({ label: 'Qué hicimos', text: p.solution });
     if(p.result) blocks.push({ label: 'El resultado', text: p.result });
+    // Cifras reales del caso (solo si hay datos; no se inventa nada)
+    const metricsEl = document.getElementById('pd-metrics');
+    if(metricsEl){
+      metricsEl.innerHTML = (p.metrics && p.metrics.length) ? `
+        <div class="case-metrics">${p.metrics.map(m => `<div class="case-metric"><b>${m.value}</b><span>${m.label}</span></div>`).join('')}</div>
+        ${p.metricsNote ? `<p class="case-metrics-note">${p.metricsNote}</p>` : ''}` : '';
+    }
     if(blocks.length){
-      const colsClass = blocks.length === 1 ? 'grid-cols-1' : (blocks.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3');
+      const colsClass = blocks.length === 1 ? 'grid-cols-1' : (blocks.length === 2 ? 'md:grid-cols-2' : (blocks.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-4'));
       storyEl.className = 'grid ' + colsClass + ' gap-5 mb-14';
       storyEl.innerHTML = blocks.map(b => `
         <div class="glass rounded-2xl p-7">
