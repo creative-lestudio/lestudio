@@ -1,5 +1,9 @@
 # Leads, CRM y n8n
 
+## Situación actual
+No hay CRM ni n8n. Los leads llegan por **email vía Formspree** y `LEAD_WEBHOOK_URL` está vacío (desactivado). No hace falta tocar nada para que el sitio funcione.
+Cuando quieras ordenar los leads sin montar infraestructura, lo más simple es la integración de Formspree con Google Sheets (desde su panel); no requiere cambios de código.
+
 ## Cómo funciona hoy
 1. Cada formulario (contacto, auditoría, presupuesto, checklist) envía a **Formspree** (`FORM_ENDPOINT` en `assets/config.js`). Llega a tu email.
 2. Si defines `LEAD_WEBHOOK_URL` en `assets/config.js`, **además** se envía el mismo lead (JSON) a esa URL. Vacío = desactivado.

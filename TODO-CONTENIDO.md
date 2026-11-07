@@ -53,7 +53,7 @@ La plantilla está documentada en `assets/app.js` (bloque `PLANTILLA DE CASO DE 
 - [ ] **Revisar el texto del hero y el método** (redactados sin datos comerciales; cámbialos si no te representan).
 - [ ] **Fichas de caso editoriales** (contexto, reto, solución, resultado, enlace público): faltan los datos reales de cada proyecto. Venezuela Food y HappyNest Café solo se publicarán con material tuyo.
 - [ ] **Logo en SVG vectorial** (hoy solo existe PNG blanco recoloreado con máscara CSS).
-- [ ] **URL real de n8n o CRM** para `LEAD_WEBHOOK_URL` (ver `docs/crm-leads.md`). No se ha inventado ninguna.
+- [ ] **CRM / n8n (opcional, no tienes ahora):** los leads llegan por email (Formspree). Si más adelante creas un flujo, pega su URL en `LEAD_WEBHOOK_URL` (ver `docs/crm-leads.md`).
 - [ ] **Páginas de sector** para "pymes" y "marcas en crecimiento": solo con contenido real. Hostelería ya existe.
 - [ ] **Demo de IA**: no se ha creado página de demo porque no hay casos reales documentados.
 - [ ] **Dirección física, reseñas públicas y premios**: no se publican hasta que los aportes.
