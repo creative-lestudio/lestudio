@@ -962,3 +962,12 @@ h1.font-display, h2.font-display, .h-title, .h-hero-title{ font-family:var(--fon
 .mt-steps b{ font-family:var(--font-mono); font-size:.8rem; color:var(--mist-3); }
 .mt-steps h3{ font-size:1.35rem; font-weight:500; margin:10px 0 8px; letter-spacing:-.02em; }
 .mt-steps p{ color:var(--mist-2); line-height:1.55; }
+
+/* ---------- Tabla comparativa de planes ---------- */
+.cmp-wrap{ overflow-x:auto; margin:0 0 12px; border:1px solid rgb(var(--ink) / .14); border-radius:20px; -webkit-overflow-scrolling:touch; }
+.cmp{ width:100%; min-width:680px; border-collapse:collapse; font-size:.92rem; }
+.cmp th,.cmp td{ padding:14px 16px; text-align:left; vertical-align:top; border-bottom:1px solid rgb(var(--ink) / .1); color:var(--mist-1); }
+.cmp thead th{ font-family:var(--font-display); font-weight:500; font-size:1.05rem; color:rgb(var(--ink)); }
+.cmp tbody th{ font-weight:500; color:rgb(var(--ink)); width:18%; }
+.cmp tr:last-child th,.cmp tr:last-child td{ border-bottom:0; }
+.sr-only{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
