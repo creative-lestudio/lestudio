@@ -157,13 +157,13 @@
           </div>
         </div>
       </div>
-      <a href="#quienes-somos" class="hover:text-white transition-colors">About us</a>
-      <a href="#portafolio" onclick="showPortfolioPage(); return false;" class="hover:text-white transition-colors">Selected work</a>
+      <a href="#estudio" class="hover:text-white transition-colors">Studio</a>
+      <a href="#portafolio" onclick="showPortfolioPage(); return false;" class="hover:text-white transition-colors">Projects</a>
     </nav>
 
     <div class="flex items-center gap-4">
       <div class="lang-switch" role="group" aria-label="Language"><button type="button" data-lang="es" class="" aria-pressed="false">ES</button><button type="button" data-lang="en" aria-pressed="true" class="is-active">EN</button></div><button type="button" class="theme-toggle" data-theme-toggle="" aria-label="Switch between light and dark theme"><svg class="ico-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.2A8 8 0 0 1 9.8 4 8.2 8.2 0 1 0 20 14.2z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><svg class="ico-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"></circle><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg></button>
-      <a href="#contacto" class="hidden md:inline-block btn-primary text-sm font-semibold px-5 py-2.5 rounded-full">Contact us</a>
+      <a href="#contacto" class="hidden md:inline-block btn-primary text-sm font-semibold px-5 py-2.5 rounded-full">Let's talk</a>
       <button id="mobile-toggle" class="lg:hidden p-2 -mr-2" aria-label="Open menu">
         <svg width="22" height="16" viewBox="0 0 22 16" fill="none"><path d="M0 1H22M0 8H22M0 15H22" stroke="currentColor" stroke-width="1.6"></path></svg>
       </button>
@@ -181,9 +181,9 @@
     <a href="/en/growth-marketing/" class="block">Growth &amp; Marketing</a>
     <a href="/en/ai-automation/" class="block">AI &amp; Automation</a>
     <div class="h-px bg-white/10"></div>
-    <a href="#quienes-somos" onclick="closeMobile()" class="block">About us</a>
-    <a href="#portafolio" onclick="showPortfolioPage(); closeMobile(); return false;" class="block">Selected work</a>
-    <a href="#contacto" onclick="closeMobile()" class="block btn-primary text-center rounded-full py-3 font-semibold">Contact us</a>
+    <a href="#estudio" onclick="closeMobile()" class="block">Studio</a>
+    <a href="#portafolio" onclick="showPortfolioPage(); closeMobile(); return false;" class="block">Projects</a>
+    <a href="#contacto" onclick="closeMobile()" class="block btn-primary text-center rounded-full py-3 font-semibold">Let's talk</a>
   </div>
 </header>
 
@@ -192,8 +192,8 @@
   <div class="liquid-glass rounded-full p-1 flex items-center gap-0.5">
     <a class="dock-btn" data-nav="home" data-tooltip="Home" aria-label="Home" href="/en/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 11L12 4L21 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path><path d="M5 10V19H19V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
     <a class="dock-btn" data-nav="servicios" data-tooltip="Services" aria-label="Services" href="/en/#servicios"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.6"></rect><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.6"></rect><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.6"></rect><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.6"></rect></svg></a>
-    <a class="dock-btn" data-nav="quienes-somos" data-tooltip="About us" aria-label="About us" href="/en/#quienes-somos"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.6"></circle><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path><circle cx="17" cy="8" r="2.4" stroke="currentColor" stroke-width="1.4"></circle><path d="M15.5 15.3c2.6.4 4.5 2 4.5 4.7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg></a>
-    <a class="dock-btn" data-nav="portafolio" data-tooltip="Selected work" aria-label="Selected work" href="/en/#portafolio"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 8a2 2 0 012-2h4l2 2h8a2 2 0 012 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"></path></svg></a>
+    <a class="dock-btn" data-nav="estudio" data-tooltip="Studio" aria-label="Studio" href="/en/#estudio"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.6"></circle><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path><circle cx="17" cy="8" r="2.4" stroke="currentColor" stroke-width="1.4"></circle><path d="M15.5 15.3c2.6.4 4.5 2 4.5 4.7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg></a>
+    <a class="dock-btn" data-nav="portafolio" data-tooltip="Projects" aria-label="Projects" href="/en/#portafolio"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 8a2 2 0 012-2h4l2 2h8a2 2 0 012 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"></path></svg></a>
     <a class="dock-btn" data-nav="contacto" data-tooltip="Contact" aria-label="Contact" href="/en/#contacto"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 4h16v12H8l-4 4V4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"></path></svg></a>
   </div>
 </div>
@@ -202,19 +202,22 @@
 <main id="home-view">
 
   <!-- HERO -->
-  <section class="h-hero">
+  <section class="h-hero h-hero--v2">
     <div class="h-glow" aria-hidden="true"></div>
-    <div class="h-wrap">
-      <a href="#" onclick="openContactForm('', null, 'audit'); return false;" class="h-offer hero-in" style="--d:0s"><span class="h-offer-dot" aria-hidden="true"></span>Free digital systems audit<span aria-hidden="true">→</span></a>
-      <h1 class="font-display h-hero-title hero-in" style="--d:.08s">Your business, with digital systems <span class="accent">that work for you.</span></h1>
-      <p class="h-hero-lead hero-in" style="--d:.16s">
-        Web, social media, content, branding and AI automation in a single team, for restaurants, shops and small businesses in Spain and Venezuela.
-      </p>
-      <div class="h-hero-ctas hero-in" style="--d:.24s">
-        <button onclick="openContactForm('', null, 'audit')" class="btn-primary btn-lg" data-cta="audit">Book a free audit</button>
-        <a href="#servicios" class="btn-ghost btn-lg">See services</a>
+    <div class="h-wrap h-hero-grid">
+      <div class="h-hero-copy">
+        <p class="cl-eyebrow hero-in" style="--d:0s">Digital studio · Valencia, Spain and Venezuela</p>
+        <h1 class="font-display h-hero-title hero-in" style="--d:.08s">Brand, web and content working together to bring you clients.</h1>
+        <p class="h-hero-lead hero-in" style="--d:.16s">Design, development, social media, video production and AI automation in one team, so your business looks professional and sells better.</p>
+        <div class="h-hero-ctas hero-in" style="--d:.24s">
+          <button onclick="openContactForm('', null, 'audit')" class="btn-primary btn-lg" data-cta="hero_hablemos">Let's talk about your project</button>
+          <a href="#portafolio" class="btn-ghost btn-lg" data-cta="hero_proyectos">See projects</a>
+        </div>
+        <p class="h-hero-note hero-in" style="--d:.34s">Auditoría gratuita de 30 min · <a href="#diagnostico" class="underline underline-offset-4">Take the 1-minute diagnostic</a> · <a class="js-phone-link underline underline-offset-4" href="tel:+34662490547">+34 662 490 547</a></p>
       </div>
-      <p class="h-hero-note hero-in" style="--d:.34s">30-minute call · Reply in under 24 h · Or call us on <a class="js-phone-link underline underline-offset-4" href="tel:+34662490547">+34 662 490 547</a></p>
+      <div class="h-hero-art hero-in" style="--d:.2s" aria-hidden="true">
+        <div class="lg3d" id="lg3d"><span class="lg3d-l l1"></span><span class="lg3d-l l2"></span><span class="lg3d-l l3"></span><span class="lg3d-core"></span></div>
+      </div>
     </div>
   </section>
 
@@ -258,21 +261,13 @@
     </div>
   </section>
 
-  <!-- ¿QUÉ ESTÁ FRENANDO TU NEGOCIO? -->
+  <!-- DIAGNÓSTICO (4 preguntas) -->
   <section id="diagnostico" class="h-sec h-sec--line">
     <div class="h-wrap h-narrow">
-      <h2 class="h-title rv">What's holding your business back?</h2>
-      <p class="h-lead rv">Tell us your situation in your own words. We'll explain what we'd do and why.</p>
-
-      <div class="ai-box rv" id="ai-box">
-        <div id="chat-messages" class="ai-thread" aria-live="polite"></div>
-        <div class="ai-input">
-          <textarea id="chat-input" rows="2" maxlength="600" placeholder="Tell us what's holding your business back…" aria-label="Tell us what's holding your business back"></textarea>
-          <button id="chat-send" onclick="sendChatMessage()" aria-label="Send message">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-          </button>
-        </div>
-      </div>
+      <p class="cl-eyebrow rv">Diagnostic</p>
+      <h2 class="h-title rv">Where to start?</h2>
+      <p class="h-lead rv">Four quick questions. You get an initial orientation, not a quote: we define it in the free audit.</p>
+      <div class="dg lg rv" id="dg" aria-live="polite"><p class="dg-step">Pregunta 1 de 4</p><div class="dg-bar"><i style="width:0%"></i></div><h3 class="font-display dg-q">What do you want to achieve now?</h3><div class="dg-opts"><button type="button" class="dg-opt" data-v="clientes">More clients or enquiries</button><button type="button" class="dg-opt" data-v="imagen">A more professional image</button><button type="button" class="dg-opt" data-v="ventas">Sell or take orders online</button><button type="button" class="dg-opt" data-v="tiempo">Save time answering messages</button></div></div>
     </div>
   </section>
 
@@ -434,7 +429,7 @@
   </section>
 
   <!-- QUIÉNES SOMOS -->
-  <section id="quienes-somos" class="h-sec h-sec--line">
+  <section id="estudio" class="h-sec h-sec--line">
     <div class="h-wrap">
       <h2 class="h-title h-title--xl rv" style="max-width:18ch">We build what brands need to move forward.</h2>
 
@@ -627,7 +622,7 @@
         <h2 class="h-title h-title--xl rv" style="margin-inline:auto;max-width:14ch">What do you want to build?</h2>
         <p class="h-lead rv" style="margin:24px auto 0">Tell us what you want to achieve, what you want to improve or what's blocking your business's growth. We'll analyze the project and propose the next step.</p>
         <div class="h-hero-ctas rv">
-          <button onclick="openContactForm('', null, 'audit')" class="btn-primary btn-lg" data-cta="audit">Book a free audit</button>
+          <button onclick="openContactForm('', null, 'audit')" class="btn-primary btn-lg" data-cta="audit">Book free audit</button>
           <a href="https://wa.me/584241859724?text=Hola%2C%20quiero%20contarles%20sobre%20mi%20proyecto." data-msg="Hola, quiero contarles sobre mi proyecto." class="js-whatsapp-link btn-ghost btn-lg" target="_blank" rel="noopener">Chat on WhatsApp</a>
         </div>
         <p class="h-hero-note" style="margin-top:20px">Prefer to talk? Call us on <a class="js-phone-link underline underline-offset-4" href="tel:+34662490547">+34 662 490 547</a></p>
@@ -834,7 +829,7 @@
       <h3 class="font-display text-2xl md:text-3xl mb-4">Want a similar result?</h3>
       <p class="text-white/55 mb-8 max-w-md mx-auto">Tell us about your project and we'll figure out how to approach it.</p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <button class="btn-primary w-full sm:w-auto text-center font-semibold px-8 py-3.5 rounded-full" onclick="openContactForm('', null, 'audit')" data-cta="audit">Book a free audit</button>
+        <button class="btn-primary w-full sm:w-auto text-center font-semibold px-8 py-3.5 rounded-full" onclick="openContactForm('', null, 'audit')" data-cta="audit">Book free audit</button>
         <button id="pd-service-link" class="btn-ghost w-full sm:w-auto text-center font-semibold px-8 py-3.5 rounded-full">View the service</button>
         <a data-msg="Hola, quiero contarles sobre mi proyecto." href="https://wa.me/584241859724?text=Hola%2C%20quiero%20contarles%20sobre%20mi%20proyecto." class="js-whatsapp-link btn-ghost w-full sm:w-auto text-center font-semibold px-8 py-3.5 rounded-full" target="_blank" rel="noopener">Write to us</a>
       </div>
@@ -1023,6 +1018,7 @@
 <script src="/assets/app.js?v=17" defer=""></script>
 <script src="/assets/i18n.js?v=15" defer=""></script>
 <script src="/assets/intro.js?v=4" defer=""></script>
+<script src="/assets/diagnostico.js" defer=""></script>
 
 
 </body></html>

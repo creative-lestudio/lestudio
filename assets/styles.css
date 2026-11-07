@@ -920,3 +920,38 @@ h3.font-display, .font-display{ letter-spacing:-.04em; }
 }
 @media (prefers-reduced-transparency:reduce){ .lg{ background:rgb(var(--paper)); -webkit-backdrop-filter:none; backdrop-filter:none; } }
 @media (prefers-reduced-motion:reduce){ .lg, .lg *{ transition:none !important; animation:none !important; } }
+
+/* ---------- Hero v2: objeto 3D Liquid Glass (solo CSS) ---------- */
+.h-hero--v2{ text-align:left; }
+.h-hero-grid{ display:grid; grid-template-columns:1.15fr .85fr; gap:clamp(24px,4vw,64px); align-items:center; }
+.h-hero--v2 .h-hero-lead{ margin-left:0; }
+.h-hero--v2 .h-hero-ctas{ justify-content:flex-start; }
+.h-hero-art{ display:grid; place-items:center; perspective:900px; min-height:320px; }
+.lg3d{ position:relative; width:min(340px,70vw); aspect-ratio:1; transform-style:preserve-3d; transform:rotateX(calc(var(--py,0)*-10deg)) rotateY(calc(var(--px,0)*12deg)); transition:transform .25s ease-out; }
+.lg3d-l{ position:absolute; inset:0; border-radius:28%; border:1px solid rgb(var(--ink) / .22); background:linear-gradient(135deg, rgb(var(--ink) / .14), rgb(var(--ink) / .03)); box-shadow:inset 0 1px 0 rgb(255 255 255 / .3), 0 24px 60px rgb(var(--sh) / calc(.22*var(--shk))); }
+@supports (backdrop-filter:blur(1px)){ .lg3d-l{ backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); } }
+.lg3d-l.l1{ transform:translateZ(-60px) rotate(8deg) scale(.92); }
+.lg3d-l.l2{ transform:translateZ(0) rotate(-4deg); }
+.lg3d-l.l3{ transform:translateZ(60px) rotate(14deg) scale(.7); animation:lgfloat 7s ease-in-out infinite; }
+.lg3d-core{ position:absolute; left:50%; top:50%; width:22%; aspect-ratio:1; border-radius:50%; transform:translate(-50%,-50%) translateZ(90px); background:rgb(var(--ink)); opacity:.92; }
+@keyframes lgfloat{ 0%,100%{ transform:translateZ(60px) rotate(14deg) scale(.7) translateY(0);} 50%{ transform:translateZ(60px) rotate(14deg) scale(.7) translateY(-10px);} }
+@media (max-width:900px){ .h-hero-grid{ grid-template-columns:1fr; } .h-hero-art{ min-height:240px; order:-1; } .h-hero--v2{ text-align:left; } }
+@media (prefers-reduced-motion:reduce){ .lg3d{ transform:none; transition:none; } .lg3d-l.l3{ animation:none; } }
+
+/* ---------- Diagnóstico ---------- */
+.dg{ padding:clamp(20px,3vw,36px); margin-top:28px; }
+.dg-step{ font-family:var(--font-mono); font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:var(--mist-3); }
+.dg-bar{ height:3px; background:rgb(var(--ink) / .12); border-radius:3px; margin:12px 0 22px; overflow:hidden; }
+.dg-bar i{ display:block; height:100%; background:rgb(var(--ink)); transition:width .3s; }
+.dg-q{ font-size:clamp(1.4rem,3vw,2rem); font-weight:400; letter-spacing:-.03em; margin:8px 0 18px; }
+.dg-opts{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; }
+.dg-opt{ text-align:left; padding:16px 18px; border-radius:16px; border:1px solid rgb(var(--ink) / .18); background:rgb(var(--ink) / .04); color:rgb(var(--ink)); font:inherit; cursor:pointer; min-height:56px; transition:background .2s, transform .2s; }
+.dg-opt:hover,.dg-opt:focus-visible{ background:rgb(var(--ink) / .1); transform:translateY(-2px); outline:2px solid rgb(var(--ink) / .5); outline-offset:2px; }
+.dg-back{ margin-top:16px; background:none; border:0; color:var(--mist-2); cursor:pointer; font:inherit; min-height:44px; }
+.dg-res{ color:var(--mist-1); font-size:1.1rem; line-height:1.6; max-width:56ch; }
+.dg-note{ color:var(--mist-3); font-size:.85rem; margin-top:10px; }
+.dg-actions{ display:flex; flex-wrap:wrap; gap:12px; margin-top:22px; }
+
+/* Ajuste de titulares para Clash Grotesk (sustituye el tracking muy cerrado de Helvetica) */
+h1.font-display, h2.font-display, .h-title, .h-hero-title{ font-family:var(--font-display); font-weight:500; letter-spacing:-.025em; word-spacing:0; line-height:1.06; }
+.h-hero--v2 .h-hero-title{ font-size:clamp(2.3rem,5vw,4.4rem); max-width:20ch; }
