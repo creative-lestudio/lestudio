@@ -980,3 +980,4 @@ h1.font-display, h2.font-display, .h-title, .h-hero-title{ font-family:var(--fon
 .goal span{ display:block; color:var(--mist-2); font-size:.92rem; line-height:1.5; }
 .goal i{ position:absolute; right:20px; bottom:16px; font-style:normal; }
 @media (prefers-reduced-motion:reduce){ .goal{ transition:none; } }
+@media (max-width:900px){ .h-hero-art{ min-height:150px; } .lg3d{ width:min(190px,48vw); } }

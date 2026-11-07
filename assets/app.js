@@ -894,6 +894,16 @@
     if(fields._gotcha){ return { ok: true }; }
     delete fields._gotcha;
     fields = Object.assign({}, fields, { _page: location.pathname, _lang: document.documentElement.getAttribute('lang') || 'es' }, kind === 'review' ? { estado: 'PENDIENTE DE MODERACIÓN (no se publica sola)' } : {}, getAttribution());
+    // Webhook opcional (n8n, CRM, etc.): solo si LEAD_WEBHOOK_URL está configurada. Sin secretos en el frontend.
+    if(CONFIG.LEAD_WEBHOOK_URL && kind !== 'review'){
+      try {
+        const lead = { lead_id: 'ls-' + Date.now().toString(36), fecha: new Date().toISOString(), estado: 'nuevo', tipo: kind || 'lead',
+          nombre: fields.name || '', email: fields.email || '', telefono: fields.phone || '', empresa: fields.company || '',
+          servicio: fields.service || '', mensaje: fields.message || '', cuando: fields.when || '',
+          consentimiento: true, /* el formulario exige aceptar la privacidad antes de enviar */ pagina: fields._page, idioma: fields._lang, atribucion: getAttribution() };
+        fetch(CONFIG.LEAD_WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(lead), keepalive: true }).catch(function(){});
+      } catch(e){}
+    }
     if(CONFIG.FORM_ENDPOINT && CONFIG.FORM_ENDPOINT !== 'PLACEHOLDER'){
       try {
         const subjectLine = (kind === 'review' ? 'Nueva reseña de cliente — ' : (kind === 'lead-magnet' ? 'Descarga de la checklist — ' : 'Nueva solicitud — ')) + (fields.company || fields.service || fields.name || 'LE STUDIO');
@@ -909,6 +919,7 @@
         });
         if(res.ok){
           trackEvent('form_submit', { kind: kind || 'lead', service: fields.service || '' });
+          if(kind !== 'review') trackEvent('generate_lead', { kind: kind || 'lead', service: fields.service || '' });
           return { ok: true };
         }
         return { ok: false };

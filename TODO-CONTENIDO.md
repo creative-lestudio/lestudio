@@ -47,3 +47,13 @@ La plantilla está documentada en `assets/app.js` (bloque `PLANTILLA DE CASO DE 
 ## 6. Imágenes y contenido por idioma
 
 - [ ] La versión en inglés se genera con el diccionario de `assets/i18n.js`. Si añades texto nuevo en español, añade su traducción ahí (si no, se queda en español en `/en/`). Hay un comprobador rápido en el README.
+
+## 7. Rediseño integral (rama `rediseno-integral`)
+
+- [ ] **Revisar el texto del hero y el método** (redactados sin datos comerciales; cámbialos si no te representan).
+- [ ] **Fichas de caso editoriales** (contexto, reto, solución, resultado, enlace público): faltan los datos reales de cada proyecto. Venezuela Food y HappyNest Café solo se publicarán con material tuyo.
+- [ ] **Logo en SVG vectorial** (hoy solo existe PNG blanco recoloreado con máscara CSS).
+- [ ] **URL real de n8n o CRM** para `LEAD_WEBHOOK_URL` (ver `docs/crm-leads.md`). No se ha inventado ninguna.
+- [ ] **Páginas de sector** para "pymes" y "marcas en crecimiento": solo con contenido real. Hostelería ya existe.
+- [ ] **Demo de IA**: no se ha creado página de demo porque no hay casos reales documentados.
+- [ ] **Dirección física, reseñas públicas y premios**: no se publican hasta que los aportes.

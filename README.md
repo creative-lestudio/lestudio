@@ -14,6 +14,8 @@ Sitio estático (HTML + CSS + JS). No hay servidor ni framework: lo único que s
 | `assets/styles.css` | Estilos (tema claro/oscuro con variables `--ink` y `--paper`) |
 | `assets/tailwind.css` | CSS de Tailwind **compilado** (no editar) |
 | `tools/` | Herramientas de compilación (Tailwind, prerender, inglés). No forman parte del sitio |
+| `assets/diagnostico.js` | Diagnóstico de 4 preguntas de la home y parallax del hero |
+| `docs/` | Auditoría, leads/CRM/n8n y analítica |
 | `TODO-CONTENIDO.md` | Lo que falta por aportar |
 
 ## Preparar el entorno (una vez)
@@ -65,4 +67,4 @@ Envían a Formspree (`FORM_ENDPOINT` en `assets/config.js`) con antispam (campo 
 
 ## Analítica
 
-Solo se carga Google Analytics si hay ID en `assets/config.js` **y** el visitante acepta el aviso de cookies. Eventos: `reserve_audit_click`, `whatsapp_click`, `phone_click`, `form_submit`, `lead_magnet_submit`, `lead_magnet_download`.
+Solo se carga Google Analytics si hay ID en `assets/config.js` **y** el visitante acepta el aviso de cookies. Ver `docs/analitica.md`. Eventos: `generate_lead`, `diagnostic_start`, `diagnostic_complete`, `reserve_audit_click`, `whatsapp_click`, `phone_click`, `form_submit`, `lead_magnet_submit`, `lead_magnet_download`.

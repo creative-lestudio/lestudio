@@ -23,6 +23,10 @@ window.SITE_CONFIG = {
   GA_MEASUREMENT_ID: '',
   META_PIXEL_ID: '',
 
+  // Webhook opcional para enviar cada lead a un CRM o a n8n (URL real que tú crees; vacío = desactivado).
+  // No pongas aquí claves ni tokens: el frontend es público.
+  LEAD_WEBHOOK_URL: '',
+
   // Asistente "¿Qué está frenando tu negocio?": 'PLACEHOLDER' = respuestas locales por palabras clave
   CHAT_API_ENDPOINT: 'PLACEHOLDER'
 };
