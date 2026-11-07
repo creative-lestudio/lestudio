@@ -5,13 +5,19 @@
 @font-face{ font-family:'LS Sans'; font-style:normal; font-weight:500; font-display:swap; src:local('Helvetica Neue Medium'), local('HelveticaNeue-Medium'), url(fonts/inter.woff2) format('woff2'); }
 @font-face{ font-family:'LS Sans'; font-style:normal; font-weight:600; font-display:swap; src:local('Helvetica Neue Medium'), local('HelveticaNeue-Medium'), url(fonts/inter.woff2) format('woff2'); }
 @font-face{ font-family:'LS Sans'; font-style:normal; font-weight:700; font-display:swap; src:local('Helvetica Neue Bold'), local('HelveticaNeue-Bold'), local('Helvetica Bold'), local('Helvetica-Bold'), url(fonts/inter.woff2) format('woff2'); }
+@font-face{ font-family:'Clash Grotesk'; font-style:normal; font-weight:300; font-display:swap; src:url(fonts/clash-grotesk-300.woff2) format('woff2'); }
+@font-face{ font-family:'Clash Grotesk'; font-style:normal; font-weight:400; font-display:swap; src:url(fonts/clash-grotesk-400.woff2) format('woff2'); }
+@font-face{ font-family:'Clash Grotesk'; font-style:normal; font-weight:500; font-display:swap; src:url(fonts/clash-grotesk-500.woff2) format('woff2'); }
+@font-face{ font-family:'Clash Grotesk'; font-style:normal; font-weight:600; font-display:swap; src:url(fonts/clash-grotesk-600.woff2) format('woff2'); }
+@font-face{ font-family:'Clash Grotesk'; font-style:normal; font-weight:700; font-display:swap; src:url(fonts/clash-grotesk-700.woff2) format('woff2'); }
 @font-face{ font-family:'JetBrains Mono'; font-style:normal; font-weight:100 800; font-display:swap; src:url(fonts/jetbrains-mono.woff2) format('woff2'); }
 :root{
     --navy-deep:#021024;
-    --navy-mid:#052659;
+    --navy-mid:#032A67;   /* azul de marca */
+    --surface:#F5F8FC;    /* fondo secundario claro */
     --navy-low:#011638;
     --gold: rgb(var(--ink));   /* sin colores de resaltado: todo en la tinta del tema */
-    --font-display: 'LS Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-display: 'Clash Grotesk', 'LS Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-body: 'LS Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
@@ -39,9 +45,9 @@
   }
   /* ---------- Tema claro: fondo blanco y letras azules ---------- */
   html[data-theme="light"]{
-    --ink: 5 38 89;
+    --ink: 3 42 103;
     --paper: 255 255 255;
-    --sh: 5 38 89;
+    --sh: 3 42 103;
     --shk: .24;
     --ab: .5;
     --mist-1: rgb(var(--ink) / .9);
@@ -906,3 +912,11 @@ h3.font-display, .font-display{ letter-spacing:-.04em; }
 .sv-quote p, .intro-line{ letter-spacing:-.05em; }
 .h-stat b, .case-metric b{ letter-spacing:-.07em; }
 .h-card h3{ letter-spacing:-.045em; }
+
+/* ---------- Liquid Glass (utilidad con fallbacks) ---------- */
+.lg{ background:rgb(var(--paper) / .72); border:1px solid rgb(var(--ink) / .14); border-radius:24px; box-shadow:0 10px 40px rgb(var(--sh) / calc(.18*var(--shk))); }
+@supports (backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px)){
+  .lg{ background:linear-gradient(135deg, rgb(var(--ink) / .10), rgb(var(--ink) / .03)); -webkit-backdrop-filter:blur(18px) saturate(1.4); backdrop-filter:blur(18px) saturate(1.4); box-shadow:inset 0 1px 0 rgb(255 255 255 / .25), 0 10px 40px rgb(var(--sh) / calc(.18*var(--shk))); }
+}
+@media (prefers-reduced-transparency:reduce){ .lg{ background:rgb(var(--paper)); -webkit-backdrop-filter:none; backdrop-filter:none; } }
+@media (prefers-reduced-motion:reduce){ .lg, .lg *{ transition:none !important; animation:none !important; } }
