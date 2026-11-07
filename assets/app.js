@@ -2384,7 +2384,7 @@
       btn.type = 'button';
       btn.setAttribute('aria-label', i + ' de 5 estrellas');
       btn.style.cssText = 'background:none;border:none;cursor:pointer;padding:2px;';
-      btn.innerHTML = '<svg width="26" height="26" viewBox="0 0 20 20" fill="' + (i <= selectedRating ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="1.3" style="color:' + (i <= selectedRating ? '#d9c79a' : 'rgb(var(--ink) / .25)') + '"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>';
+      btn.innerHTML = '<svg width="26" height="26" viewBox="0 0 20 20" fill="' + (i <= selectedRating ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="1.3" style="color:' + (i <= selectedRating ? 'rgb(var(--ink))' : 'rgb(var(--ink) / .25)') + '"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>';
       // Rating scale is 0-5: clicking the star that's already the current rating resets it to 0.
       btn.onclick = () => { selectedRating = (selectedRating === i) ? 0 : i; renderReviewStars(); };
       wrap.appendChild(btn);

@@ -1,13 +1,18 @@
-/* Tipografía (alojada en el propio sitio): Plus Jakarta Sans para títulos y texto, JetBrains Mono para etiquetas */
-@font-face{ font-family:'Plus Jakarta Sans'; font-style:normal; font-weight:200 800; font-display:swap; src:url(fonts/plus-jakarta-sans.woff2) format('woff2'); }
+/* Tipografía: Helvetica Neue (Light) del propio dispositivo; si no está instalada (Windows/Android),
+   se usa Inter alojada en el sitio con los mismos pesos. JetBrains Mono para las etiquetas. */
+@font-face{ font-family:'LS Sans'; font-style:normal; font-weight:300; font-display:swap; src:local('Helvetica Neue Light'), local('HelveticaNeue-Light'), local('Helvetica Light'), local('Helvetica-Light'), url(fonts/inter.woff2) format('woff2'); }
+@font-face{ font-family:'LS Sans'; font-style:normal; font-weight:400; font-display:swap; src:local('Helvetica Neue'), local('HelveticaNeue'), local('Helvetica'), url(fonts/inter.woff2) format('woff2'); }
+@font-face{ font-family:'LS Sans'; font-style:normal; font-weight:500; font-display:swap; src:local('Helvetica Neue Medium'), local('HelveticaNeue-Medium'), url(fonts/inter.woff2) format('woff2'); }
+@font-face{ font-family:'LS Sans'; font-style:normal; font-weight:600; font-display:swap; src:local('Helvetica Neue Medium'), local('HelveticaNeue-Medium'), url(fonts/inter.woff2) format('woff2'); }
+@font-face{ font-family:'LS Sans'; font-style:normal; font-weight:700; font-display:swap; src:local('Helvetica Neue Bold'), local('HelveticaNeue-Bold'), local('Helvetica Bold'), local('Helvetica-Bold'), url(fonts/inter.woff2) format('woff2'); }
 @font-face{ font-family:'JetBrains Mono'; font-style:normal; font-weight:100 800; font-display:swap; src:url(fonts/jetbrains-mono.woff2) format('woff2'); }
 :root{
     --navy-deep:#021024;
     --navy-mid:#052659;
     --navy-low:#011638;
-    --gold: #d9c79a;
-    --font-display: 'Plus Jakarta Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-body: 'Plus Jakarta Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --gold: rgb(var(--ink));   /* sin colores de resaltado: todo en la tinta del tema */
+    --font-display: 'LS Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-body: 'LS Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
     /* Tema (por defecto oscuro; el claro se define abajo con [data-theme="light"]).
@@ -17,7 +22,7 @@
     --sh: 0 0 0;            /* color de las sombras */
     --shk: 1;               /* intensidad de las sombras */
     --ab: 0;                /* refuerzo del contraste del texto con alfa */
-    --accent: #d9c79a;
+    --accent: rgb(var(--ink));
     --ivory: rgb(var(--ink));
     --mist-1: rgb(var(--ink) / .82);
     --mist-2: rgb(var(--ink) / .58);
@@ -39,7 +44,6 @@
     --sh: 5 38 89;
     --shk: .24;
     --ab: .5;
-    --accent: #1a5fd8;
     --mist-1: rgb(var(--ink) / .9);
     --mist-2: rgb(var(--ink) / .8);
     --mist-3: rgb(var(--ink) / .72);
@@ -61,7 +65,7 @@
   html{scroll-behavior:smooth;}
   body{
     font-family:var(--font-body);
-    font-weight:400;
+    font-weight:300;
     background: var(--page-bg);
     background-attachment:fixed;
     color:var(--ivory);
@@ -138,7 +142,7 @@
     .hover-lift:hover{transform:none;}
   }
 
-  .star{ color: var(--gold); }
+  .star{ color: rgb(var(--ink)); }
 
   /* liquid glass dock */
   .liquid-glass{
@@ -262,7 +266,7 @@
 
   /* =====================================================================
      HOME 2.0 — diseño tipo Apple sobre la línea gráfica de LE STUDIO
-     (mismos colores; tipografía: Plus Jakarta Sans + JetBrains Mono)
+     (mismos colores; tipografía: Helvetica Neue Light + JetBrains Mono)
      ===================================================================== */
   :root{
     --ease: cubic-bezier(.2,.8,.2,1);
@@ -763,7 +767,7 @@ ul.sv-collapsed > li.sv-more{ display:none; }
 .vc-cap{ position:absolute; left:16px; right:16px; bottom:14px; z-index:2; display:flex; flex-direction:column; gap:2px; }
 .vc-cap b{ font-family:var(--font-display); font-size:1.02rem; line-height:1.2; }
 .vc-cap em{ font-style:normal; font-size:.78rem; color:rgb(var(--ink) / calc(.75 + (1 - .75) * var(--ab))); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-.vc-cap i{ font-style:normal; margin-top:4px; font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); }
+.vc-cap i{ font-style:normal; margin-top:4px; font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--mist-2); }
 @media (max-width:639px){ .vc-arrows{ display:none; } .vc-card{ width:200px; } }
 @media (prefers-reduced-motion:reduce){ .vc-card, .vc-card img, .vc-play{ transition:none; } .vc-card:hover{ transform:none; } .vc-card:hover img{ transform:none; } }
 .vc-seg{ display:inline-flex; gap:4px; padding:5px; margin-bottom:26px; border-radius:999px; border:1px solid var(--line); background:rgb(var(--ink) / .05); max-width:100%; overflow-x:auto; scrollbar-width:none; }
@@ -893,3 +897,12 @@ html[data-theme="dark"] .form-error{ color:#ff9b93; }
 .cc-btns button{ padding:10px 20px; border-radius:999px; font-weight:600; font-size:.875rem; }
 .cc-link{ color:var(--mist-3); font-size:.8125rem; text-decoration:underline; text-underline-offset:3px; background:none; border:0; cursor:pointer; font-family:inherit; }
 .cc-link:hover{ color:rgb(var(--ink)); }
+
+
+/* ---------- Títulos: Helvetica Light con el espaciado entre letras reducido ---------- */
+h1.font-display, h2.font-display, .h-title, .h-hero-title{ font-weight:300; letter-spacing:-.065em; word-spacing:-.05em; line-height:1.03; }
+.h-title--xl{ letter-spacing:-.07em; }
+h3.font-display, .font-display{ letter-spacing:-.04em; }
+.sv-quote p, .intro-line{ letter-spacing:-.05em; }
+.h-stat b, .case-metric b{ letter-spacing:-.07em; }
+.h-card h3{ letter-spacing:-.045em; }
