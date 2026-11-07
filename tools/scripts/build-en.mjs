@@ -74,7 +74,7 @@ for (const p of pages) {
     d.querySelectorAll('.marquee-track').forEach((n) => n.removeAttribute('style'));
     d.querySelectorAll('.rv.in').forEach((n) => n.classList.remove('in'));
     d.documentElement.setAttribute('lang', 'en');
-    d.documentElement.setAttribute('data-theme', 'light');
+    d.documentElement.setAttribute('data-theme', 'dark');
 
     // metadatos
     d.title = tr(d.title);
