@@ -992,3 +992,8 @@ h3.font-display, .font-display{ letter-spacing:-.04em; }
 .h-hero--center .hv-h1b{ margin-inline:auto; max-width:32ch; }
 .h-hero--center .h-hero-lead{ margin-inline:auto; }
 .h-hero--center .h-hero-ctas{ justify-content:center; }
+
+/* Pie: correo bajo el logo y la descripción */
+.ft-brand .ft-mail{ margin-top:clamp(20px,3vw,32px); padding-top:0; border-top:0; }
+.ft-brand .ft-mail p{ margin-bottom:6px; }
+.ft-brand .ft-email{ font-size:clamp(1.15rem,2vw,1.6rem); letter-spacing:-.02em; }
