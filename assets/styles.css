@@ -823,12 +823,16 @@ h3.font-display, .font-display{ letter-spacing:-.025em; }
 html[data-theme="dark"] .theme-toggle .ico-sun{ display:block; } html[data-theme="dark"] .theme-toggle .ico-moon{ display:none; }
 .theme-toggle--menu{ margin-left:10px; vertical-align:middle; }
 
-/* Guías verticales discontinuas en los bordes del contenido */
-body::after{ content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+/* Textura de fondo: guías verticales discontinuas que dividen el contenido en 4 columnas */
+body::after{ content:""; position:fixed; top:0; bottom:0; left:50%; width:min(1180px,calc(100% - 32px)); transform:translateX(-50%); z-index:-1; pointer-events:none;
+  --dash:repeating-linear-gradient(to bottom, var(--guide) 0 6px, transparent 6px 12px);
   background:
-    repeating-linear-gradient(to bottom, var(--guide) 0 6px, transparent 6px 12px) calc(50% - 590px) 0 / 1px 100% no-repeat,
-    repeating-linear-gradient(to bottom, var(--guide) 0 6px, transparent 6px 12px) calc(50% + 590px) 0 / 1px 100% no-repeat; }
-@media (max-width:1240px){ body::after{ display:none; } }
+    var(--dash) 0% 0 / 1px 100% no-repeat,
+    var(--dash) 25% 0 / 1px 100% no-repeat,
+    var(--dash) 50% 0 / 1px 100% no-repeat,
+    var(--dash) 75% 0 / 1px 100% no-repeat,
+    var(--dash) 100% 0 / 1px 100% no-repeat; }
+@media (max-width:640px){ body::after{ width:calc(100% - 24px); } }
 
 /* Logos de clientes (máscara) */
 .cl-tile .logo-mask{ max-width:82%; transition:transform .35s var(--ease,ease); }
@@ -1028,3 +1032,31 @@ h3.font-display, .font-display{ letter-spacing:-.04em; }
 }
 @media (max-width:520px){ .hx-ctas .btn-lg{ flex:1 1 100%; } }
 @media (prefers-reduced-motion:reduce){ .hx-orb{ animation:none; } .hx-svc a,.hx-svc i{ transition:none; } }
+
+/* ---------- Sección de clientes: siempre en el tema inverso al de la página ---------- */
+html[data-theme="dark"] #clientes{
+  --ink: 3 42 103; --paper: 255 255 255; --sh: 3 42 103; --shk: .24; --ab: .5;
+  --mist-1: rgb(var(--ink) / .9); --mist-2: rgb(var(--ink) / .8); --mist-3: rgb(var(--ink) / .72);
+  --line: rgb(var(--ink) / .14); --guide: rgb(var(--ink) / .1);
+  background:#ffffff; color:rgb(var(--ink)); color-scheme:light;
+}
+html[data-theme="light"] #clientes{
+  --ink: 255 255 255; --paper: 2 16 36; --sh: 0 0 0; --shk: 1; --ab: 0;
+  --mist-1: rgb(var(--ink) / .82); --mist-2: rgb(var(--ink) / .58); --mist-3: rgb(var(--ink) / .36);
+  --line: rgb(var(--ink) / .12); --guide: rgb(var(--ink) / .1);
+  background:linear-gradient(180deg,#021024,#052659); color:rgb(var(--ink)); color-scheme:dark;
+}
+
+/* Encabezado y menú flotante siempre legibles, también sobre la sección de clientes invertida */
+html[data-theme="dark"] #site-header{ background:rgb(2 16 36 / .92); }
+html[data-theme="light"] #site-header{ background:rgb(255 255 255 / .94); }
+html[data-theme="dark"] #nav-dock .liquid-glass{ background:rgb(8 26 58 / .92) !important; }
+html[data-theme="light"] #nav-dock .liquid-glass{ background:rgb(255 255 255 / .94) !important; }
+
+/* Hero: constelación interactiva en lugar de la lista de servicios */
+.hx-stage{ width:100%; max-width:520px; justify-self:end; }
+@media (max-width:900px){ .hx-stage{ justify-self:center; } }
+.hx-wrap{ grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr); }
+.hx-stage{ max-width:560px; }
+.hx-title{ font-size:clamp(2.5rem,5vw,5.4rem); }
+@media (max-width:900px){ .hx-wrap{ grid-template-columns:1fr; } }
