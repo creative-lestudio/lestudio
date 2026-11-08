@@ -32,6 +32,27 @@
     });
   }
   applyConfig();
+  // Pie: "Llamar" abre la llamada en móvil; en ordenador muestra el número (y un segundo clic lo copia).
+  (function(){
+    const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || (window.matchMedia && matchMedia('(hover:none) and (pointer:coarse)').matches);
+    const tr = (t) => (window.I18N ? I18N.tr(t) : t);
+    document.querySelectorAll('.js-call-reveal').forEach(el => {
+      el.href = 'tel:' + CONFIG.PHONE_E164;
+      el.addEventListener('click', (e) => {
+        if(isMobile) return; // móvil: llamada directa con el enlace tel:
+        e.preventDefault();
+        if(!el.dataset.shown){
+          el.dataset.shown = '1';
+          el.textContent = CONFIG.PHONE_DISPLAY;
+          el.setAttribute('aria-label', tr('Copiar número de teléfono'));
+          trackEvent('phone_reveal', { page: location.pathname });
+          return;
+        }
+        const done = () => { const prev = CONFIG.PHONE_DISPLAY; el.textContent = tr('Copiado'); setTimeout(() => { el.textContent = prev; }, 1500); };
+        try { navigator.clipboard.writeText(CONFIG.PHONE_DISPLAY).then(done, done); } catch(err){ done(); }
+      });
+    });
+  })();
   document.addEventListener('click', (e) => {
     if(e.target.closest('.js-whatsapp-link')){
       trackEvent('whatsapp_click', { page: location.pathname, section: (e.target.closest('section, footer, header, [id]') || {}).id || '' });
