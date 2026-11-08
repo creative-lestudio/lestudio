@@ -1,4 +1,4 @@
-/* Intro de bienvenida: teléfono recibiendo notificaciones -> mensaje -> gráficos.
+/* Intro de bienvenida: teléfono recibiendo notificaciones -> mensaje.
    Se muestra una vez por sesión (al abrir la página). Añade ?nointro a la URL para saltarla. */
 (function(){
   var root = document.documentElement;
@@ -34,10 +34,8 @@
   var clock = setInterval(tick, 1000);
   var line = document.getElementById('intro-line');
   line.innerHTML = T.line.split(' ').map(function(w){ return '<span class="w">' + w + '</span>'; }).join(' ');
-  var caps = intro.querySelectorAll('.chart figcaption span');
-  caps[0].textContent = T.up; caps[1].textContent = T.down;
 
-  var phone = document.getElementById('phone'), notifs = document.getElementById('notifs'), charts = document.getElementById('intro-charts');
+  var phone = document.getElementById('phone'), notifs = document.getElementById('notifs');
   var timers = [], done = false;
   function at(ms, fn){ timers.push(setTimeout(fn, ms)); }
 
@@ -61,13 +59,12 @@
   intro.addEventListener('click', finish);
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') finish(); });
 
-  // Línea de tiempo (~9,5 s)
+  // Línea de tiempo (~6,7 s)
   at(80,  function(){ phone.classList.add('in'); });
   var t = 750;
   T.n.forEach(function(n, i){ at(t, function(){ addNotif(n); }); t += i < 4 ? 430 : 300; });   // notificaciones
   at(3500, function(){ phone.classList.remove('in'); phone.classList.add('away'); });           // se va el teléfono
   at(3800, function(){ line.classList.add('on'); [].forEach.call(line.querySelectorAll('.w'), function(w, i){ w.style.transitionDelay = (i * 90) + 'ms'; }); });
   at(6000, function(){ line.classList.remove('on'); line.classList.add('off'); });              // sale el mensaje
-  at(6550, function(){ charts.classList.add('on'); });                                          // gráficos
-  at(9700, finish);
+  at(6700, finish);
 })();
