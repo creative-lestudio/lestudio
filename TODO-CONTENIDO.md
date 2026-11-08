@@ -39,7 +39,7 @@ La plantilla está documentada en `assets/app.js` (bloque `PLANTILLA DE CASO DE 
   - A (publicado): *Tu negocio, con sistemas digitales que trabajan por ti.*
   - B: *Más pedidos, menos mensajes sin responder.*
   - C: *Haz que tus clientes te encuentren, te elijan y vuelvan.*
-- [ ] **Dirección del negocio** en los datos estructurados: solo se publica "Valencia, ES" como localidad.
+- [ ] **Dirección del negocio** en los datos estructurados: solo se publica el país (ES); no se indica ciudad.
 - [ ] **Logo del cliente "Caracas Mary"** y demás logos en blanco: están en `assets/marquee-*.png`. Si tienes versiones vectoriales (SVG), sustitúyelas para más nitidez.
 - [ ] **Enlaces de Behance de Urbantex y Synergy**: no aparecen en tu perfil público; verifica que abren.
 - [ ] **Embebidos de Behance** en las páginas estáticas `/proyectos/*-identidad/`: devuelven error 400 en pruebas automáticas; compruébalo en tu navegador.
